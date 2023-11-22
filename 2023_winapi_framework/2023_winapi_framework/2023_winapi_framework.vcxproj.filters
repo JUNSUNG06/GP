@@ -154,6 +154,9 @@
     <ClInclude Include="2023_winapi_framework.h">
       <Filter>Default</Filter>
     </ClInclude>
+    <ClInclude Include="Rigidbody.h">
+      <Filter>Engine\07. Component</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="2023_winapi_framework.rc">
@@ -239,6 +242,9 @@
       <Filter>Engine\07. Component</Filter>
     </ClCompile>
     <ClCompile Include="Animator.cpp">
+      <Filter>Engine\07. Component</Filter>
+    </ClCompile>
+    <ClCompile Include="Rigidbody.cpp">
       <Filter>Engine\07. Component</Filter>
     </ClCompile>
   </ItemGroup>
