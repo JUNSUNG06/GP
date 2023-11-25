@@ -21,6 +21,7 @@ public:
 	void SetVelocity(Vec2 _vecVelocity) { m_vecVelocity = _vecVelocity; }
 	bool GetReverseGravity() { return m_bReverseGravity; }
 	void SetReverseGravity(bool _bReverseGravity);
+	void AddForce(Vec2 force);
 private:
 	Object* m_pOwner;
 	float m_fGravityScale;
