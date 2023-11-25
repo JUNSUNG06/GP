@@ -11,7 +11,7 @@ void PixelCollision::Init()
 bool PixelCollision::CheckCollision(int startX, int startY, int endX, int endY)
 {
 	if (m_texColorImgae == nullptr)
-		return;
+		return false;
 
 	for (int y = startY; y < endY; y++)
 	{
