@@ -24,7 +24,7 @@ void Rigidbody::FinalUpdate()
 	}
 }
 
-void Rigidbody::SetReverseGravity(bool _bReverseGravity)
+void Rigidbody::ReverseGravity(bool _bReverseGravity)
 {
 	m_bReverseGravity = _bReverseGravity;
 

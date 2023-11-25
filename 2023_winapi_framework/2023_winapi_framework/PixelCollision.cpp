@@ -30,3 +30,8 @@ bool PixelCollision::CheckCollision(int startX, int startY, int endX, int endY)
 
 	return false;
 }
+
+void PixelCollision::Release()
+{
+	m_texColorImgae = nullptr;
+}

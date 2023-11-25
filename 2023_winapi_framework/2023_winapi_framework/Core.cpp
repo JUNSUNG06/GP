@@ -148,4 +148,5 @@ void Core::Release()
 	}
 
 	ResMgr::GetInst()->Release();
+	PixelCollision::GetInst()->Release();
 }
