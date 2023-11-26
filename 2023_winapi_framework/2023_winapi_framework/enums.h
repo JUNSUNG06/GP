@@ -48,3 +48,9 @@ enum class EVENT_TYPE
 	SCENE_CHANGE,
 	END
 };
+
+
+enum class SITUATION_TYPE
+{
+
+};

@@ -8,6 +8,7 @@
 #include "CollisionMgr.h"
 #include "EventMgr.h"
 #include "PixelCollision.h"
+#include "SituationMgr.h"
 bool Core::Init(HWND _hWnd, POINT _ptResolution)
 {
 	// === 변수 초기화 === 
@@ -37,6 +38,7 @@ bool Core::Init(HWND _hWnd, POINT _ptResolution)
 	KeyMgr::GetInst()->Init();
 	ResMgr::GetInst()->Init();
 	SceneMgr::GetInst()->Init();
+	SituationMgr::GetInst()->Init();
 	PixelCollision::GetInst()->Init();
 
 	return true;
@@ -66,6 +68,7 @@ void Core::Update()
 	KeyMgr::GetInst()->Update();
 	SceneMgr::GetInst()->Update();
 	CollisionMgr::GetInst()->Update();
+	SituationMgr::GetInst()->Udpate();
 //	Vec2 vPos = m_obj.GetPos();
 //
 ////	if (GetAsyncKeyState(VK_LEFT) & 0x8000)
@@ -148,5 +151,6 @@ void Core::Release()
 	}
 
 	ResMgr::GetInst()->Release();
+	SituationMgr::GetInst()->Release();
 	PixelCollision::GetInst()->Release();
 }
