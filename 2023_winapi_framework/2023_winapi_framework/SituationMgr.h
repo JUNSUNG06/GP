@@ -19,6 +19,6 @@ public:
 
 private: 
 	std::unordered_map<SITUATION_TYPE, Situation*> m_umSituationMap;
-	Situation* m_pCurrentSituation;
+	Situation* m_pCurrentSituation;	
 };
 
