@@ -17,7 +17,7 @@ public:
 	float	GetGravityScale()					{ return m_fGravityScale; }
 	void	SetGravityScale(float _fGravity)	{ m_fGravityScale = _fGravity; }
 	void	SetUseGravity(bool _bValue)			{ m_bUseGravity = _bValue; }
-	void	GetApplyGravity(bool _bValue)		{ m_bApplyGravity = _bValue; }
+	void	SetApplyGravity(bool _bValue)		{ m_bApplyGravity = _bValue; }
 	float	GetBounciness()						{ return m_fBounciness; }
 	void	SetBounciness(float _fBounciness)	{ m_fBounciness = _fBounciness; }
 	Vec2	GetVelocity()						{ return m_vecVelocity; }

@@ -7,6 +7,7 @@ Rigidbody::Rigidbody(Object* _pOwner)
 	, m_fGravityScale(-9.81f)
 	, m_fBounciness(0)
 	, m_bUseGravity(true)
+	, m_bApplyGravity(true)
 	, m_bReverseGravity(false)
 	, m_vecVelocity({0, 0})
 {
