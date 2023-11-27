@@ -17,10 +17,12 @@ public:
         m_vDir.Normalize();
     }
     void SetDamage(int _damage) { m_iDmg = _damage; }
+    void SetSpeed(int _speed) { m_fSpeed = _speed; }
 private:
 //    float m_fDir; // 총알 방향(-1 위, 1 아래);
     float m_fTheta; // 삼각함수 방향.
     Vec2 m_vDir;
+    float m_fSpeed;
     int m_iDmg;
     Texture* m_pTex;
 };
