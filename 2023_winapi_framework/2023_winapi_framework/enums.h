@@ -26,6 +26,7 @@ enum class OBJECT_GROUP
 	PLAYER,
 	PLAYER2,
 	BULLET,
+	BULLET2,
 	MONSTER,
 	END = 30
 };

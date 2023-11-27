@@ -65,9 +65,6 @@
     <Filter Include="Engine\03. Manager\PixelCollision">
       <UniqueIdentifier>{e2345a56-19e8-43f5-97ba-aa0035b0a6a4}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Engine\NewFilter1">
-      <UniqueIdentifier>{b7966463-2992-4e81-bc89-9592769a1c48}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -166,11 +163,17 @@
     <ClInclude Include="PixelCollision.h">
       <Filter>Engine\03. Manager\PixelCollision</Filter>
     </ClInclude>
+    <ClInclude Include="Player2.h">
+      <Filter>Engine\04. Object\MainObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Player1.h">
+      <Filter>Engine\04. Object\MainObject</Filter>
+    </ClInclude>
     <ClInclude Include="SituationMgr.h">
       <Filter>Engine\03. Manager</Filter>
     </ClInclude>
     <ClInclude Include="Situation.h">
-      <Filter>Engine\NewFilter1</Filter>
+      <Filter>Engine\07. Component</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -265,11 +268,17 @@
     <ClCompile Include="PixelCollision.cpp">
       <Filter>Engine\03. Manager\PixelCollision</Filter>
     </ClCompile>
+    <ClCompile Include="Player2.cpp">
+      <Filter>Engine\04. Object\MainObject</Filter>
+    </ClCompile>
+    <ClCompile Include="Player1.cpp">
+      <Filter>Engine\04. Object\MainObject</Filter>
+    </ClCompile>
     <ClCompile Include="SituationMgr.cpp">
       <Filter>Engine\03. Manager</Filter>
     </ClCompile>
     <ClCompile Include="Situation.cpp">
-      <Filter>Engine\NewFilter1</Filter>
+      <Filter>Engine\07. Component</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

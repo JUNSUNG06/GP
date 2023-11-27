@@ -59,7 +59,7 @@ void Player2::EnterCollision(Collider* _pOther)
 	const Object* pOtherObj = _pOther->GetObj();
 	if (pOtherObj->GetName() == L"Player1_Bullet")
 	{
-		m_iHP--;
+		m_iHP --;
 		if (m_iHP <= 0)
 			EventMgr::GetInst()->DeleteObject(this);
 	}

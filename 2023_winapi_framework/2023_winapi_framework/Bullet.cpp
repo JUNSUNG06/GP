@@ -6,7 +6,8 @@
 Bullet::Bullet()
 //	: m_fDir(-1.f)
 	: m_fTheta(0.f)
-	, m_vDir(Vec2(0.f,0.f))
+	, m_vDir(Vec2(0.f, 0.f))
+	, m_iDmg(1)
 	, m_pTex(nullptr)
 {
 	m_pTex = ResMgr::GetInst()->TexLoad(L"Bullet", L"Texture\\Bullet.bmp");
