@@ -145,7 +145,7 @@ void Core::Release()
 	{
 		DeleteObject(m_arrPen[i]);
 	}
-	for (int i = 1; i < (UINT)BRUSH_TYPE::END; ++i)9
+	for (int i = 1; i < (UINT)BRUSH_TYPE::END; ++i)
 	{
 		DeleteObject(m_arrBrush[i]);
 	}
