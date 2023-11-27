@@ -4,6 +4,6 @@ class Intro_Scene
 	: public Scene
 {
 public:
-    virtual void Init() override;
+    void Init() override;
 };
 

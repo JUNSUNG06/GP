@@ -8,6 +8,6 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 {
     _CrtSetDbgFlag(_CRTDBG_LEAK_CHECK_DF);
     //_CrtSetBreakAlloc(325);
-    BaseWindow game({ WINDOW_WIDTH, WINDOW_HEIGHT });
+    BaseWindow game({ GetSystemMetrics(SM_CXSCREEN), GetSystemMetrics(SM_CYSCREEN) });
     game.Run(hInstance, lpCmdLine, nCmdShow);
 }

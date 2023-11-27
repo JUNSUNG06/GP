@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "Button.h"
 #include "KeyMgr.h"
+#include <string>
 
 Button::Button(void(*_action)(), wstring _text)
 	: m_pTex(nullptr)

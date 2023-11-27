@@ -52,11 +52,11 @@ void BaseWindow::WindowCreate()
 {
     int iWinposx = GetSystemMetrics(SM_CXSCREEN) / 2 - m_ptResolution.x / 2;
     int iWinposy = GetSystemMetrics(SM_CYSCREEN) / 2 - m_ptResolution.y / 2;
-    
+
     /*m_hWnd = CreateWindowW(WINDOW_CLASS_NAME, L"Jun's Framework", WS_OVERLAPPEDWINDOW,
         0, 0, GetSystemMetrics(SM_CXSCREEN), GetSystemMetrics(SM_CYSCREEN), nullptr, nullptr, m_hInst, nullptr);*/
     m_hWnd = CreateWindowW(WINDOW_CLASS_NAME, L"Jun's Framework", WS_EX_TOPMOST | WS_POPUP,
-        0, 0, GetSystemMetrics(SM_CXSCREEN), GetSystemMetrics(SM_CYSCREEN), nullptr, nullptr, m_hInst, nullptr);
+        0, 0, WINDOW_WIDTH, WINDOW_HEIGHT, nullptr, nullptr, m_hInst, nullptr);
     
     //RECT rt = { iWinposx, iWinposy, iWinposx + m_ptResolution.x, iWinposy + m_ptResolution.y };
     //AdjustWindowRect(&rt, WS_OVERLAPPEDWINDOW, false);
