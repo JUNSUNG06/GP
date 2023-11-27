@@ -24,7 +24,7 @@ void Rigidbody::FinalUpdate()
 	}
 }
 
-void Rigidbody::SetReverseGravity(bool _bReverseGravity)
+void Rigidbody::ReverseGravity(bool _bReverseGravity)
 {
 	m_bReverseGravity = _bReverseGravity;
 
@@ -32,4 +32,9 @@ void Rigidbody::SetReverseGravity(bool _bReverseGravity)
 
 	if (m_bReverseGravity == false)
 		m_fGravityScale *= -1;
+}
+
+void Rigidbody::AddForce(Vec2 force)
+{
+	m_vecVelocity += force;
 }
