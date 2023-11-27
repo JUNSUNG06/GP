@@ -18,7 +18,7 @@ Rigidbody::~Rigidbody()
 
 void Rigidbody::FinalUpdate()
 {
-	if (m_bUseGravity == true)
+	if (m_bUseGravity == true && m_bApplyGravity == true)
 	{
 		m_vecVelocity.y += m_fGravityScale * fDT;
 	}
