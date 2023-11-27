@@ -10,6 +10,10 @@ public:
 public:
     void Update() override;
     void Render(HDC _dc) override;
+    virtual void EnterCollision(Collider* _pOther) override;
+    virtual void ExitCollision(Collider* _pOther)  override;
+    virtual void StayCollision(Collider* _pOther)  override;
+public:
     void SetPlayerSpeed(float _speed) { m_fPlayerSpeed = _speed; }
     void SetFireDelay(float _delay) { m_fFireDelay = _delay; }
     void Attack();

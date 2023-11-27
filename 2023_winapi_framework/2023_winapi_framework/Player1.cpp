@@ -6,10 +6,11 @@
 #include "Bullet.h"
 #include "SceneMgr.h"
 #include "Scene.h"
+#include "EventMgr.h"
 
 Player1::Player1()
 	: m_pTex(nullptr)
-	, m_iHP(1)
+	, m_iHP(5)
 	, m_fPlayerSpeed(100.f)
 	, m_fFireDelay(0.f)
 	, m_fCurFireDelay(3.f)
@@ -53,6 +54,25 @@ void Player1::Render(HDC _dc)
 	Component_Render(_dc);
 }
 
+void Player1::EnterCollision(Collider* _pOther)
+{
+	const Object* pOtherObj = _pOther->GetObj();
+	if (pOtherObj->GetName() == L"Player2_Bullet")
+	{
+		m_iHP--;
+		if (m_iHP <= 0)
+			EventMgr::GetInst()->DeleteObject(this);
+	}
+}
+
+void Player1::ExitCollision(Collider* _pOther)
+{
+}
+
+void Player1::StayCollision(Collider* _pOther)
+{
+}
+
 void Player1::Attack()
 {
 	Bullet* pBullet = new Bullet;
@@ -63,6 +83,6 @@ void Player1::Attack()
 	//	pBullet->SetDir(120* M_PI / 180);
 	//pBullet->SetDir(Vec2(-10.f, -15.f));
 	pBullet->SetDir({ m_pEnemy->GetPos().x - GetPos().x, m_pEnemy->GetPos().y - GetPos().y });
-	pBullet->SetName(L"Player_Bullet");
+	pBullet->SetName(L"Player1_Bullet");
 	SceneMgr::GetInst()->GetCurScene()->AddObject(pBullet, OBJECT_GROUP::BULLET);
 }
