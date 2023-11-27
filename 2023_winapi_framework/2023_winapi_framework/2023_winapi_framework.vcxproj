@@ -194,6 +194,8 @@
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneMgr.h" />
     <ClInclude Include="SelectGDI.h" />
+    <ClInclude Include="Situation.h" />
+    <ClInclude Include="SituationMgr.h" />
     <ClInclude Include="Start_Scene.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="Texture.h" />
@@ -223,6 +225,8 @@
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SceneMgr.cpp" />
     <ClCompile Include="SelectGDI.cpp" />
+    <ClCompile Include="Situation.cpp" />
+    <ClCompile Include="SituationMgr.cpp" />
     <ClCompile Include="Start_Scene.cpp" />
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="TimeMgr.cpp" />
