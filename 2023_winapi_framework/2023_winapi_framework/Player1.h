@@ -24,6 +24,7 @@ public:
 private:
     Texture* m_pTex;
     int m_iHP;
+    bool m_bIsDie;
     float m_fPlayerSpeed;
     float m_fFireDelay;
     float m_fCurFireDelay;

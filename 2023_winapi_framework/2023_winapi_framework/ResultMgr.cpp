@@ -2,6 +2,29 @@
 #include "ResultMgr.h"
 #include "SceneMgr.h"
 #include "Object.h"
+#include "TimeMgr.h"
+
+
+
+void ResultMgr::Init()
+{
+	m_iPlayer1Win = 0;
+	m_iPlayer2Win = 0;
+	m_iMaxPoint = 5;
+	m_fCurTime = 0;
+	m_bIsGameEnded = false;
+}
+
+void ResultMgr::Update()
+{
+	if (m_bIsGameEnded)
+		m_fCurTime += fDT;
+	if (m_fCurTime >= 3) {
+		SceneMgr::GetInst()->LoadScene(L"Result_Scene");
+		m_bIsGameEnded = false;
+		m_fCurTime = 0;
+	}
+}
 
 void ResultMgr::ResetPoint()
 {
@@ -9,19 +32,14 @@ void ResultMgr::ResetPoint()
 	m_iPlayer2Win = 0;
 }
 
-void ResultMgr::PlayerDied(const Object* _pObj)
+void ResultMgr::PlayerDied(int _iPlayeridx)
 {
-	if (_pObj->GetName() == L"Player1") {
-		m_iPlayer2Win++;
-	}
-	else if (_pObj->GetName() == L"Player2") {
+	if (_iPlayeridx == 1) {
 		m_iPlayer1Win++;
 	}
-	SceneMgr::GetInst()->LoadScene(L"Result_Scene");
-
-
-	if (m_iPlayer1Win >= m_iMaxPoint) {
-		
-		//ResetPoint();
+	else if (_iPlayeridx == 2) {
+		m_iPlayer2Win++;
 	}
+
+	m_bIsGameEnded = true;
 }

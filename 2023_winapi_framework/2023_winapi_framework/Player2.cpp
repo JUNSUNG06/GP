@@ -12,6 +12,7 @@
 Player2::Player2()
 	: m_pTex(nullptr)
 	, m_iHP(5)
+	, m_bIsDie(false)
 	, m_fPlayerSpeed(100.f)
 	, m_fFireDelay(0.f)
 	, m_fCurFireDelay(3.f)
@@ -70,10 +71,11 @@ void Player2::EnterCollision(Collider* _pOther)
 	const Object* pOtherObj = _pOther->GetObj();
 	if (pOtherObj->GetName() == L"Player1_Bullet")
 	{
-		m_iHP --;
+		m_iHP--;
 		if (m_iHP <= 0) {
-			ResultMgr::GetInst()->PlayerDied(this);
+			m_bIsDie = true;
 			EventMgr::GetInst()->DeleteObject(this);
+			ResultMgr::GetInst()->PlayerDied(2);
 		}
 	}
 }

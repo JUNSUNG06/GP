@@ -8,7 +8,6 @@
 void Result_Scene::Init()
 {
 	m_fCurTime = 0;
-	Scene::Init();
 }
 
 void Result_Scene::Update()
