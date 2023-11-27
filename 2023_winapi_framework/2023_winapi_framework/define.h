@@ -14,6 +14,8 @@ public:							\
 #define WINDOW_HEIGHT 720 
 #define RECT_RENDER(posx, posy, scalex, scaley, hdc) Rectangle(hdc, (int)(posx-scalex/2), (int)(posy-scaley/2), (int)(posx+scalex/2), (int)(posy+scaley/2))
 #define ELLIPSE_RENDER(posx, posy, scalex, scaley, hdc) Ellipse(hdc, (int)(posx-scalex/2), (int)(posy-scaley/2), (int)(posx+scalex/2), (int)(posy+scaley/2))
+#define IS_CLICK(posx, posy, scalex, scaley, mousex, mousey) (int)(posx-scalex/2) <= mousex && (int)(posy-scaley/2) <= mousey \
+	&& (int)(posx+scalex/2) >= mousex && (int)(posy+scaley/2) >= mousey													      \
 
 #define RECT_MAKE(posx, posy, scalex, scaley) {posx-scalex/2, posy-scaley/2, posx+scalex/2, posy+scaley/2}
 #define fDT TimeMgr::GetInst()->GetDT()

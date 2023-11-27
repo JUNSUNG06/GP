@@ -68,6 +68,9 @@
     <Filter Include="Engine\09.ETC">
       <UniqueIdentifier>{b7966463-2992-4e81-bc89-9592769a1c48}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\03. Manager\SItuationMgr">
+      <UniqueIdentifier>{c5bf0356-7000-493b-bd79-ad7d411981f3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -166,9 +169,6 @@
     <ClInclude Include="PixelCollision.h">
       <Filter>Engine\03. Manager\PixelCollision</Filter>
     </ClInclude>
-    <ClInclude Include="SituationMgr.h">
-      <Filter>Engine\03. Manager</Filter>
-    </ClInclude>
     <ClInclude Include="Situation.h">
       <Filter>Engine\09.ETC</Filter>
     </ClInclude>
@@ -177,6 +177,15 @@
     </ClInclude>
     <ClInclude Include="Player2.h">
       <Filter>Engine\04. Object\MainObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Button.h">
+      <Filter>Engine\07. Component</Filter>
+    </ClInclude>
+    <ClInclude Include="SituationMgr.h">
+      <Filter>Engine\03. Manager\SItuationMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="Intro_Scene.h">
+      <Filter>Engine\05. Scene\MainScene</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -271,9 +280,6 @@
     <ClCompile Include="PixelCollision.cpp">
       <Filter>Engine\03. Manager\PixelCollision</Filter>
     </ClCompile>
-    <ClCompile Include="SituationMgr.cpp">
-      <Filter>Engine\03. Manager</Filter>
-    </ClCompile>
     <ClCompile Include="Situation.cpp">
       <Filter>Engine\09.ETC</Filter>
     </ClCompile>
@@ -282,6 +288,15 @@
     </ClCompile>
     <ClCompile Include="Player2.cpp">
       <Filter>Engine\04. Object\MainObject</Filter>
+    </ClCompile>
+    <ClCompile Include="Button.cpp">
+      <Filter>Engine\07. Component</Filter>
+    </ClCompile>
+    <ClCompile Include="SituationMgr.cpp">
+      <Filter>Engine\03. Manager\SItuationMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="Intro_Scene.cpp">
+      <Filter>Engine\05. Scene\MainScene</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
