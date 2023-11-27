@@ -7,6 +7,7 @@
 #include "SceneMgr.h"
 #include "Scene.h"
 #include "EventMgr.h"
+#include "ResultMgr.h"
 
 Player2::Player2()
 	: m_pTex(nullptr)
@@ -39,6 +40,16 @@ void Player2::Update()
 		vPos.x += m_fPlayerSpeed * fDT;
 		//GetAnimator()->PlayAnim(L"Jiwoo_Right", true);
 	}
+	if (KEY_PRESS(KEY_TYPE::W))
+	{
+		vPos.y -= m_fPlayerSpeed * fDT;
+		//GetAnimator()->PlayAnim(L"Jiwoo_Right", true);
+	}
+	if (KEY_PRESS(KEY_TYPE::S))
+	{
+		vPos.y += m_fPlayerSpeed * fDT;
+		//GetAnimator()->PlayAnim(L"Jiwoo_Right", true);
+	}
 	SetPos(vPos);
 
 
@@ -60,8 +71,10 @@ void Player2::EnterCollision(Collider* _pOther)
 	if (pOtherObj->GetName() == L"Player1_Bullet")
 	{
 		m_iHP --;
-		if (m_iHP <= 0)
+		if (m_iHP <= 0) {
+			ResultMgr::GetInst()->PlayerDied(this);
 			EventMgr::GetInst()->DeleteObject(this);
+		}
 	}
 }
 

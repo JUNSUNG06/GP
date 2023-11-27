@@ -21,13 +21,16 @@ void Start_Scene::Init()
 	pObj->SetScale(Vec2(100.f, 100.f));
 	pObj->SetPlayerSpeed(100.f);
 	pObj->SetFireDelay(3.f);
+	pObj->SetName(L"Player1");
 	AddObject(pObj, OBJECT_GROUP::PLAYER);
+
 
 	Player2* pObj1 = new Player2;
 	pObj1->SetPos((Vec2({ Core::GetInst()->GetResolution().x / 2, (Core::GetInst()->GetResolution().y / 2) - 100 })));
 	pObj1->SetScale(Vec2(100.f, 100.f));
 	pObj1->SetPlayerSpeed(100.f);
 	pObj1->SetFireDelay(3.f);
+	pObj->SetName(L"Player2");
 	AddObject(pObj1, OBJECT_GROUP::PLAYER2);
 
 	pObj->SetEnemy(pObj1);

@@ -65,6 +65,9 @@
     <Filter Include="Engine\03. Manager\PixelCollision">
       <UniqueIdentifier>{e2345a56-19e8-43f5-97ba-aa0035b0a6a4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\03. Manager\ResultManager">
+      <UniqueIdentifier>{1285423d-d783-4c24-9381-094392628156}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -175,6 +178,12 @@
     <ClInclude Include="Situation.h">
       <Filter>Engine\07. Component</Filter>
     </ClInclude>
+    <ClInclude Include="Result_Scene.h">
+      <Filter>Engine\05. Scene\MainScene</Filter>
+    </ClInclude>
+    <ClInclude Include="ResultMgr.h">
+      <Filter>Engine\03. Manager\ResultManager</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="2023_winapi_framework.rc">
@@ -279,6 +288,12 @@
     </ClCompile>
     <ClCompile Include="Situation.cpp">
       <Filter>Engine\07. Component</Filter>
+    </ClCompile>
+    <ClCompile Include="Result_Scene.cpp">
+      <Filter>Engine\05. Scene\MainScene</Filter>
+    </ClCompile>
+    <ClCompile Include="ResultMgr.cpp">
+      <Filter>Engine\03. Manager\ResultManager</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
