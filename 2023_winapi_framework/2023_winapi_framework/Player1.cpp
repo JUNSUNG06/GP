@@ -8,6 +8,8 @@
 #include "Scene.h"
 #include "EventMgr.h"
 #include "ResultMgr.h"
+#include "Rigidbody.h"
+#include "PixelCollision.h"
 
 Player1::Player1()
 	: m_pTex(nullptr)
@@ -21,6 +23,7 @@ Player1::Player1()
 {
 	CreateCollider();
 	GetCollider()->SetScale(Vec2(20.f, 30.f));
+	m_pRigidbody = new Rigidbody(this);
 }
 
 Player1::~Player1()
@@ -30,6 +33,7 @@ Player1::~Player1()
 void Player1::Update()
 {
 	Vec2 vPos = GetPos();
+	Vec2 vScale = GetScale();
 
 	if (KEY_PRESS(KEY_TYPE::LEFT))
 	{
@@ -41,16 +45,34 @@ void Player1::Update()
 		vPos.x += m_fPlayerSpeed * fDT;
 		//GetAnimator()->PlayAnim(L"Jiwoo_Right", true);
 	}
-	if (KEY_PRESS(KEY_TYPE::UP))
+	//if (KEY_PRESS(KEY_TYPE::UP))
+	//{
+	//	vPos.y -= m_fPlayerSpeed * fDT;
+	//	//GetAnimator()->PlayAnim(L"Jiwoo_Right", true);
+	//}
+	//if (KEY_PRESS(KEY_TYPE::DOWN))
+	//{
+	//	vPos.y += m_fPlayerSpeed * fDT;
+	//	//GetAnimator()->PlayAnim(L"Jiwoo_Right", true);
+	//}
+
+	if (PixelCollision::GetInst()->CheckCollision(
+		vPos.x - vScale.x / 2, vPos.y,
+		vPos.x + vScale.x / 2, vPos.y + vScale.y / 2))
 	{
-		vPos.y -= m_fPlayerSpeed * fDT;
-		//GetAnimator()->PlayAnim(L"Jiwoo_Right", true);
+		m_pRigidbody->SetApplyGravity(false);
+		m_pRigidbody->SetVelocity({ 
+			(float)m_pRigidbody->GetVelocity().x, 0.f });
 	}
-	if (KEY_PRESS(KEY_TYPE::DOWN))
+	else
 	{
-		vPos.y += m_fPlayerSpeed * fDT;
-		//GetAnimator()->PlayAnim(L"Jiwoo_Right", true);
+		m_pRigidbody->SetApplyGravity(true);
 	}
+	m_pRigidbody->Update();
+
+
+	vPos += m_pRigidbody->GetVelocity();
+
 	SetPos(vPos);
 
 
@@ -63,7 +85,12 @@ void Player1::Update()
 
 void Player1::Render(HDC _dc)
 {
+	Vec2 vPos = GetPos();
+	Vec2 vScale = GetScale();
+
 	Component_Render(_dc);
+
+	RECT_RENDER(vPos.x, vPos.y, vScale.x, vScale.y, _dc);\
 }
 
 void Player1::EnterCollision(Collider* _pOther)

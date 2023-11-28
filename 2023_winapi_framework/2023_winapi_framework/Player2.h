@@ -1,6 +1,7 @@
 #pragma once
 #include "Object.h"
 class Texture;
+class Rigidbody;
 class Player2 :
     public Object
 {
@@ -32,4 +33,5 @@ private:
     //
     Object* m_pEnemy;
     //
+    Rigidbody* m_pRigidbody;
 };

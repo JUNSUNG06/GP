@@ -27,8 +27,14 @@ bool PixelCollision::CheckCollision(int startX, int startY, int endX, int endY)
 				return true;
 		}
 	}
-
+	
 	return false;
+}
+
+void PixelCollision::Render(HDC _dc)
+{
+	if (m_texColorImgae != nullptr)
+		BitBlt(_dc, 0, 0, m_texColorImgae->GetWidth(), m_texColorImgae->GetHeight(), m_texColorImgae->GetDC(), 0, 0, SRCCOPY);
 }
 
 void PixelCollision::Release()

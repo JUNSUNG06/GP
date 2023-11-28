@@ -8,7 +8,7 @@ public:
 	~Rigidbody();
 
 public:
-	void	FinalUpdate();
+	void	Update();
 	void	ReverseGravity(bool _bReverseGravity);
 	void	AddForce(Vec2 force);
 

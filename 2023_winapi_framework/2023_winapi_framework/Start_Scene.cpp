@@ -13,14 +13,14 @@
 #include "PixelCollision.h"
 void Start_Scene::Init()
 {
-	SetBackground(L"Background_Intro", L"Texture5\\Background_Intro.bmp");
+	//SetBackground(L"Level_1", L"Texture\\Level_1.bmp");
 	m_pCollisionTexture = ResMgr::GetInst()->TexLoad(L"LevelCollision", L"Texture\\LevelCollision.bmp");
-	m_pLevelTexture = ResMgr::GetInst()->TexLoad(L"Level", L"Texture\\Level.bmp");
+	//m_pLevelTexture = ResMgr::GetInst()->TexLoad(L"Level", L"Texture\\Level.bmp");
 	PixelCollision::GetInst()->SetColorImage(m_pCollisionTexture);
 
 	Player1* pObj = new Player1;
 	pObj->SetPos((Vec2({ Core::GetInst()->GetResolution().x / 2, (Core::GetInst()->GetResolution().y / 2) + 100 })));
-	pObj->SetScale(Vec2(100.f, 100.f));
+	pObj->SetScale(Vec2(50.f, 50.f));
 	pObj->SetPlayerSpeed(100.f);
 	//pObj->SetFireDelay(3.f);
 	pObj->SetName(L"Player1");
@@ -29,7 +29,7 @@ void Start_Scene::Init()
 
 	Player2* pObj1 = new Player2;
 	pObj1->SetPos((Vec2({ Core::GetInst()->GetResolution().x / 2, (Core::GetInst()->GetResolution().y / 2) - 100 })));
-	pObj1->SetScale(Vec2(100.f, 100.f));
+	pObj1->SetScale(Vec2(50.f, 50.f));
 	pObj1->SetPlayerSpeed(100.f);
 	//pObj1->SetFireDelay(3.f);
 	pObj->SetName(L"Player2");
@@ -80,7 +80,15 @@ void Start_Scene::Update()
 void Start_Scene::Render(HDC _dc)
 {
 	Scene::Render(_dc);
-	TransparentBlt(_dc, 0, 0, m_pLevelTexture->GetWidth(), m_pLevelTexture->GetHeight(), m_pLevelTexture->GetDC(), 0, 0, SRCCOPY);
+
+	/*TransparentBlt(_dc, 0, 0, 
+		m_pLevelTexture->GetWidth(), 
+		m_pLevelTexture->GetHeight(), 
+		m_pLevelTexture->GetDC(), 
+		0, 0, 
+		m_pLevelTexture->GetWidth(),
+		m_pLevelTexture->GetHeight(),
+		RGB(255, 0, 255));*/
 }
 
 void Start_Scene::Release()

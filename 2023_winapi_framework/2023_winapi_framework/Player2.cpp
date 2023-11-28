@@ -8,6 +8,7 @@
 #include "Scene.h"
 #include "EventMgr.h"
 #include "ResultMgr.h"
+#include "Rigidbody.h"
 
 Player2::Player2()
 	: m_pTex(nullptr)
@@ -21,6 +22,7 @@ Player2::Player2()
 {
 	CreateCollider();
 	GetCollider()->SetScale(Vec2(20.f, 30.f));
+	m_pRigidbody = new Rigidbody(this);
 }
 
 Player2::~Player2()
@@ -41,16 +43,19 @@ void Player2::Update()
 		vPos.x += m_fPlayerSpeed * fDT;
 		//GetAnimator()->PlayAnim(L"Jiwoo_Right", true);
 	}
-	if (KEY_PRESS(KEY_TYPE::W))
-	{
-		vPos.y -= m_fPlayerSpeed * fDT;
-		//GetAnimator()->PlayAnim(L"Jiwoo_Right", true);
-	}
-	if (KEY_PRESS(KEY_TYPE::S))
-	{
-		vPos.y += m_fPlayerSpeed * fDT;
-		//GetAnimator()->PlayAnim(L"Jiwoo_Right", true);
-	}
+	//if (KEY_PRESS(KEY_TYPE::W))
+	//{
+	//	vPos.y -= m_fPlayerSpeed * fDT;
+	//	//GetAnimator()->PlayAnim(L"Jiwoo_Right", true);
+	//}
+	//if (KEY_PRESS(KEY_TYPE::S))
+	//{
+	//	vPos.y += m_fPlayerSpeed * fDT;
+	//	//GetAnimator()->PlayAnim(L"Jiwoo_Right", true);
+	//}
+
+	vPos += m_pRigidbody->GetVelocity();
+
 	SetPos(vPos);
 
 
