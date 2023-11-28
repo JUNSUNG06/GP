@@ -6,7 +6,9 @@
 Bullet::Bullet()
 //	: m_fDir(-1.f)
 	: m_fTheta(0.f)
-	, m_vDir(Vec2(0.f,0.f))
+	, m_vDir(Vec2(0.f, 0.f))
+	, m_fSpeed(500.f)
+	, m_iDmg(1)
 	, m_pTex(nullptr)
 {
 	m_pTex = ResMgr::GetInst()->TexLoad(L"Bullet", L"Texture\\Bullet.bmp");
@@ -24,8 +26,8 @@ void Bullet::Update()
 	//vPos.y += 500.f * fDT * m_fDir;
 	//vPos.x += 500.f * fDT * cosf(m_fTheta);
 	//vPos.y += 500.f * fDT * sinf(m_fTheta);
-	vPos.x += 500.f * fDT * m_vDir.x;
-	vPos.y += 500.f * fDT * m_vDir.y;
+	vPos.x += m_fSpeed * fDT * m_vDir.x;
+	vPos.y += m_fSpeed * fDT * m_vDir.y;
 	SetPos(vPos);
 }
 

@@ -65,11 +65,8 @@
     <Filter Include="Engine\03. Manager\PixelCollision">
       <UniqueIdentifier>{e2345a56-19e8-43f5-97ba-aa0035b0a6a4}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Engine\09.ETC">
-      <UniqueIdentifier>{b7966463-2992-4e81-bc89-9592769a1c48}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Engine\03. Manager\SItuationMgr">
-      <UniqueIdentifier>{c5bf0356-7000-493b-bd79-ad7d411981f3}</UniqueIdentifier>
+    <Filter Include="Engine\03. Manager\ResultManager">
+      <UniqueIdentifier>{1285423d-d783-4c24-9381-094392628156}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -169,23 +166,23 @@
     <ClInclude Include="PixelCollision.h">
       <Filter>Engine\03. Manager\PixelCollision</Filter>
     </ClInclude>
-    <ClInclude Include="Situation.h">
-      <Filter>Engine\09.ETC</Filter>
+    <ClInclude Include="Player2.h">
+      <Filter>Engine\04. Object\MainObject</Filter>
     </ClInclude>
     <ClInclude Include="Player1.h">
       <Filter>Engine\04. Object\MainObject</Filter>
     </ClInclude>
-    <ClInclude Include="Player2.h">
-      <Filter>Engine\04. Object\MainObject</Filter>
+    <ClInclude Include="SituationMgr.h">
+      <Filter>Engine\03. Manager</Filter>
     </ClInclude>
-    <ClInclude Include="Button.h">
+    <ClInclude Include="Situation.h">
       <Filter>Engine\07. Component</Filter>
     </ClInclude>
-    <ClInclude Include="SituationMgr.h">
-      <Filter>Engine\03. Manager\SItuationMgr</Filter>
-    </ClInclude>
-    <ClInclude Include="Intro_Scene.h">
+    <ClInclude Include="Result_Scene.h">
       <Filter>Engine\05. Scene\MainScene</Filter>
+    </ClInclude>
+    <ClInclude Include="ResultMgr.h">
+      <Filter>Engine\03. Manager\ResultManager</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -280,23 +277,23 @@
     <ClCompile Include="PixelCollision.cpp">
       <Filter>Engine\03. Manager\PixelCollision</Filter>
     </ClCompile>
-    <ClCompile Include="Situation.cpp">
-      <Filter>Engine\09.ETC</Filter>
+    <ClCompile Include="Player2.cpp">
+      <Filter>Engine\04. Object\MainObject</Filter>
     </ClCompile>
     <ClCompile Include="Player1.cpp">
       <Filter>Engine\04. Object\MainObject</Filter>
     </ClCompile>
-    <ClCompile Include="Player2.cpp">
-      <Filter>Engine\04. Object\MainObject</Filter>
+    <ClCompile Include="SituationMgr.cpp">
+      <Filter>Engine\03. Manager</Filter>
     </ClCompile>
-    <ClCompile Include="Button.cpp">
+    <ClCompile Include="Situation.cpp">
       <Filter>Engine\07. Component</Filter>
     </ClCompile>
-    <ClCompile Include="SituationMgr.cpp">
-      <Filter>Engine\03. Manager\SItuationMgr</Filter>
-    </ClCompile>
-    <ClCompile Include="Intro_Scene.cpp">
+    <ClCompile Include="Result_Scene.cpp">
       <Filter>Engine\05. Scene\MainScene</Filter>
+    </ClCompile>
+    <ClCompile Include="ResultMgr.cpp">
+      <Filter>Engine\03. Manager\ResultManager</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
