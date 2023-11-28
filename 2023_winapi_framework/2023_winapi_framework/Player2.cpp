@@ -10,6 +10,7 @@
 #include "ResultMgr.h"
 #include "Rigidbody.h"
 #include "PixelCollision.h"
+#include "Texture.h"
 
 Player2::Player2()
 	: m_pTex(nullptr)
@@ -22,10 +23,14 @@ Player2::Player2()
 	, m_pEnemy(nullptr)
 	, m_fJumpPower(250.f)
 	, m_bIsGround(false)
+	, m_bCanMoveLeft(true)
+	, m_bCanMoveRight(true)
 {
 	CreateCollider();
 	GetCollider()->SetScale(Vec2(20.f, 30.f));
 	m_pRigidbody = new Rigidbody(this);
+	m_pTex = ResMgr::GetInst()->TexLoad(L"Player2", L"Texture\\Player2.bmp");
+
 }
 
 Player2::~Player2()
@@ -43,32 +48,6 @@ void Player2::Update()
 	SetPos(vPos);
 
 
-	//if (KEY_PRESS(KEY_TYPE::A))
-	//{
-	//	vPos.x -= m_fPlayerSpeed * fDT;
-	//	//GetAnimator()->PlayAnim(L"Jiwoo_Left", true);
-	//}
-	//if (KEY_PRESS(KEY_TYPE::D))
-	//{
-	//	vPos.x += m_fPlayerSpeed * fDT;
-	//	//GetAnimator()->PlayAnim(L"Jiwoo_Right", true);
-	//}
-	////if (KEY_PRESS(KEY_TYPE::W))
-	////{
-	////	vPos.y -= m_fPlayerSpeed * fDT;
-	////	//GetAnimator()->PlayAnim(L"Jiwoo_Right", true);
-	////}
-	////if (KEY_PRESS(KEY_TYPE::S))
-	////{
-	////	vPos.y += m_fPlayerSpeed * fDT;
-	////	//GetAnimator()->PlayAnim(L"Jiwoo_Right", true);
-	////}
-
-	//vPos += m_pRigidbody->GetVelocity();
-
-	//SetPos(vPos);
-
-
 	m_fCurFireDelay += fDT;
 	if (m_fCurFireDelay >= m_fFireDelay && m_fFireDelay && m_pEnemy != nullptr) {
 		if (KEY_PRESS(KEY_TYPE::S))
@@ -81,7 +60,16 @@ void Player2::Update()
 
 void Player2::Render(HDC _dc)
 {
+	Vec2 vPos = GetPos();
+	Vec2 vScale = GetScale();
+
 	Component_Render(_dc);
+
+	TransparentBlt(_dc
+		, (int)(vPos.x - vScale.x / 2)
+		, (int)(vPos.y - vScale.y / 2)
+		, m_pTex->GetWidth(), m_pTex->GetHeight(), m_pTex->GetDC()
+		, 0, 0, m_pTex->GetWidth(), m_pTex->GetHeight(), RGB(255, 0, 255));
 }
 
 void Player2::EnterCollision(Collider* _pOther)
@@ -126,9 +114,10 @@ void Player2::Move()
 	Vec2 vPos = GetPos();
 	Vec2 vScale = GetScale();
 
+#pragma region check ground
 	if (PixelCollision::GetInst()->CheckCollision(
-		vPos.x - vScale.x / 2, vPos.y,
-		vPos.x + vScale.x / 2, vPos.y + vScale.y / 2))
+		vPos.x - vScale.x / 2 + 5, vPos.y,
+		vPos.x + vScale.x / 2 - 5, vPos.y + vScale.y / 2))
 	{
 		m_pRigidbody->SetApplyGravity(false);
 		m_pRigidbody->SetVerticalVelocity(0.f);
@@ -140,32 +129,55 @@ void Player2::Move()
 		m_bIsGround = false;
 	}
 	m_pRigidbody->Update();
+#pragma endregion
 
-
-	if (KEY_PRESS(KEY_TYPE::A))
+#pragma region check left move
+	if (PixelCollision::GetInst()->CheckCollision(
+		vPos.x - vScale.x / 2.f, vPos.y - vScale.y / 2.f + 5,
+		vPos.x - vScale.x / 3.f, vPos.y + vScale.y / 2.f - 5))
 	{
-		//vPos.x -= m_fPlayerSpeed * fDT;
-		//GetAnimator()->PlayAnim(L"Jiwoo_Left", true);
+		m_bCanMoveLeft = false;
+		m_pRigidbody->SetHorizontalVelocity(0);
+	}
+	else
+	{
+		m_bCanMoveLeft = true;
+	}
+#pragma endregion
+
+#pragma region check right move
+	if (PixelCollision::GetInst()->CheckCollision(
+		vPos.x + vScale.x / 3.f, vPos.y - vScale.y / 2.f + 5,
+		vPos.x + vScale.x / 2.f, vPos.y + vScale.y / 2.f - 5))
+	{
+		m_bCanMoveRight = false;
+		m_pRigidbody->SetHorizontalVelocity(0);
+	}
+	else
+	{
+		m_bCanMoveRight = true;
+	}
+#pragma endregion
+
+#pragma region move
+	if (KEY_PRESS(KEY_TYPE::A) && m_bCanMoveLeft)
+	{
 		m_pRigidbody->SetHorizontalVelocity(-m_fPlayerSpeed);
 	}
 	else if (KEY_UP(KEY_TYPE::A))
-		m_pRigidbody->SetHorizontalVelocity(0);
-	if (KEY_PRESS(KEY_TYPE::D))
 	{
-		//vPos.x += m_fPlayerSpeed * fDT;
-		//GetAnimator()->PlayAnim(L"Jiwoo_Right", true);
+		m_pRigidbody->SetHorizontalVelocity(0);
+	}
+
+	if (KEY_PRESS(KEY_TYPE::D) && m_bCanMoveRight)
+	{
 		m_pRigidbody->SetHorizontalVelocity(m_fPlayerSpeed);
 	}
 	else if (KEY_UP(KEY_TYPE::D))
+	{
 		m_pRigidbody->SetHorizontalVelocity(0);
-	
-	//if (KEY_PRESS(KEY_TYPE::DOWN))
-	//{
-	//	vPos.y += m_fPlayerSpeed * fDT;
-	//	//GetAnimator()->PlayAnim(L"Jiwoo_Right", true);
-	//}
-
-	
+	}
+#pragma endregion
 }
 
 void Player2::Jump()

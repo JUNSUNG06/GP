@@ -34,6 +34,8 @@ private:
     float m_fBulletSpeed;
     float m_fJumpPower;
     bool m_bIsGround;
+    bool m_bCanMoveRight;
+    bool m_bCanMoveLeft;
     //
     Object* m_pEnemy;
     //

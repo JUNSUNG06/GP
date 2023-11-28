@@ -13,7 +13,7 @@
 #include "PixelCollision.h"
 void Start_Scene::Init()
 {
-	//SetBackground(L"Level_1", L"Texture\\Level_1.bmp");
+	SetBackground(L"Level_1", L"Texture\\Level_1.bmp");
 	m_pCollisionTexture = ResMgr::GetInst()->TexLoad(L"LevelCollision", L"Texture\\LevelCollision.bmp");
 	//m_pLevelTexture = ResMgr::GetInst()->TexLoad(L"Level", L"Texture\\Level.bmp");
 	PixelCollision::GetInst()->SetColorImage(m_pCollisionTexture);
