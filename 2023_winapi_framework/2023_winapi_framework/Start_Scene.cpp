@@ -10,12 +10,13 @@
 #include "CollisionMgr.h"
 #include "ResMgr.h"
 #include "ResultMgr.h"
+#include "PixelCollision.h"
 void Start_Scene::Init()
 {
-	//Object* pObj = new Player;
-	//pObj->SetPos((Vec2({Core::GetInst()->GetResolution().x /2, Core::GetInst()->GetResolution().y / 2})));
-	//pObj->SetScale(Vec2(100.f,100.f));
-	//AddObject(pObj, OBJECT_GROUP::PLAYER);
+	SetBackground(L"Background_Intro", L"Texture5\\Background_Intro.bmp");
+	m_pCollisionTexture = ResMgr::GetInst()->TexLoad(L"LevelCollision", L"Texture\\LevelCollision.bmp");
+	m_pLevelTexture = ResMgr::GetInst()->TexLoad(L"Level", L"Texture\\Level.bmp");
+	PixelCollision::GetInst()->SetColorImage(m_pCollisionTexture);
 
 	Player1* pObj = new Player1;
 	pObj->SetPos((Vec2({ Core::GetInst()->GetResolution().x / 2, (Core::GetInst()->GetResolution().y / 2) + 100 })));
@@ -79,6 +80,7 @@ void Start_Scene::Update()
 void Start_Scene::Render(HDC _dc)
 {
 	Scene::Render(_dc);
+	TransparentBlt(_dc, 0, 0, m_pLevelTexture->GetWidth(), m_pLevelTexture->GetHeight(), m_pLevelTexture->GetDC(), 0, 0, SRCCOPY);
 }
 
 void Start_Scene::Release()
