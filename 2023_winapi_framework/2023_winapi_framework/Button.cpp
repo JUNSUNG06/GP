@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "Button.h"
 #include "KeyMgr.h"
+#include "ResMgr.h"
 #include <string>
 
 Button::Button(void(*_action)(), wstring _text)
@@ -25,6 +26,7 @@ void Button::Update()
 
 		if (IS_CLICK(vPos.x, vPos.y, vScale.x, vScale.y, _pMousePoint.x, _pMousePoint.y))
 		{
+			ResMgr::GetInst()->Play(L"Button_Click");
 			m_pAction();
 		}
 	}

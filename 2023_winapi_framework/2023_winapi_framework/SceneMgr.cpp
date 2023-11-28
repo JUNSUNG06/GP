@@ -4,6 +4,7 @@
 #include "Start_Scene.h"
 #include "Game_Scene.h"
 #include "Result_Scene.h"
+#include "Explanation_Scene.h"
 void SceneMgr::Init()
 {
 	m_pCurScene = nullptr;
@@ -12,6 +13,7 @@ void SceneMgr::Init()
 	RegisterScene(L"Start_Scene",std::make_shared<Start_Scene>());
 	RegisterScene(L"Game_Scene", std::make_shared<Game_Scene>());
 	RegisterScene(L"Result_Scene", std::make_shared<Result_Scene>());
+	RegisterScene(L"Explanation_Scene", std::make_shared<Explanation_Scene>());
 
 	// Ã¹ ¾À ÁöÁ¤
 	LoadScene(L"Intro_Scene");

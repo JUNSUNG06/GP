@@ -184,6 +184,9 @@
     <ClInclude Include="ResultMgr.h">
       <Filter>Engine\03. Manager\ResultManager</Filter>
     </ClInclude>
+    <ClInclude Include="Button.h" />
+    <ClInclude Include="Intro_Scene.h" />
+    <ClInclude Include="Explanation_Scene.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="2023_winapi_framework.rc">
@@ -295,5 +298,8 @@
     <ClCompile Include="ResultMgr.cpp">
       <Filter>Engine\03. Manager\ResultManager</Filter>
     </ClCompile>
+    <ClCompile Include="Button.cpp" />
+    <ClCompile Include="Intro_Scene.cpp" />
+    <ClCompile Include="Explanation_Scene.cpp" />
   </ItemGroup>
 </Project>
