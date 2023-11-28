@@ -9,18 +9,19 @@
 #include "KeyMgr.h"
 #include "CollisionMgr.h"
 #include "ResMgr.h"
+#include "ResultMgr.h"
 void Start_Scene::Init()
 {
-		//Object* pObj = new Player;
-		//pObj->SetPos((Vec2({Core::GetInst()->GetResolution().x /2, Core::GetInst()->GetResolution().y / 2})));
-		//pObj->SetScale(Vec2(100.f,100.f));
-		//AddObject(pObj, OBJECT_GROUP::PLAYER);
+	//Object* pObj = new Player;
+	//pObj->SetPos((Vec2({Core::GetInst()->GetResolution().x /2, Core::GetInst()->GetResolution().y / 2})));
+	//pObj->SetScale(Vec2(100.f,100.f));
+	//AddObject(pObj, OBJECT_GROUP::PLAYER);
 
 	Player1* pObj = new Player1;
 	pObj->SetPos((Vec2({ Core::GetInst()->GetResolution().x / 2, (Core::GetInst()->GetResolution().y / 2) + 100 })));
 	pObj->SetScale(Vec2(100.f, 100.f));
 	pObj->SetPlayerSpeed(100.f);
-	pObj->SetFireDelay(3.f);
+	//pObj->SetFireDelay(3.f);
 	pObj->SetName(L"Player1");
 	AddObject(pObj, OBJECT_GROUP::PLAYER);
 
@@ -29,7 +30,7 @@ void Start_Scene::Init()
 	pObj1->SetPos((Vec2({ Core::GetInst()->GetResolution().x / 2, (Core::GetInst()->GetResolution().y / 2) - 100 })));
 	pObj1->SetScale(Vec2(100.f, 100.f));
 	pObj1->SetPlayerSpeed(100.f);
-	pObj1->SetFireDelay(3.f);
+	//pObj1->SetFireDelay(3.f);
 	pObj->SetName(L"Player2");
 	AddObject(pObj1, OBJECT_GROUP::PLAYER2);
 

@@ -10,7 +10,7 @@ void ResultMgr::Init()
 {
 	m_iPlayer1Win = 0;
 	m_iPlayer2Win = 0;
-	m_iMaxPoint = 5;
+	m_iMaxPoint = 3;
 	m_fCurTime = 0;
 	m_bIsGameEnded = false;
 }
@@ -35,10 +35,10 @@ void ResultMgr::ResetPoint()
 void ResultMgr::PlayerDied(int _iPlayeridx)
 {
 	if (_iPlayeridx == 1) {
-		m_iPlayer1Win++;
+		m_iPlayer2Win++;
 	}
 	else if (_iPlayeridx == 2) {
-		m_iPlayer2Win++;
+		m_iPlayer1Win++;
 	}
 
 	m_bIsGameEnded = true;

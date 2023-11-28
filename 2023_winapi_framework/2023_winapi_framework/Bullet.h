@@ -11,7 +11,7 @@ public:
     void Update() override;
     void Render(HDC _dc) override;
     void SetDir(float _f) { m_fTheta = _f; }
-    void SetDir(Vec2 _vDir) 
+    void SetDir(Vec2 _vDir = {1.f, 1.f})
     { 
         m_vDir = _vDir; 
         m_vDir.Normalize();
