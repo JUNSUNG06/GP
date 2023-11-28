@@ -23,6 +23,8 @@ public:
 	Vec2	GetVelocity()						{ return m_vecVelocity; }
 	void	SetVelocity(Vec2 _vecVelocity)		{ m_vecVelocity = _vecVelocity; }
 	bool	GetReverseGravity()					{ return m_bReverseGravity; }
+	void	SetVerticalVelocity(float _fValue) { m_vecVelocity.y = _fValue; }
+	void	SetHorizontalVelocity(float _fValue) { m_vecVelocity.x = _fValue; }
 
 private:
 	Object* m_pOwner;

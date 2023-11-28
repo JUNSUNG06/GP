@@ -20,6 +20,8 @@ Player1::Player1()
 	, m_fCurFireDelay(3.f)
 	, m_fBulletSpeed(3.f)
 	, m_pEnemy(nullptr)
+	, m_fJumpPower(250.f)
+	, m_bIsGround(false)
 {
 	CreateCollider();
 	GetCollider()->SetScale(Vec2(20.f, 30.f));
@@ -33,46 +35,11 @@ Player1::~Player1()
 void Player1::Update()
 {
 	Vec2 vPos = GetPos();
-	Vec2 vScale = GetScale();
 
-	if (KEY_PRESS(KEY_TYPE::LEFT))
-	{
-		vPos.x -= m_fPlayerSpeed * fDT;
-		//GetAnimator()->PlayAnim(L"Jiwoo_Left", true);
-	}
-	if (KEY_PRESS(KEY_TYPE::RIGHT))
-	{
-		vPos.x += m_fPlayerSpeed * fDT;
-		//GetAnimator()->PlayAnim(L"Jiwoo_Right", true);
-	}
-	//if (KEY_PRESS(KEY_TYPE::UP))
-	//{
-	//	vPos.y -= m_fPlayerSpeed * fDT;
-	//	//GetAnimator()->PlayAnim(L"Jiwoo_Right", true);
-	//}
-	//if (KEY_PRESS(KEY_TYPE::DOWN))
-	//{
-	//	vPos.y += m_fPlayerSpeed * fDT;
-	//	//GetAnimator()->PlayAnim(L"Jiwoo_Right", true);
-	//}
+	Move();
+	Jump();
 
-	if (PixelCollision::GetInst()->CheckCollision(
-		vPos.x - vScale.x / 2, vPos.y,
-		vPos.x + vScale.x / 2, vPos.y + vScale.y / 2))
-	{
-		m_pRigidbody->SetApplyGravity(false);
-		m_pRigidbody->SetVelocity({ 
-			(float)m_pRigidbody->GetVelocity().x, 0.f });
-	}
-	else
-	{
-		m_pRigidbody->SetApplyGravity(true);
-	}
-	m_pRigidbody->Update();
-
-
-	vPos += m_pRigidbody->GetVelocity();
-
+	vPos += m_pRigidbody->GetVelocity() * fDT;
 	SetPos(vPos);
 
 
@@ -128,4 +95,59 @@ void Player1::Attack()
 		pBullet->SetDir({ m_pEnemy->GetPos().x - GetPos().x, m_pEnemy->GetPos().y - GetPos().y });
 	pBullet->SetName(L"Player1_Bullet");
 	SceneMgr::GetInst()->GetCurScene()->AddObject(pBullet, OBJECT_GROUP::BULLET);
+}
+
+void Player1::Move()
+{
+	Vec2 vPos = GetPos();
+	Vec2 vScale = GetScale();
+
+	if (PixelCollision::GetInst()->CheckCollision(
+		vPos.x - vScale.x / 2, vPos.y,
+		vPos.x + vScale.x / 2, vPos.y + vScale.y / 2))
+	{
+		m_pRigidbody->SetApplyGravity(false);
+		m_pRigidbody->SetVerticalVelocity(0.f);
+		m_bIsGround = true;
+	}
+	else
+	{
+		m_pRigidbody->SetApplyGravity(true);
+		m_bIsGround = false;
+	}
+	m_pRigidbody->Update();
+
+
+	if (KEY_PRESS(KEY_TYPE::LEFT))
+	{
+		//vPos.x -= m_fPlayerSpeed * fDT;
+		//GetAnimator()->PlayAnim(L"Jiwoo_Left", true);
+		m_pRigidbody->SetHorizontalVelocity(-m_fPlayerSpeed);
+	}
+	else if (KEY_UP(KEY_TYPE::LEFT))
+		m_pRigidbody->SetHorizontalVelocity(0);
+	if (KEY_PRESS(KEY_TYPE::RIGHT))
+	{
+		//vPos.x += m_fPlayerSpeed * fDT;
+		//GetAnimator()->PlayAnim(L"Jiwoo_Right", true);
+		m_pRigidbody->SetHorizontalVelocity(m_fPlayerSpeed);
+	}
+	else if (KEY_UP(KEY_TYPE::RIGHT))
+		m_pRigidbody->SetHorizontalVelocity(0);
+	
+	//if (KEY_PRESS(KEY_TYPE::DOWN))
+	//{
+	//	vPos.y += m_fPlayerSpeed * fDT;
+	//	//GetAnimator()->PlayAnim(L"Jiwoo_Right", true);
+	//}
+}
+
+void Player1::Jump()
+{
+	if (KEY_PRESS(KEY_TYPE::UP) && m_bIsGround == true)
+	{
+		//vPos.y -= m_fPlayerSpeed * fDT;
+		//GetAnimator()->PlayAnim(L"Jiwoo_Right", true);
+		m_pRigidbody->SetVerticalVelocity(-m_fJumpPower);
+	}
 }

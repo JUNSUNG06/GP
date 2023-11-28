@@ -19,6 +19,8 @@ public:
     void SetPlayerSpeed(float _speed) { m_fPlayerSpeed = _speed; }
     void SetFireDelay(float _delay) { m_fFireDelay = _delay; }
     void Attack();
+    void Move();
+    void Jump();
     //
     void SetEnemy(Object* _obj) { m_pEnemy = _obj; }
     //
@@ -30,6 +32,8 @@ private:
     float m_fFireDelay;
     float m_fCurFireDelay;
     float m_fBulletSpeed;
+    float m_fJumpPower;
+    bool m_bIsGround;
     //
     Object* m_pEnemy;
     //
