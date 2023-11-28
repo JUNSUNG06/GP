@@ -45,8 +45,11 @@ void Player1::Update()
 
 	m_fCurFireDelay += fDT;
 	if (m_fCurFireDelay >= m_fFireDelay && m_pEnemy != nullptr) {
-		Attack();
-		m_fCurFireDelay = 0;
+		if (KEY_PRESS(KEY_TYPE::DOWN))
+		{
+			Attack();
+			m_fCurFireDelay = 0;
+		}\
 	}
 }
 
@@ -146,8 +149,6 @@ void Player1::Jump()
 {
 	if (KEY_PRESS(KEY_TYPE::UP) && m_bIsGround == true)
 	{
-		//vPos.y -= m_fPlayerSpeed * fDT;
-		//GetAnimator()->PlayAnim(L"Jiwoo_Right", true);
 		m_pRigidbody->SetVerticalVelocity(-m_fJumpPower);
 	}
 }
