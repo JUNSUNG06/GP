@@ -27,6 +27,10 @@ void SceneMgr::Update()
 
 void SceneMgr::Render(HDC _dc)
 {
+	//ÆùÆ® ¹Ù²ãº¸±â!
+	HFONT hFont = CreateFont(20, 0, 0, 0, 0, 0, 0, 0, HANGEUL_CHARSET, 0, 0, 0, VARIABLE_PITCH | FF_ROMAN, L"±Ã¼­");
+	SelectObject(_dc, hFont);
+
 	m_pCurScene->Render(_dc);
 }
 

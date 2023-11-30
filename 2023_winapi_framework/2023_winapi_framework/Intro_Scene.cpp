@@ -15,15 +15,12 @@ void Intro_Scene::Init()
 	ResMgr::GetInst()->LoadSound(L"Main_Menu_BGM", L"Sound\\Main_Menu_BGM.wav", true);
 	ResMgr::GetInst()->LoadSound(L"Button_Click", L"Sound\\Button_Click.wav", false);
 
-	//if(!isplaying)
-		ResMgr::GetInst()->Play(L"Main_Menu_BGM");
-		//isplaying = false
+	ResMgr::GetInst()->Play(L"Main_Menu_BGM");
 
 	Object* obj = new Button([]()
 		{
 			SceneMgr::GetInst()->LoadScene(L"Start_Scene");
 			ResMgr::GetInst()->Stop(SOUND_CHANNEL::BGM);
-			//isplaying = true
 		}
 	, L"게임 시작");
 	obj->SetPos((Vec2({ Core::GetInst()->GetResolution().x / 2, Core::GetInst()->GetResolution().y / 2 })));
@@ -43,7 +40,6 @@ void Intro_Scene::Init()
 
 void Intro_Scene::Render(HDC _dc)
 {
-
 	Scene::Render(_dc);
 }
 
