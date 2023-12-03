@@ -9,6 +9,7 @@
 #include "EventMgr.h"
 #include "PixelCollision.h"
 #include "SituationMgr.h"
+#include "ResultMgr.h"
 bool Core::Init(HWND _hWnd, POINT _ptResolution)
 {
 	// === 변수 초기화 === 
@@ -40,6 +41,7 @@ bool Core::Init(HWND _hWnd, POINT _ptResolution)
 	SceneMgr::GetInst()->Init();
 	SituationMgr::GetInst()->Init();
 	PixelCollision::GetInst()->Init();
+	ResultMgr::GetInst()->Init();
 
 	return true;
 }
@@ -69,6 +71,7 @@ void Core::Update()
 	SceneMgr::GetInst()->Update();
 	CollisionMgr::GetInst()->Update();
 	SituationMgr::GetInst()->Udpate();
+	ResultMgr::GetInst()->Update();
 //	Vec2 vPos = m_obj.GetPos();
 //
 ////	if (GetAsyncKeyState(VK_LEFT) & 0x8000)
@@ -94,6 +97,7 @@ void Core::Render()
 	//Rectangle(m_hbackDC, -1,-1,m_ptResolution.x +1,m_ptResolution.y + 1);
 	PatBlt(m_hbackDC, 0, 0, m_ptResolution.x, m_ptResolution.y, WHITENESS);
 
+	//PixelCollision::GetInst()->Render(m_hbackDC);
 	SceneMgr::GetInst()->Render(m_hbackDC);
 	/*Vec2 vPos = m_obj.GetPos();
 	Vec2 vScale = m_obj.GetScale();
@@ -109,7 +113,6 @@ void Core::Render()
 	BitBlt(m_hDC, 0,0, m_ptResolution.x, m_ptResolution.y, 
 		m_hbackDC, 0,0, SRCCOPY);
 	EventMgr::GetInst()->Update();
-
 
 	//TransparentBlt();
 	//StretchBlt();

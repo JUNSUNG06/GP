@@ -24,8 +24,11 @@ enum class OBJECT_GROUP
 {
 	DEFAULT,
 	PLAYER,
+	PLAYER2,
 	BULLET,
+	BULLET2,
 	MONSTER,
+	UI,
 	END = 30
 };
 
@@ -52,5 +55,6 @@ enum class EVENT_TYPE
 
 enum class SITUATION_TYPE
 {
-
+	REVERSEGRAVITY,
+	END
 };

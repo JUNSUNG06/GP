@@ -8,6 +8,7 @@ class PixelCollision
 public:
 	void	Init();
 	bool	CheckCollision(int startX, int startY, int endX, int endY);
+	void	Render(HDC _dc);
 	void	Release();
 
 public:

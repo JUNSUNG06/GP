@@ -1,6 +1,9 @@
 #pragma once
 //#include "Object.h"
+#include "ResMgr.h"
 class Object;
+class Texture;
+
 class Scene
 {
 public:
@@ -22,8 +25,13 @@ public:
 	{
 		m_vecObj[(UINT)_eType].push_back(_pObj);
 	}
+	void SetBackground(wstring name, wstring path)
+	{
+		m_pBackground = ResMgr::GetInst()->TexLoad(name, path);
+	}
 private:
 //	Object*  m_obj;
 	vector<Object*> m_vecObj[(UINT)OBJECT_GROUP::END];
+	Texture* m_pBackground;
 };
 

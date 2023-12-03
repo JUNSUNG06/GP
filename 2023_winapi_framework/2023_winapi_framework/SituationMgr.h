@@ -4,7 +4,15 @@ class Situation;
 
 class SituationMgr
 {
-	SINGLE(SituationMgr)
+private:						
+	SituationMgr() = default;
+	~SituationMgr() = default;
+public:							
+	static SituationMgr* GetInst()
+	{							
+		static SituationMgr m_pInst;
+		return &m_pInst;		
+	}
 
 public:
 	void Init();

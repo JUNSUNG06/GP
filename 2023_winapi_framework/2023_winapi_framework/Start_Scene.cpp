@@ -3,45 +3,79 @@
 #include "Object.h"
 #include "Core.h"
 #include "Player.h"
+#include "Player1.h"
+#include "Player2.h"
 #include "Monster.h"
 #include "KeyMgr.h"
 #include "CollisionMgr.h"
 #include "ResMgr.h"
+#include "ResultMgr.h"
+#include "PixelCollision.h"
+#include "GameMgr.h"
+#include "SituationMgr.h"
+
 void Start_Scene::Init()
 {
-	Object* pObj = new Player;
-	pObj->SetPos((Vec2({Core::GetInst()->GetResolution().x /2, Core::GetInst()->GetResolution().y / 2})));
-	pObj->SetScale(Vec2(100.f,100.f));
+	SetBackground(L"Level_1", L"Texture\\Level_1.bmp");
+	m_pCollisionTexture = ResMgr::GetInst()->TexLoad(L"LevelCollision", L"Texture\\LevelCollision.bmp");
+	//m_pLevelTexture = ResMgr::GetInst()->TexLoad(L"Level", L"Texture\\Level.bmp");
+	PixelCollision::GetInst()->SetColorImage(m_pCollisionTexture);
+
+	Player1* pObj = new Player1;
+	pObj->SetPos((Vec2({ Core::GetInst()->GetResolution().x / 2, (Core::GetInst()->GetResolution().y / 2) + 100 })));
+	pObj->SetScale(Vec2(50.f, 50.f));
+	pObj->SetPlayerSpeed(100.f);
+	//pObj->SetFireDelay(3.f);
+	pObj->SetName(L"Player1");
 	AddObject(pObj, OBJECT_GROUP::PLAYER);
+	GameMgr::GetInst()->SetPlayer1(pObj);
+
+
+	Player2* pObj1 = new Player2;
+	pObj1->SetPos((Vec2({ Core::GetInst()->GetResolution().x / 2, (Core::GetInst()->GetResolution().y / 2) - 100 })));
+	pObj1->SetScale(Vec2(50.f, 50.f));
+	pObj1->SetPlayerSpeed(100.f);
+	//pObj1->SetFireDelay(3.f);
+	pObj->SetName(L"Player2");
+	AddObject(pObj1, OBJECT_GROUP::PLAYER2);
+	GameMgr::GetInst()->SetPlayer2(pObj1);
+
+
+	pObj->SetEnemy(pObj1);
+	pObj1->SetEnemy(pObj);
 
 	// 몬스터 세팅 마구마구 배치를 해봅시다.
 
-	Vec2 vResolution = Core::GetInst()->GetResolution();
-	Monster* pMonster = nullptr;
-	int iMonster = 10;		// 몬스터 수 
-	float fMoveDist = 30.f; // 움직일 거리
-	float fMonsterScale = 50.f; // 몬스터 크기
-	// 해상도x - ( 움직일 거리 + 오브젝트 크기 /2) * 2 / 몬스터수 -1 
-	float fTerm = (vResolution.x - (fMoveDist + fMonsterScale / 2.f) * 2) 
-					/ (float)(iMonster -1);
-	for (int i = 0; i < iMonster; ++i)
-	{
-		pMonster = new Monster;
-		pMonster->SetPos(Vec2(
-			(fMoveDist + fMonsterScale / 2.f) + i* fTerm
-			,300.f));
-		pMonster->SetScale(Vec2(fMonsterScale, fMonsterScale));
-		pMonster->SetCenterPos(pMonster->GetPos());
-		pMonster->SetMoveDis(fMoveDist);
-		AddObject(pMonster, OBJECT_GROUP::MONSTER);
-	}
+	//Vec2 vResolution = Core::GetInst()->GetResolution();
+	//Monster* pMonster = nullptr;
+	//int iMonster = 10;		// 몬스터 수 
+	//float fMoveDist = 30.f; // 움직일 거리
+	//float fMonsterScale = 50.f; // 몬스터 크기
+	//// 해상도x - ( 움직일 거리 + 오브젝트 크기 /2) * 2 / 몬스터수 -1 
+	//float fTerm = (vResolution.x - (fMoveDist + fMonsterScale / 2.f) * 2) 
+	//				/ (float)(iMonster -1);
+	//for (int i = 0; i < iMonster; ++i)
+	//{
+	//	pMonster = new Monster;
+	//	pMonster->SetPos(Vec2(
+	//		(fMoveDist + fMonsterScale / 2.f) + i* fTerm
+	//		,300.f));
+	//	pMonster->SetScale(Vec2(fMonsterScale, fMonsterScale));
+	//	pMonster->SetCenterPos(pMonster->GetPos());
+	//	pMonster->SetMoveDis(fMoveDist);
+	//	AddObject(pMonster, OBJECT_GROUP::MONSTER);
+	//}
 	// 사운드 세팅
 	ResMgr::GetInst()->LoadSound(L"BGM", L"Sound\\Retro_bgm.wav", true);
 	ResMgr::GetInst()->LoadSound(L"Shoot", L"Sound\\laserShoot.wav", false);
-	ResMgr::GetInst()->Play(L"BGM");
+	//ResMgr::GetInst()->Play(L"BGM");
 
 	// 충돌체크해야되는것들을 설정하자.
 	CollisionMgr::GetInst()->CheckGroup(OBJECT_GROUP::BULLET, OBJECT_GROUP::MONSTER);
+	CollisionMgr::GetInst()->CheckGroup(OBJECT_GROUP::PLAYER, OBJECT_GROUP::BULLET2);
+	CollisionMgr::GetInst()->CheckGroup(OBJECT_GROUP::PLAYER2, OBJECT_GROUP::BULLET);
+
+	SituationMgr::GetInst()->ChangeSituation(SITUATION_TYPE::REVERSEGRAVITY);
 }
 
 void Start_Scene::Update()
@@ -54,6 +88,15 @@ void Start_Scene::Update()
 void Start_Scene::Render(HDC _dc)
 {
 	Scene::Render(_dc);
+
+	/*TransparentBlt(_dc, 0, 0, 
+		m_pLevelTexture->GetWidth(), 
+		m_pLevelTexture->GetHeight(), 
+		m_pLevelTexture->GetDC(), 
+		0, 0, 
+		m_pLevelTexture->GetWidth(),
+		m_pLevelTexture->GetHeight(),
+		RGB(255, 0, 255));*/
 }
 
 void Start_Scene::Release()

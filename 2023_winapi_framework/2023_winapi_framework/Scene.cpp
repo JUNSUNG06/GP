@@ -1,7 +1,10 @@
 #include "pch.h"
 #include "Scene.h"
 #include "Object.h"
+#include "Texture.h"
+
 Scene::Scene()
+	: m_pBackground(nullptr)
 {
 }
 
@@ -35,6 +38,9 @@ void Scene::FinalUpdate()
 
 void Scene::Render(HDC _dc)
 {
+	if (m_pBackground != nullptr)
+		BitBlt(_dc, 0, 0, m_pBackground->GetWidth(), m_pBackground->GetHeight(), m_pBackground->GetDC(), 0, 0, SRCCOPY);
+
 	for (UINT i = 0; i < (UINT)OBJECT_GROUP::END; ++i)
 	{
 		for (size_t j = 0; j < m_vecObj[i].size();)
@@ -60,4 +66,6 @@ void Scene::Release()
 		}
 		m_vecObj[i].clear();
 	}
+
+	//delete m_pBackground;
 }

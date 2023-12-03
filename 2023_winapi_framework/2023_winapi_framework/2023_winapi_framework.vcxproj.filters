@@ -65,6 +65,18 @@
     <Filter Include="Engine\03. Manager\PixelCollision">
       <UniqueIdentifier>{e2345a56-19e8-43f5-97ba-aa0035b0a6a4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\03. Manager\ResultManager">
+      <UniqueIdentifier>{1285423d-d783-4c24-9381-094392628156}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\09. ETC">
+      <UniqueIdentifier>{0d1f8c44-5979-487d-844a-561ad31e6dba}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\09. ETC\Situation">
+      <UniqueIdentifier>{8488113a-d063-4255-b203-c36e6e29e782}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\03. Manager\GameMgr">
+      <UniqueIdentifier>{f7eb17eb-1399-47a7-b52c-5494c9dc5d1c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -163,6 +175,32 @@
     <ClInclude Include="PixelCollision.h">
       <Filter>Engine\03. Manager\PixelCollision</Filter>
     </ClInclude>
+    <ClInclude Include="Player2.h">
+      <Filter>Engine\04. Object\MainObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Player1.h">
+      <Filter>Engine\04. Object\MainObject</Filter>
+    </ClInclude>
+    <ClInclude Include="SituationMgr.h">
+      <Filter>Engine\03. Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="Result_Scene.h">
+      <Filter>Engine\05. Scene\MainScene</Filter>
+    </ClInclude>
+    <ClInclude Include="ResultMgr.h">
+      <Filter>Engine\03. Manager\ResultManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Button.h" />
+    <ClInclude Include="Intro_Scene.h" />
+    <ClInclude Include="Situation.h">
+      <Filter>Engine\09. ETC\Situation</Filter>
+    </ClInclude>
+    <ClInclude Include="ReverseGravitySituation.h">
+      <Filter>Engine\09. ETC\Situation</Filter>
+    </ClInclude>
+    <ClInclude Include="GameMgr.h">
+      <Filter>Engine\03. Manager\GameMgr</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="2023_winapi_framework.rc">
@@ -255,6 +293,32 @@
     </ClCompile>
     <ClCompile Include="PixelCollision.cpp">
       <Filter>Engine\03. Manager\PixelCollision</Filter>
+    </ClCompile>
+    <ClCompile Include="Player2.cpp">
+      <Filter>Engine\04. Object\MainObject</Filter>
+    </ClCompile>
+    <ClCompile Include="Player1.cpp">
+      <Filter>Engine\04. Object\MainObject</Filter>
+    </ClCompile>
+    <ClCompile Include="SituationMgr.cpp">
+      <Filter>Engine\03. Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="Result_Scene.cpp">
+      <Filter>Engine\05. Scene\MainScene</Filter>
+    </ClCompile>
+    <ClCompile Include="ResultMgr.cpp">
+      <Filter>Engine\03. Manager\ResultManager</Filter>
+    </ClCompile>
+    <ClCompile Include="Button.cpp" />
+    <ClCompile Include="Intro_Scene.cpp" />
+    <ClCompile Include="Situation.cpp">
+      <Filter>Engine\09. ETC\Situation</Filter>
+    </ClCompile>
+    <ClCompile Include="ReverseGravitySituation.cpp">
+      <Filter>Engine\09. ETC\Situation</Filter>
+    </ClCompile>
+    <ClCompile Include="GameMgr.cpp">
+      <Filter>Engine\03. Manager\GameMgr</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
