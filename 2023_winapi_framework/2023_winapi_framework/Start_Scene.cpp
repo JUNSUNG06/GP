@@ -11,6 +11,9 @@
 #include "ResMgr.h"
 #include "ResultMgr.h"
 #include "PixelCollision.h"
+#include "GameMgr.h"
+#include "SituationMgr.h"
+
 void Start_Scene::Init()
 {
 	SetBackground(L"Level_1", L"Texture\\Level_1.bmp");
@@ -25,6 +28,7 @@ void Start_Scene::Init()
 	//pObj->SetFireDelay(3.f);
 	pObj->SetName(L"Player1");
 	AddObject(pObj, OBJECT_GROUP::PLAYER);
+	GameMgr::GetInst()->SetPlayer1(pObj);
 
 
 	Player2* pObj1 = new Player2;
@@ -34,6 +38,8 @@ void Start_Scene::Init()
 	//pObj1->SetFireDelay(3.f);
 	pObj->SetName(L"Player2");
 	AddObject(pObj1, OBJECT_GROUP::PLAYER2);
+	GameMgr::GetInst()->SetPlayer2(pObj1);
+
 
 	pObj->SetEnemy(pObj1);
 	pObj1->SetEnemy(pObj);
@@ -68,6 +74,8 @@ void Start_Scene::Init()
 	CollisionMgr::GetInst()->CheckGroup(OBJECT_GROUP::BULLET, OBJECT_GROUP::MONSTER);
 	CollisionMgr::GetInst()->CheckGroup(OBJECT_GROUP::PLAYER, OBJECT_GROUP::BULLET2);
 	CollisionMgr::GetInst()->CheckGroup(OBJECT_GROUP::PLAYER2, OBJECT_GROUP::BULLET);
+
+	SituationMgr::GetInst()->ChangeSituation(SITUATION_TYPE::REVERSEGRAVITY);
 }
 
 void Start_Scene::Update()

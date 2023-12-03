@@ -1,10 +1,16 @@
 #include "pch.h"
 #include "SituationMgr.h"
 #include "Situation.h"
+#include "ReverseGravitySituation.h"
 
 void SituationMgr::Init()
 {
 	m_pCurrentSituation = nullptr;
+
+	SITUATION_TYPE situationType;
+
+	situationType = SITUATION_TYPE::REVERSEGRAVITY;
+	RegistSituation(situationType, new ReverseGravitySituation(situationType));
 }
 
 void SituationMgr::Udpate()

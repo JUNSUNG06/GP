@@ -21,7 +21,7 @@ Player2::Player2()
 	, m_fCurFireDelay(3.f)
 	, m_fBulletSpeed(3.f)
 	, m_pEnemy(nullptr)
-	, m_fJumpPower(250.f)
+	, m_fJumpHeight(75.f)
 	, m_bIsGround(false)
 	, m_bCanMoveLeft(true)
 	, m_bCanMoveRight(true)
@@ -35,6 +35,8 @@ Player2::Player2()
 
 Player2::~Player2()
 {
+	if (m_pRigidbody != nullptr)
+		delete m_pRigidbody;
 }
 
 void Player2::Update()
@@ -115,9 +117,20 @@ void Player2::Move()
 	Vec2 vScale = GetScale();
 
 #pragma region check ground
-	if (PixelCollision::GetInst()->CheckCollision(
-		vPos.x - vScale.x / 2 + 5, vPos.y,
-		vPos.x + vScale.x / 2 - 5, vPos.y + vScale.y / 2))
+	RECT groundCheckRect;
+	if (!m_pRigidbody->GetReverseGravity())
+	{
+		groundCheckRect = { (LONG)(vPos.x - vScale.x / 2 + 5), (LONG)(vPos.y),
+							(LONG)(vPos.x + vScale.x / 2 - 5), (LONG)(vPos.y + vScale.y / 2) };
+	}
+	else
+	{
+		groundCheckRect = { (LONG)(vPos.x - vScale.x / 2 + 5), (LONG)(vPos.y - vScale.y / 2),
+							(LONG)(vPos.x + vScale.x / 2 - 5), (LONG)(vPos.y) };
+	}
+
+	if (PixelCollision::GetInst()->CheckCollision(groundCheckRect.left, groundCheckRect.top,
+		groundCheckRect.right, groundCheckRect.bottom))
 	{
 		m_pRigidbody->SetApplyGravity(false);
 		m_pRigidbody->SetVerticalVelocity(0.f);
@@ -184,6 +197,6 @@ void Player2::Jump()
 {
 	if (KEY_PRESS(KEY_TYPE::W) && m_bIsGround == true)
 	{
-		m_pRigidbody->SetVerticalVelocity(-m_fJumpPower);
+		m_pRigidbody->SetVerticalVelocity(sqrtf(m_fJumpHeight * -2.f * m_pRigidbody->GetGravityScale()));
 	}
 }
