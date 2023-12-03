@@ -75,7 +75,8 @@ void Start_Scene::Init()
 	CollisionMgr::GetInst()->CheckGroup(OBJECT_GROUP::PLAYER, OBJECT_GROUP::BULLET2);
 	CollisionMgr::GetInst()->CheckGroup(OBJECT_GROUP::PLAYER2, OBJECT_GROUP::BULLET);
 
-	SituationMgr::GetInst()->ChangeSituation(SITUATION_TYPE::REVERSEGRAVITY);
+	SituationMgr::GetInst()->SetSituation(SITUATION_TYPE::REVERSEGRAVITY);
+	SituationMgr::GetInst()->StartSituation();
 }
 
 void Start_Scene::Update()

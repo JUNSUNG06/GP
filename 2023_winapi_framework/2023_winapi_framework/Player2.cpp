@@ -21,7 +21,7 @@ Player2::Player2()
 	, m_fCurFireDelay(3.f)
 	, m_fBulletSpeed(3.f)
 	, m_pEnemy(nullptr)
-	, m_fJumpHeight(75.f)
+	, m_fJumpPower(250.f)
 	, m_bIsGround(false)
 	, m_bCanMoveLeft(true)
 	, m_bCanMoveRight(true)
@@ -195,8 +195,11 @@ void Player2::Move()
 
 void Player2::Jump()
 {
+	float jumpPower = m_pRigidbody->GetReverseGravity() ?
+		m_fJumpPower : -m_fJumpPower;
+
 	if (KEY_PRESS(KEY_TYPE::W) && m_bIsGround == true)
 	{
-		m_pRigidbody->SetVerticalVelocity(sqrtf(m_fJumpHeight * -2.f * m_pRigidbody->GetGravityScale()));
+		m_pRigidbody->SetVerticalVelocity(jumpPower);
 	}
 }

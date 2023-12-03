@@ -7,6 +7,7 @@ ReverseGravitySituation::ReverseGravitySituation(SITUATION_TYPE _eSitutationType
 {
 	m_pPlayer1Rigidbody = nullptr;
 	m_pPlayer2Rigidbody = nullptr;
+	m_fDuration = 3.f;
 }
 
 ReverseGravitySituation::~ReverseGravitySituation()
