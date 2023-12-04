@@ -31,5 +31,8 @@ private:
 	std::unordered_map<SITUATION_TYPE, Situation*> m_umSituationMap;
 	Situation* m_pCurrentSituation;	
 	float m_fCurrentSituationTime;
+	float m_fSituationChagneInterval;
+	float m_fCurrentSitautionChangeTime;
+	bool m_bInSituation;
 };
 

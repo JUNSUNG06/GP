@@ -72,9 +72,9 @@ void Player1::Render(HDC _dc)
 		, m_pTex->GetWidth(), m_pTex->GetHeight(), m_pTex->GetDC()
 		, 0, 0, m_pTex->GetWidth(), m_pTex->GetHeight(), RGB(255,0,255));
 
-	Rectangle(_dc,
+	/*Rectangle(_dc,
 		vPos.x - vScale.x / 2 + 5, vPos.y - vScale.y / 2,
-		vPos.x + vScale.x / 2 - 5, vPos.y);
+		vPos.x + vScale.x / 2 - 5, vPos.y);*/
 }
 
 void Player1::EnterCollision(Collider* _pOther)

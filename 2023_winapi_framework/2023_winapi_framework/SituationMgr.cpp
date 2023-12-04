@@ -3,6 +3,7 @@
 #include "Situation.h"
 #include "ReverseGravitySituation.h"
 #include "TimeMgr.h"
+#include <time.h>
 
 void SituationMgr::Init()
 {
@@ -13,17 +14,36 @@ void SituationMgr::Init()
 	situationType = SITUATION_TYPE::REVERSEGRAVITY;
 	RegistSituation(situationType, new ReverseGravitySituation(situationType));
 	m_fCurrentSituationTime = 0;
+	m_fSituationChagneInterval = 5.f;
+	m_fCurrentSitautionChangeTime = 0.f;
+	m_bInSituation = false;
+	srand((unsigned int)time(NULL));
 }
 
 void SituationMgr::Udpate()
 {
-	if (m_pCurrentSituation != nullptr)
+	if (m_bInSituation)
 	{
-		m_pCurrentSituation->UpdateSituation();
-		m_fCurrentSituationTime += fDT;
+		if (m_pCurrentSituation != nullptr)
+		{
+			m_pCurrentSituation->UpdateSituation();
+			m_fCurrentSituationTime += fDT;
 
-		if (m_fCurrentSituationTime >= m_pCurrentSituation->GetDuration())
-			EndSituation();
+			if (m_fCurrentSituationTime >= m_pCurrentSituation->GetDuration())
+				EndSituation();
+		}
+	}
+	else
+	{
+		m_fCurrentSitautionChangeTime += fDT;
+
+		if (m_fCurrentSitautionChangeTime >= m_fSituationChagneInterval)
+		{
+			m_fCurrentSitautionChangeTime = 0.f;
+			int type = rand() % (int)SITUATION_TYPE::END;
+			SetSituation((SITUATION_TYPE)type);
+			StartSituation();
+		}
 	}
 }
 
@@ -46,6 +66,7 @@ void SituationMgr::EndSituation()
 		m_pCurrentSituation->EndSituation();
 
 	m_pCurrentSituation = nullptr;
+	m_bInSituation = false;
 }
 
 void SituationMgr::SetSituation(SITUATION_TYPE _situationType)
@@ -54,4 +75,5 @@ void SituationMgr::SetSituation(SITUATION_TYPE _situationType)
 		return;
 
 	m_pCurrentSituation = m_umSituationMap[_situationType];
+	m_bInSituation = true;
 }
