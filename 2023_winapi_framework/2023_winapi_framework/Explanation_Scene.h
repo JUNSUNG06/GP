@@ -1,7 +1,7 @@
 #pragma once
 #include "Scene.h"
-class Explanation_Scene :
-    public Scene
+class Explanation_Scene 
+    : public Scene
 {
 public:
     void Init() override;

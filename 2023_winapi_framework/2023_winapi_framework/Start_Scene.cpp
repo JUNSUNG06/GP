@@ -36,7 +36,7 @@ void Start_Scene::Init()
 	pObj1->SetScale(Vec2(50.f, 50.f));
 	pObj1->SetPlayerSpeed(100.f);
 	//pObj1->SetFireDelay(3.f);
-	pObj->SetName(L"Player2");
+	pObj1->SetName(L"Player2");
 	AddObject(pObj1, OBJECT_GROUP::PLAYER2);
 	GameMgr::GetInst()->SetPlayer2(pObj1);
 
@@ -77,6 +77,9 @@ void Start_Scene::Init()
 
 	SituationMgr::GetInst()->SetSituation(SITUATION_TYPE::REVERSEGRAVITY);
 	SituationMgr::GetInst()->StartSituation();
+
+	//ui
+	ResMgr::GetInst()->TexLoad(L"Heart", L"Texture\\Heart.bmp");
 }
 
 void Start_Scene::Update()
@@ -90,11 +93,40 @@ void Start_Scene::Render(HDC _dc)
 {
 	Scene::Render(_dc);
 
-	/*TransparentBlt(_dc, 0, 0, 
-		m_pLevelTexture->GetWidth(), 
-		m_pLevelTexture->GetHeight(), 
-		m_pLevelTexture->GetDC(), 
-		0, 0, 
+	//heart ui
+	int player1hp = GameMgr::GetInst()->GetPlayer1()->GetPlayerHP();
+	int Width = ResMgr::GetInst()->TexFind(L"Heart")->GetWidth();
+	int Height = ResMgr::GetInst()->TexFind(L"Heart")->GetHeight();
+	Vec2 vPos = { 10, 10 };
+	Vec2 vScale = { 30, 30 };
+	for (size_t i = 0; i < player1hp; i++)
+	{
+		TransparentBlt(_dc
+			, (int)(vPos.x - vScale.x / 2)
+			, (int)(vPos.y - vScale.y / 2)
+			, Width, Height, ResMgr::GetInst()->TexFind(L"Heart")->GetDC()
+			, 0, 0, Width, Height, RGB(255, 0, 255));
+		vPos.x += Width + 10;
+	}
+
+	int player2hp = GameMgr::GetInst()->GetPlayer2()->GetPlayerHP();
+	 vPos = { 1490,  10 };
+	 vScale = { 30, 30 };
+	for (size_t i = 0; i < player2hp; i++)
+	{
+		TransparentBlt(_dc
+			, (int)(vPos.x - vScale.x / 2)
+			, (int)(vPos.y - vScale.y / 2)
+			, Width, Height, ResMgr::GetInst()->TexFind(L"Heart")->GetDC()
+			, 0, 0, Width, Height, RGB(255, 0, 255));
+		vPos.x -= Width + 10;
+	}
+
+	/*TransparentBlt(_dc, 0, 0,
+		m_pLevelTexture->GetWidth(),
+		m_pLevelTexture->GetHeight(),
+		m_pLevelTexture->GetDC(),
+		0, 0,
 		m_pLevelTexture->GetWidth(),
 		m_pLevelTexture->GetHeight(),
 		RGB(255, 0, 255));*/

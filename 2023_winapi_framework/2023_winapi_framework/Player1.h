@@ -17,6 +17,7 @@ public:
     virtual void StayCollision(Collider* _pOther)  override;
 public:
     void SetPlayerHP(int _hp) { m_iHP = _hp; }
+    int GetPlayerHP() { return m_iHP; } // 추가한거
     void SetPlayerSpeed(float _speed) { m_fPlayerSpeed = _speed; }
     void SetFireDelay(float _delay) { m_fFireDelay = _delay; }
     void SetJumpPower(float _fValue) { m_fJumpPower = _fValue; }

@@ -5,6 +5,7 @@
 #include "Game_Scene.h"
 #include "Result_Scene.h"
 #include "Explanation_Scene.h"
+#include "SelectGDI.h"
 void SceneMgr::Init()
 {
 	m_pCurScene = nullptr;
@@ -30,7 +31,8 @@ void SceneMgr::Render(HDC _dc)
 	//폰트 바꿔보기!
 	//AddFontResource(L"Texture\\한국기계연구원_bold.ttf"); // 한번만 하면 되는건가
 	HFONT hFont = CreateFont(20, 0, 0, 0, 0, 0, 0, 0, HANGEUL_CHARSET, 0, 0, 0, VARIABLE_PITCH | FF_ROMAN, L"한국기계연구원_bold");
-	SelectObject(_dc, hFont);
+	//SelectObject(_dc, hFont);
+	SelectGDI selectFont(_dc, hFont);
 
 	m_pCurScene->Render(_dc);
 }
