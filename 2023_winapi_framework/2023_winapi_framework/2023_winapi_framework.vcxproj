@@ -179,8 +179,8 @@
     <ClInclude Include="define.h" />
     <ClInclude Include="enums.h" />
     <ClInclude Include="EventMgr.h" />
-    <ClInclude Include="Explanation_Scene.h" />
     <ClInclude Include="framework.h" />
+    <ClInclude Include="GameMgr.h" />
     <ClInclude Include="Game_Scene.h" />
     <ClInclude Include="Intro_Scene.h" />
     <ClInclude Include="KeyMgr.h" />
@@ -197,6 +197,7 @@
     <ClInclude Include="Resource.h" />
     <ClInclude Include="ResultMgr.h" />
     <ClInclude Include="Result_Scene.h" />
+    <ClInclude Include="ReverseGravitySituation.h" />
     <ClInclude Include="Rigidbody.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneMgr.h" />
@@ -219,7 +220,7 @@
     <ClCompile Include="CollisionMgr.cpp" />
     <ClCompile Include="Core.cpp" />
     <ClCompile Include="EventMgr.cpp" />
-    <ClCompile Include="Explanation_Scene.cpp" />
+    <ClCompile Include="GameMgr.cpp" />
     <ClCompile Include="Game_Scene.cpp" />
     <ClCompile Include="Intro_Scene.cpp" />
     <ClCompile Include="KeyMgr.cpp" />
@@ -235,6 +236,7 @@
     <ClCompile Include="ResMgr.cpp" />
     <ClCompile Include="ResultMgr.cpp" />
     <ClCompile Include="Result_Scene.cpp" />
+    <ClCompile Include="ReverseGravitySituation.cpp" />
     <ClCompile Include="Rigidbody.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SceneMgr.cpp" />

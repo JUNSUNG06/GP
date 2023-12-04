@@ -10,29 +10,36 @@
 #include "CollisionMgr.h"
 #include "ResMgr.h"
 #include "ResultMgr.h"
+#include "PixelCollision.h"
+#include "GameMgr.h"
+#include "SituationMgr.h"
+
 void Start_Scene::Init()
 {
-	//Object* pObj = new Player;
-	//pObj->SetPos((Vec2({Core::GetInst()->GetResolution().x /2, Core::GetInst()->GetResolution().y / 2})));
-	//pObj->SetScale(Vec2(100.f,100.f));
-	//AddObject(pObj, OBJECT_GROUP::PLAYER);
+	SetBackground(L"Level_1", L"Texture\\Level_1.bmp");
+	m_pCollisionTexture = ResMgr::GetInst()->TexLoad(L"LevelCollision", L"Texture\\LevelCollision.bmp");
+	//m_pLevelTexture = ResMgr::GetInst()->TexLoad(L"Level", L"Texture\\Level.bmp");
+	PixelCollision::GetInst()->SetColorImage(m_pCollisionTexture);
 
 	Player1* pObj = new Player1;
 	pObj->SetPos((Vec2({ Core::GetInst()->GetResolution().x / 2, (Core::GetInst()->GetResolution().y / 2) + 100 })));
-	pObj->SetScale(Vec2(100.f, 100.f));
+	pObj->SetScale(Vec2(50.f, 50.f));
 	pObj->SetPlayerSpeed(100.f);
 	//pObj->SetFireDelay(3.f);
 	pObj->SetName(L"Player1");
 	AddObject(pObj, OBJECT_GROUP::PLAYER);
+	GameMgr::GetInst()->SetPlayer1(pObj);
 
 
 	Player2* pObj1 = new Player2;
 	pObj1->SetPos((Vec2({ Core::GetInst()->GetResolution().x / 2, (Core::GetInst()->GetResolution().y / 2) - 100 })));
-	pObj1->SetScale(Vec2(100.f, 100.f));
+	pObj1->SetScale(Vec2(50.f, 50.f));
 	pObj1->SetPlayerSpeed(100.f);
 	//pObj1->SetFireDelay(3.f);
 	pObj->SetName(L"Player2");
 	AddObject(pObj1, OBJECT_GROUP::PLAYER2);
+	GameMgr::GetInst()->SetPlayer2(pObj1);
+
 
 	pObj->SetEnemy(pObj1);
 	pObj1->SetEnemy(pObj);
@@ -67,6 +74,9 @@ void Start_Scene::Init()
 	CollisionMgr::GetInst()->CheckGroup(OBJECT_GROUP::BULLET, OBJECT_GROUP::MONSTER);
 	CollisionMgr::GetInst()->CheckGroup(OBJECT_GROUP::PLAYER, OBJECT_GROUP::BULLET2);
 	CollisionMgr::GetInst()->CheckGroup(OBJECT_GROUP::PLAYER2, OBJECT_GROUP::BULLET);
+
+	SituationMgr::GetInst()->SetSituation(SITUATION_TYPE::REVERSEGRAVITY);
+	SituationMgr::GetInst()->StartSituation();
 }
 
 void Start_Scene::Update()
@@ -79,6 +89,15 @@ void Start_Scene::Update()
 void Start_Scene::Render(HDC _dc)
 {
 	Scene::Render(_dc);
+
+	/*TransparentBlt(_dc, 0, 0, 
+		m_pLevelTexture->GetWidth(), 
+		m_pLevelTexture->GetHeight(), 
+		m_pLevelTexture->GetDC(), 
+		0, 0, 
+		m_pLevelTexture->GetWidth(),
+		m_pLevelTexture->GetHeight(),
+		RGB(255, 0, 255));*/
 }
 
 void Start_Scene::Release()

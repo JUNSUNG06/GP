@@ -36,7 +36,9 @@ void Button::Render(HDC _dc)
 {
 	Vec2 vPos = GetPos();
 	Vec2 vScale = GetScale();
-	RECT rt = { vPos.x - vScale.x / 2, vPos.y - vScale.y / 2, vPos.x + vScale.x / 2, vPos.y + vScale.y / 2 };
+	RECT rt = { vPos.x - vScale.x / 2, vPos.y - vScale.y / 2
+		, vPos.x + vScale.x / 2, vPos.y + vScale.y / 2 };
 	RECT_RENDER(vPos.x, vPos.y, vScale.x, vScale.y, _dc);
-	DrawText(_dc, m_sText.c_str(), -1, &rt, DT_CENTER | DT_VCENTER | DT_SINGLELINE);
+	DrawText(_dc, m_sText.c_str(), -1, &rt
+		, DT_CENTER | DT_VCENTER | DT_SINGLELINE);
 }

@@ -55,5 +55,6 @@ enum class EVENT_TYPE
 
 enum class SITUATION_TYPE
 {
-
+	REVERSEGRAVITY,
+	END
 };

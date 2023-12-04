@@ -11,9 +11,13 @@ public:
 	virtual void EndSituation() = 0;
 
 public:
+	float GetDuration() { return m_fDuration; }
+
+public:
 	SITUATION_TYPE GetSituationType() { return m_eSituationType; }
 
 protected:
 	SITUATION_TYPE m_eSituationType;
+	float m_fDuration;
 };
 

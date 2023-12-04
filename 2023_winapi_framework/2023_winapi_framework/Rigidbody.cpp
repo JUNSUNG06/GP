@@ -4,7 +4,7 @@
 
 Rigidbody::Rigidbody(Object* _pOwner)
 	: m_pOwner(nullptr)
-	, m_fGravityScale(-9.81f)
+	, m_fGravityScale(500.f)
 	, m_fBounciness(0)
 	, m_bUseGravity(true)
 	, m_bApplyGravity(true)
@@ -17,7 +17,7 @@ Rigidbody::~Rigidbody()
 {
 }
 
-void Rigidbody::FinalUpdate()
+void Rigidbody::Update()
 {
 	if (m_bUseGravity == true && m_bApplyGravity == true)
 	{
@@ -31,7 +31,7 @@ void Rigidbody::ReverseGravity(bool _bReverseGravity)
 
 	m_fGravityScale = abs(m_fGravityScale);
 
-	if (m_bReverseGravity == false)
+	if (m_bReverseGravity == true)
 		m_fGravityScale *= -1;
 }
 

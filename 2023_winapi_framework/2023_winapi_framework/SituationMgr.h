@@ -18,7 +18,9 @@ public:
 	void Init();
 	void Udpate();
 	void Release();
-	void ChangeSituation(SITUATION_TYPE _situationType);
+	void SetSituation(SITUATION_TYPE _situationType);
+	void StartSituation();
+	void EndSituation();
 
 public:
 	Situation* GetCurrentSituation() { return m_pCurrentSituation; }
@@ -27,6 +29,7 @@ public:
 
 private: 
 	std::unordered_map<SITUATION_TYPE, Situation*> m_umSituationMap;
-	Situation* m_pCurrentSituation;
+	Situation* m_pCurrentSituation;	
+	float m_fCurrentSituationTime;
 };
 
