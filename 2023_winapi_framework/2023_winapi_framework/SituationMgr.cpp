@@ -3,6 +3,7 @@
 #include "Situation.h"
 #include "ReverseGravitySituation.h"
 #include "ReverseInputSituation.h"
+#include "IncreseMoveSpeedSituation.h"
 #include "TimeMgr.h"
 #include <time.h>
 
@@ -13,10 +14,12 @@ void SituationMgr::Init()
 
 	SITUATION_TYPE situationType;
 
-	situationType = SITUATION_TYPE::REVERSEGRAVITY;
+	situationType = SITUATION_TYPE::REVERSE_GRAVITY;
 	RegistSituation(situationType, new ReverseGravitySituation(situationType));
-	situationType = SITUATION_TYPE::REVERSEINPUT;
+	situationType = SITUATION_TYPE::REVERSE_INPUT;
 	RegistSituation(situationType, new ReverseInputSituation(situationType));
+	situationType = SITUATION_TYPE::INCREASE_MOVE_SPEED;
+	RegistSituation(situationType, new IncreseMoveSpeedSituation(situationType));
 	
 	m_fCurrentSituationTime = 0;
 	m_fSituationChagneInterval = 5.f;
