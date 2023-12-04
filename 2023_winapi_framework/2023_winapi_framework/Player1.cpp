@@ -26,11 +26,13 @@ Player1::Player1()
 	, m_bCanMoveLeft(true)
 	, m_bCanMoveRight(true)
 {
+	m_pHandTex = ResMgr::GetInst()->TexLoad(L"Player1_Hand", L"Texture\\Player1_Hand.bmp");
 	CreateCollider();
 	GetCollider()->SetScale(Vec2(20.f, 30.f));
 	m_pRigidbody = new Rigidbody(this);
 	m_pTex = ResMgr::GetInst()->TexLoad(L"Player1", L"Texture\\Player1.bmp");
 	SetMoveKey(KEY_TYPE::RIGHT, KEY_TYPE::LEFT);
+	m_fHandDis = 45.f;
 }
 
 Player1::~Player1()
@@ -56,7 +58,7 @@ void Player1::Update()
 		{
 			Attack();
 			m_fCurFireDelay = 0;
-		}\
+		}
 	}
 }
 
@@ -64,6 +66,9 @@ void Player1::Render(HDC _dc)
 {
 	Vec2 vPos = GetPos();
 	Vec2 vScale = GetScale();
+	Vec2 vDir = { m_pEnemy->GetPos().x - GetPos().x,
+		m_pEnemy->GetPos().y - GetPos().y };
+	vDir = vDir.Normalize();
 
 	Component_Render(_dc);
 
@@ -73,6 +78,31 @@ void Player1::Render(HDC _dc)
 		, m_pTex->GetWidth(), m_pTex->GetHeight(), m_pTex->GetDC()
 		, 0, 0, m_pTex->GetWidth(), m_pTex->GetHeight(), RGB(255,0,255));
 
+#pragma region hand
+	if (vDir.x > 0)
+	{
+		StretchBlt(_dc
+			, (int)(vPos.x - m_pHandTex->GetWidth() / 2) + vDir.x * m_fHandDis
+			, (int)(vPos.y - m_pHandTex->GetHeight() / 2) + vDir.y * m_fHandDis
+			, m_pHandTex->GetWidth(), m_pHandTex->GetHeight(), m_pHandTex->GetDC()
+			, 0, 0, m_pHandTex->GetWidth(), m_pHandTex->GetHeight(), SRCCOPY);
+	}
+	else
+	{
+		StretchBlt(_dc
+			, (int)(vPos.x - m_pHandTex->GetWidth() / 2) + vDir.x * m_fHandDis + m_pHandTex->GetWidth()
+			, (int)(vPos.y - m_pHandTex->GetHeight() / 2) + vDir.y * m_fHandDis
+			, -m_pHandTex->GetWidth(), m_pHandTex->GetHeight(), m_pHandTex->GetDC()
+			, 0, 0, m_pHandTex->GetWidth(), m_pHandTex->GetHeight(), SRCCOPY);
+	}
+#pragma endregion
+
+	//TransparentBlt(_dc
+	//	, (int)(vPos.x - vScale.x / 2) + vDir.x * m_fHandDis
+	//	, (int)(vPos.y - vScale.y / 2) + vDir.y * m_fHandDis
+	//	, -m_pHandTex->GetWidth(), m_pHandTex->GetHeight(), m_pHandTex->GetDC()
+	//	, 0, 0, m_pHandTex->GetWidth(), m_pHandTex->GetHeight(), RGB(255, 0, 255));
+	
 	/*Rectangle(_dc,
 		vPos.x - vScale.x / 2 + 5, vPos.y - vScale.y / 2,
 		vPos.x + vScale.x / 2 - 5, vPos.y);*/

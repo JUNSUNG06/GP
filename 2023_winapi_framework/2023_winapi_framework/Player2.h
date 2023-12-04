@@ -34,6 +34,7 @@ public:
     //
 private:
     Texture* m_pTex;
+    Texture* m_pHandTex;
     int m_iHP;
     bool m_bIsDie;
     float m_fPlayerSpeed;
@@ -41,6 +42,7 @@ private:
     float m_fCurFireDelay;
     float m_fBulletSpeed;
     float m_fJumpPower;
+    float m_fHandDis;
     bool m_bIsGround;
     bool m_bCanMoveRight;
     bool m_bCanMoveLeft;

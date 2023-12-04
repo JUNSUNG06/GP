@@ -207,6 +207,9 @@
     <ClInclude Include="IncreseMoveSpeedSituation.h">
       <Filter>Engine\09. ETC\Situation</Filter>
     </ClInclude>
+    <ClInclude Include="RotateMapSituation.h">
+      <Filter>Engine\09. ETC\Situation</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="2023_winapi_framework.rc">
@@ -330,6 +333,9 @@
       <Filter>Engine\09. ETC\Situation</Filter>
     </ClCompile>
     <ClCompile Include="IncreseMoveSpeedSituation.cpp">
+      <Filter>Engine\09. ETC\Situation</Filter>
+    </ClCompile>
+    <ClCompile Include="RotateMapSituation.cpp">
       <Filter>Engine\09. ETC\Situation</Filter>
     </ClCompile>
   </ItemGroup>

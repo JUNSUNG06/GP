@@ -201,6 +201,7 @@
     <ClInclude Include="ReverseGravitySituation.h" />
     <ClInclude Include="ReverseInputSituation.h" />
     <ClInclude Include="Rigidbody.h" />
+    <ClInclude Include="RotateMapSituation.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneMgr.h" />
     <ClInclude Include="SelectGDI.h" />
@@ -242,6 +243,7 @@
     <ClCompile Include="ReverseGravitySituation.cpp" />
     <ClCompile Include="ReverseInputSituation.cpp" />
     <ClCompile Include="Rigidbody.cpp" />
+    <ClCompile Include="RotateMapSituation.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SceneMgr.cpp" />
     <ClCompile Include="SelectGDI.cpp" />

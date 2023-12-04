@@ -13,5 +13,6 @@ public:
 private:
     Texture* m_pCollisionTexture;
     Texture* m_pLevelTexture;
+    float m_fLevelRotation;
 };
 

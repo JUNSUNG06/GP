@@ -17,5 +17,6 @@ public:
 	
 private:
 	Texture* m_texColorImgae;
+	float m_fTextureRotation;
 };
 
