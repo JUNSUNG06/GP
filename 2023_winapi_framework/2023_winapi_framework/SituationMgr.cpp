@@ -2,22 +2,26 @@
 #include "SituationMgr.h"
 #include "Situation.h"
 #include "ReverseGravitySituation.h"
+#include "ReverseInputSituation.h"
 #include "TimeMgr.h"
 #include <time.h>
 
 void SituationMgr::Init()
 {
 	m_pCurrentSituation = nullptr;
+	srand((unsigned int)time(NULL));
 
 	SITUATION_TYPE situationType;
 
 	situationType = SITUATION_TYPE::REVERSEGRAVITY;
 	RegistSituation(situationType, new ReverseGravitySituation(situationType));
+	situationType = SITUATION_TYPE::REVERSEINPUT;
+	RegistSituation(situationType, new ReverseInputSituation(situationType));
+	
 	m_fCurrentSituationTime = 0;
 	m_fSituationChagneInterval = 5.f;
 	m_fCurrentSitautionChangeTime = 0.f;
 	m_bInSituation = false;
-	srand((unsigned int)time(NULL));
 }
 
 void SituationMgr::Udpate()

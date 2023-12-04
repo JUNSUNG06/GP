@@ -198,6 +198,7 @@
     <ClInclude Include="ResultMgr.h" />
     <ClInclude Include="Result_Scene.h" />
     <ClInclude Include="ReverseGravitySituation.h" />
+    <ClInclude Include="ReverseInputSituation.h" />
     <ClInclude Include="Rigidbody.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneMgr.h" />
@@ -237,6 +238,7 @@
     <ClCompile Include="ResultMgr.cpp" />
     <ClCompile Include="Result_Scene.cpp" />
     <ClCompile Include="ReverseGravitySituation.cpp" />
+    <ClCompile Include="ReverseInputSituation.cpp" />
     <ClCompile Include="Rigidbody.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SceneMgr.cpp" />

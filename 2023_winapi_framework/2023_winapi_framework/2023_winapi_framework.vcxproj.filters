@@ -201,6 +201,9 @@
     <ClInclude Include="GameMgr.h">
       <Filter>Engine\03. Manager\GameMgr</Filter>
     </ClInclude>
+    <ClInclude Include="ReverseInputSituation.h">
+      <Filter>Engine\09. ETC\Situation</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="2023_winapi_framework.rc">
@@ -319,6 +322,9 @@
     </ClCompile>
     <ClCompile Include="GameMgr.cpp">
       <Filter>Engine\03. Manager\GameMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="ReverseInputSituation.cpp">
+      <Filter>Engine\09. ETC\Situation</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

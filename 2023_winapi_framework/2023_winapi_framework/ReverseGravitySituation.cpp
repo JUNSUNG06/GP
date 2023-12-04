@@ -8,6 +8,7 @@ ReverseGravitySituation::ReverseGravitySituation(SITUATION_TYPE _eSitutationType
 	m_pPlayer1Rigidbody = nullptr;
 	m_pPlayer2Rigidbody = nullptr;
 	m_fDuration = 3.f;
+	m_sDescription = L"중력이 반전됩니다.";
 }
 
 ReverseGravitySituation::~ReverseGravitySituation()

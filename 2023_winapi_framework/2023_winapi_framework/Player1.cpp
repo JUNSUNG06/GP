@@ -30,6 +30,7 @@ Player1::Player1()
 	GetCollider()->SetScale(Vec2(20.f, 30.f));
 	m_pRigidbody = new Rigidbody(this);
 	m_pTex = ResMgr::GetInst()->TexLoad(L"Player1", L"Texture\\Player1.bmp");
+	SetMoveKey(KEY_TYPE::RIGHT, KEY_TYPE::LEFT);
 }
 
 Player1::~Player1()
@@ -176,20 +177,20 @@ void Player1::Move()
 #pragma endregion
 
 #pragma region move
-	if (KEY_PRESS(KEY_TYPE::LEFT) && m_bCanMoveLeft)
+	if (KEY_PRESS(m_eLeftMoveKey) && m_bCanMoveLeft)
 	{
 		m_pRigidbody->SetHorizontalVelocity(-m_fPlayerSpeed);
 	}
-	else if (KEY_UP(KEY_TYPE::LEFT))
+	else if (KEY_UP(m_eLeftMoveKey))
 	{
 		m_pRigidbody->SetHorizontalVelocity(0);
 	}
 
-	if (KEY_PRESS(KEY_TYPE::RIGHT) && m_bCanMoveRight)
+	if (KEY_PRESS(m_eRightMoveKey) && m_bCanMoveRight)
 	{
 		m_pRigidbody->SetHorizontalVelocity(m_fPlayerSpeed);
 	}
-	else if (KEY_UP(KEY_TYPE::RIGHT))
+	else if (KEY_UP(m_eRightMoveKey))
 	{
 		m_pRigidbody->SetHorizontalVelocity(0);
 	}
