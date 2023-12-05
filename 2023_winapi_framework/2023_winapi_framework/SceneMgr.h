@@ -15,6 +15,10 @@ public:
 	{
 		return m_pCurScene;
 	}
+	std::shared_ptr<Scene>& GetScene(wstring name)
+	{
+		return m_mapScenes[name];
+	}
 private:
 	// 스마트 포인터
 	std::shared_ptr<Scene> m_pCurScene; // 현재 씬

@@ -5,6 +5,7 @@
 #include "ReverseInputSituation.h"
 #include "IncreseMoveSpeedSituation.h"
 #include "TimeMgr.h"
+#include "SceneMgr.h"
 #include <time.h>
 
 void SituationMgr::Init()
@@ -29,6 +30,12 @@ void SituationMgr::Init()
 
 void SituationMgr::Udpate()
 {
+	if (SceneMgr::GetInst()->GetCurScene() !=
+		SceneMgr::GetInst()->GetScene(L"Start_Scene"))
+	{
+		return;
+	}
+
 	if (m_bInSituation)
 	{
 		if (m_pCurrentSituation != nullptr)
@@ -61,6 +68,12 @@ void SituationMgr::Release()
 
 void SituationMgr::StartSituation()
 {
+	if (SceneMgr::GetInst()->GetCurScene() !=
+		SceneMgr::GetInst()->GetScene(L"Start_Scene"))
+	{
+		return;
+	}
+
 	m_fCurrentSituationTime = 0;
 
 	if (m_pCurrentSituation != nullptr)

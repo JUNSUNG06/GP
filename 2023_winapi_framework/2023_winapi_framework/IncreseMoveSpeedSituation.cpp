@@ -9,7 +9,7 @@ IncreseMoveSpeedSituation::IncreseMoveSpeedSituation(SITUATION_TYPE _eSitutation
 {
 	m_pPlayer1 = nullptr;
 	m_pPlayer2 = nullptr;
-	m_fDuration = 3.f;
+	m_fDuration = 5.f;
 	m_sDescription = L"이동속도가 증가합니다.";
 }
 
@@ -26,8 +26,10 @@ void IncreseMoveSpeedSituation::StartSituation()
 	m_pPlayer1 = GameMgr::GetInst()->GetPlayer1();
 	m_pPlayer2 = GameMgr::GetInst()->GetPlayer2();
 
-	m_pPlayer1->SetPlayerSpeed(300.f);
-	m_pPlayer2->SetPlayerSpeed(300.f);
+	if (m_pPlayer1 != nullptr)
+		m_pPlayer1->SetPlayerSpeed(300.f);
+	if (m_pPlayer2 != nullptr)
+		m_pPlayer2->SetPlayerSpeed(300.f);
 }
 
 void IncreseMoveSpeedSituation::UpdateSituation()
@@ -36,6 +38,8 @@ void IncreseMoveSpeedSituation::UpdateSituation()
 
 void IncreseMoveSpeedSituation::EndSituation()
 {
-	m_pPlayer1->SetPlayerSpeed(100.f);
-	m_pPlayer2->SetPlayerSpeed(100.f);
+	if (m_pPlayer1 != nullptr)
+		m_pPlayer1->SetPlayerSpeed(100.f);
+	if (m_pPlayer2 != nullptr)
+		m_pPlayer2->SetPlayerSpeed(100.f);
 }

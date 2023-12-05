@@ -65,9 +65,6 @@
     <Filter Include="Engine\03. Manager\PixelCollision">
       <UniqueIdentifier>{e2345a56-19e8-43f5-97ba-aa0035b0a6a4}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Engine\03. Manager\ResultManager">
-      <UniqueIdentifier>{1285423d-d783-4c24-9381-094392628156}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Engine\09. ETC">
       <UniqueIdentifier>{0d1f8c44-5979-487d-844a-561ad31e6dba}</UniqueIdentifier>
     </Filter>
@@ -76,6 +73,9 @@
     </Filter>
     <Filter Include="Engine\03. Manager\GameMgr">
       <UniqueIdentifier>{f7eb17eb-1399-47a7-b52c-5494c9dc5d1c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\03. Manager\ResultManager">
+      <UniqueIdentifier>{1285423d-d783-4c24-9381-094392628156}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

@@ -7,7 +7,7 @@
 ReverseInputSituation::ReverseInputSituation(SITUATION_TYPE _eSitutationType)
 	: Situation(_eSitutationType)
 {
-	m_fDuration = 3.f;
+	m_fDuration = 5.f;
 	m_pPlayer1 = nullptr;
 	m_pPlayer2 = nullptr;
 	m_sDescription = L"이동이 반전됩니다.";
@@ -26,8 +26,10 @@ void ReverseInputSituation::StartSituation()
 	m_pPlayer1 = GameMgr::GetInst()->GetPlayer1();
 	m_pPlayer2 = GameMgr::GetInst()->GetPlayer2();
 
-	m_pPlayer1->SetMoveKey(KEY_TYPE::LEFT, KEY_TYPE::RIGHT);
-	m_pPlayer2->SetMoveKey(KEY_TYPE::A, KEY_TYPE::D);
+	if (m_pPlayer1 != nullptr)
+		m_pPlayer1->SetMoveKey(KEY_TYPE::LEFT, KEY_TYPE::RIGHT);
+	if (m_pPlayer2 != nullptr)
+		m_pPlayer2->SetMoveKey(KEY_TYPE::A, KEY_TYPE::D);
 }
 
 void ReverseInputSituation::UpdateSituation()
@@ -36,6 +38,8 @@ void ReverseInputSituation::UpdateSituation()
 
 void ReverseInputSituation::EndSituation()
 {
-	m_pPlayer1->SetMoveKey(KEY_TYPE::RIGHT, KEY_TYPE::LEFT);
-	m_pPlayer2->SetMoveKey(KEY_TYPE::D, KEY_TYPE::A);
+	if (m_pPlayer1 != nullptr)
+		m_pPlayer1->SetMoveKey(KEY_TYPE::RIGHT, KEY_TYPE::LEFT);
+	if (m_pPlayer2 != nullptr)
+		m_pPlayer2->SetMoveKey(KEY_TYPE::D, KEY_TYPE::A);
 }
