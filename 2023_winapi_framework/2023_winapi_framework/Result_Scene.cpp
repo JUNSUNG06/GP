@@ -44,6 +44,7 @@ void Result_Scene::Update()
 void Result_Scene::Render(HDC _dc)
 {
 
+	Scene::Render(_dc);
 
 	if (!ResultMgr::GetInst()->GetMatchEnd()) {
 		wstring score = std::to_wstring(ResultMgr::GetInst()->GetPlayer1Wins()) + L" : " + std::to_wstring(ResultMgr::GetInst()->GetPlayer2Wins());
@@ -107,7 +108,6 @@ void Result_Scene::Render(HDC _dc)
 		TextOut(_dc, (Core::GetInst()->GetResolution().x / 2) - result.length() * 5.2,
 			(Core::GetInst()->GetResolution().y / 2) + 100, result.c_str(), result.length());
 	}
-	Scene::Render(_dc);
 }
 
 void Result_Scene::Release()
