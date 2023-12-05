@@ -7,6 +7,7 @@
 #include "SelectGDI.h"
 #include "ResMgr.h"
 #include "Explanation_Scene.h"
+#include "ResultMgr.h" // add
 void Intro_Scene::Init()
 {
 	SetBackground(L"Background_Intro", L"Texture\\Background_Intro.bmp");
@@ -27,13 +28,18 @@ void Intro_Scene::Init()
 	obj->SetScale(Vec2(100.f, 30.f));
 	AddObject(obj, OBJECT_GROUP::UI);
 
-	obj = new Button([]() { SceneMgr::GetInst()->LoadScene(L"Explanation_Scene"); }, L"게임 설명");
+	obj = new Button([]() { SceneMgr::GetInst()->LoadScene(L"Explanation_Scene"); }, L"게임 설명"); 
 	obj->SetPos((Vec2({ Core::GetInst()->GetResolution().x / 2, Core::GetInst()->GetResolution().y / 2 + 60 })));
 	obj->SetScale(Vec2(100.f, 30.f));
 	AddObject(obj, OBJECT_GROUP::UI);
 
 	obj = new Button([]() { SendMessage(Core::GetInst()->GetHwnd(), WM_CLOSE, 0, 0); }, L"게임 종료");
 	obj->SetPos((Vec2({ Core::GetInst()->GetResolution().x / 2, Core::GetInst()->GetResolution().y / 2 + 120 })));
+	obj->SetScale(Vec2(100.f, 30.f));
+	AddObject(obj, OBJECT_GROUP::UI);
+
+	obj = new Button([]() { ResultMgr::GetInst()->PlayerDied(1); SceneMgr::GetInst()->LoadScene(L"Result_Scene"); }, L"resulttest");
+	obj->SetPos((Vec2({ Core::GetInst()->GetResolution().x / 2, Core::GetInst()->GetResolution().y / 2 + 180 })));
 	obj->SetScale(Vec2(100.f, 30.f));
 	AddObject(obj, OBJECT_GROUP::UI);
 }
