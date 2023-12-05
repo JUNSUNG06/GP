@@ -35,8 +35,8 @@ void Result_Scene::Update()
 		}
 	}
 	else {
-		if (m_fCurTime >= 1)
-			SceneMgr::GetInst()->LoadScene(L"Intro_Scene"); // it was Start_Scene
+		if (m_fCurTime >= 2)
+			SceneMgr::GetInst()->LoadScene(L"Start_Scene"); // it was Start_Scene
 	}
 	Scene::Update();
 }
@@ -47,8 +47,10 @@ void Result_Scene::Render(HDC _dc)
 	Scene::Render(_dc);
 
 	if (!ResultMgr::GetInst()->GetMatchEnd()) {
+		RECT_RENDER(Core::GetInst()->GetResolution().x / 2, Core::GetInst()->GetResolution().y / 2 , 100, 50, _dc);
+
 		wstring score = std::to_wstring(ResultMgr::GetInst()->GetPlayer1Wins()) + L" : " + std::to_wstring(ResultMgr::GetInst()->GetPlayer2Wins());
-		TextOut(_dc, (Core::GetInst()->GetResolution().x / 2) - score.length() * 5.2,
+		TextOut(_dc, (Core::GetInst()->GetResolution().x / 2) - score.length() * 4,
 			(Core::GetInst()->GetResolution().y / 2) - 10, score.c_str(), score.length());
 
 		ResMgr::GetInst()->TexLoad(L"Player1", L"Texture\\Player1.bmp");

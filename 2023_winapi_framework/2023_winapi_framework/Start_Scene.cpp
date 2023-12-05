@@ -75,7 +75,7 @@ void Start_Scene::Init()
 	CollisionMgr::GetInst()->CheckGroup(OBJECT_GROUP::PLAYER, OBJECT_GROUP::BULLET2);
 	CollisionMgr::GetInst()->CheckGroup(OBJECT_GROUP::PLAYER2, OBJECT_GROUP::BULLET);
 
-	SituationMgr::GetInst()->SetSituation(SITUATION_TYPE::REVERSEGRAVITY);
+	SituationMgr::GetInst()->SetSituation(SITUATION_TYPE::REVERSE_GRAVITY);
 	SituationMgr::GetInst()->StartSituation();
 
 	//ui
@@ -94,12 +94,14 @@ void Start_Scene::Render(HDC _dc)
 	Scene::Render(_dc);
 
 	//heart ui
-	int player1hp = GameMgr::GetInst()->GetPlayer1()->GetPlayerHP();
+	long long player1hp = GameMgr::GetInst()->GetPlayer1()->GetPlayerHP();
 	int Width = ResMgr::GetInst()->TexFind(L"Heart")->GetWidth();
 	int Height = ResMgr::GetInst()->TexFind(L"Heart")->GetHeight();
 	Vec2 vPos = { 10, 10 };
 	Vec2 vScale = { 30, 30 };
-	for (size_t i = 0; i < player1hp; i++)
+	if ((player1hp) < 0 || (player1hp) > 50)
+		player1hp = 0;
+	for (size_t i = 0; i < (player1hp); i++)
 	{
 		TransparentBlt(_dc
 			, (int)(vPos.x - vScale.x / 2)
@@ -109,9 +111,12 @@ void Start_Scene::Render(HDC _dc)
 		vPos.x += Width + 10;
 	}
 
+
 	int player2hp = GameMgr::GetInst()->GetPlayer2()->GetPlayerHP();
-	 vPos = { 1490,  10 };
-	 vScale = { 30, 30 };
+	vPos = { 1490,  10 };
+	vScale = { 30, 30 };
+	if ((player2hp) < 0 || (player2hp) > 50)
+		player2hp = 0;
 	for (size_t i = 0; i < player2hp; i++)
 	{
 		TransparentBlt(_dc

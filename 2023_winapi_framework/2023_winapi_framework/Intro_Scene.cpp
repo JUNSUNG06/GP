@@ -37,11 +37,6 @@ void Intro_Scene::Init()
 	obj->SetPos((Vec2({ Core::GetInst()->GetResolution().x / 2, Core::GetInst()->GetResolution().y / 2 + 120 })));
 	obj->SetScale(Vec2(100.f, 30.f));
 	AddObject(obj, OBJECT_GROUP::UI);
-
-	obj = new Button([]() { ResultMgr::GetInst()->PlayerDied(1); SceneMgr::GetInst()->LoadScene(L"Result_Scene"); }, L"resulttest");
-	obj->SetPos((Vec2({ Core::GetInst()->GetResolution().x / 2, Core::GetInst()->GetResolution().y / 2 + 180 })));
-	obj->SetScale(Vec2(100.f, 30.f));
-	AddObject(obj, OBJECT_GROUP::UI);
 }
 
 void Intro_Scene::Render(HDC _dc)

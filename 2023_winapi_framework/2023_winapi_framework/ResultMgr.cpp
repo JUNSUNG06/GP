@@ -19,7 +19,7 @@ void ResultMgr::Update()
 {
 	if (m_bIsGameEnded)
 		m_fCurTime += fDT;
-	if (m_fCurTime >= 3) {
+	if (m_fCurTime >= 1) {
 		SceneMgr::GetInst()->LoadScene(L"Result_Scene");
 		m_bIsGameEnded = false;
 		m_fCurTime = 0;
