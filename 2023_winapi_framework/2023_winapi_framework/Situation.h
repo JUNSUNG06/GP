@@ -15,9 +15,11 @@ public:
 
 public:
 	SITUATION_TYPE GetSituationType() { return m_eSituationType; }
+	wstring GetDescription() { return m_sDescription; }
 
 protected:
 	SITUATION_TYPE m_eSituationType;
 	float m_fDuration;
+	wstring m_sDescription;
 };
 

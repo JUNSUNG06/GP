@@ -21,6 +21,11 @@ public:
     void SetPlayerSpeed(float _speed) { m_fPlayerSpeed = _speed; }
     void SetFireDelay(float _delay) { m_fFireDelay = _delay; }
     void SetJumpPower(float _fValue) { m_fJumpPower = _fValue; }
+    void SetMoveKey(KEY_TYPE rightKey, KEY_TYPE leftKey)
+    {
+        m_eRightMoveKey = rightKey;
+        m_eLeftMoveKey = leftKey;
+    }
     void Attack();
     void Move();
     void Jump();
@@ -30,6 +35,7 @@ public:
     //
 private:
     Texture* m_pTex;
+    Texture* m_pHandTex;
     int m_iHP;
     bool m_bIsDie;
     float m_fPlayerSpeed;
@@ -37,6 +43,7 @@ private:
     float m_fCurFireDelay;
     float m_fBulletSpeed;
     float m_fJumpPower;
+    float m_fHandDis;
     bool m_bIsGround;
     bool m_bCanMoveRight;
     bool m_bCanMoveLeft;
@@ -44,4 +51,7 @@ private:
     Object* m_pEnemy;
     //
     Rigidbody* m_pRigidbody;
+
+    KEY_TYPE m_eRightMoveKey;
+    KEY_TYPE m_eLeftMoveKey;
 };

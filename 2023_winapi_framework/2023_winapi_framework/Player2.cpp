@@ -11,6 +11,7 @@
 #include "Rigidbody.h"
 #include "PixelCollision.h"
 #include "Texture.h"
+#include "Core.h"
 
 Player2::Player2()
 	: m_pTex(nullptr)
@@ -26,11 +27,13 @@ Player2::Player2()
 	, m_bCanMoveLeft(true)
 	, m_bCanMoveRight(true)
 {
+	m_pHandTex = ResMgr::GetInst()->TexLoad(L"Player2_Hand", L"Texture\\Player2_Hand.bmp");
 	CreateCollider();
 	GetCollider()->SetScale(Vec2(20.f, 30.f));
 	m_pRigidbody = new Rigidbody(this);
 	m_pTex = ResMgr::GetInst()->TexLoad(L"Player2", L"Texture\\Player2.bmp");
-
+	SetMoveKey(KEY_TYPE::D, KEY_TYPE::A);
+	m_fHandDis = 45.f;
 }
 
 Player2::~Player2()
@@ -58,12 +61,25 @@ void Player2::Update()
 			m_fCurFireDelay = 0;
 		}
 	}
+
+	POINT pRes = Core::GetInst()->GetResolution();
+
+	if (vPos.x < 0 || vPos.y < 0 || vPos.x > pRes.x || vPos.y > pRes.y)
+	{
+		m_iHP = 0;
+		m_bIsDie = true;
+		ResultMgr::GetInst()->PlayerDied(1);
+		EventMgr::GetInst()->DeleteObject(this);
+	}
 }
 
 void Player2::Render(HDC _dc)
 {
 	Vec2 vPos = GetPos();
 	Vec2 vScale = GetScale();
+	Vec2 vDir = { m_pEnemy->GetPos().x - GetPos().x,
+		m_pEnemy->GetPos().y - GetPos().y };
+	vDir = vDir.Normalize();
 
 	Component_Render(_dc);
 
@@ -72,6 +88,35 @@ void Player2::Render(HDC _dc)
 		, (int)(vPos.y - vScale.y / 2)
 		, m_pTex->GetWidth(), m_pTex->GetHeight(), m_pTex->GetDC()
 		, 0, 0, m_pTex->GetWidth(), m_pTex->GetHeight(), RGB(255, 0, 255));
+
+#pragma region hand
+	if (vDir.x > 0)
+	{
+		StretchBlt(_dc
+			, (int)(vPos.x - m_pHandTex->GetWidth() / 2) + vDir.x * m_fHandDis
+			, (int)(vPos.y - m_pHandTex->GetHeight() / 2) + vDir.y * m_fHandDis
+			, m_pHandTex->GetWidth(), m_pHandTex->GetHeight(), m_pHandTex->GetDC()
+			, 0, 0, m_pHandTex->GetWidth(), m_pHandTex->GetHeight(), SRCCOPY);
+	}
+	else
+	{
+		StretchBlt(_dc
+			, (int)(vPos.x - m_pHandTex->GetWidth() / 2) + vDir.x * m_fHandDis + m_pHandTex->GetWidth()
+			, (int)(vPos.y - m_pHandTex->GetHeight() / 2) + vDir.y * m_fHandDis
+			, -m_pHandTex->GetWidth(), m_pHandTex->GetHeight(), m_pHandTex->GetDC()
+			, 0, 0, m_pHandTex->GetWidth(), m_pHandTex->GetHeight(), SRCCOPY);
+	}
+#pragma endregion
+
+	//TransparentBlt(_dc
+	//	, (int)(vPos.x - vScale.x / 2) + vDir.x * m_fHandDis
+	//	, (int)(vPos.y - vScale.y / 2) + vDir.y * m_fHandDis
+	//	, -m_pHandTex->GetWidth(), m_pHandTex->GetHeight(), m_pHandTex->GetDC()
+	//	, 0, 0, m_pHandTex->GetWidth(), m_pHandTex->GetHeight(), RGB(255, 0, 255));
+
+	/*Rectangle(_dc,
+		vPos.x - vScale.x / 2 + 5, vPos.y - vScale.y / 2,
+		vPos.x + vScale.x / 2 - 5, vPos.y);*/
 }
 
 void Player2::EnterCollision(Collider* _pOther)
@@ -173,20 +218,20 @@ void Player2::Move()
 #pragma endregion
 
 #pragma region move
-	if (KEY_PRESS(KEY_TYPE::A) && m_bCanMoveLeft)
+	if (KEY_PRESS(m_eLeftMoveKey) && m_bCanMoveLeft)
 	{
 		m_pRigidbody->SetHorizontalVelocity(-m_fPlayerSpeed);
 	}
-	else if (KEY_UP(KEY_TYPE::A))
+	else if (KEY_UP(m_eLeftMoveKey))
 	{
 		m_pRigidbody->SetHorizontalVelocity(0);
 	}
 
-	if (KEY_PRESS(KEY_TYPE::D) && m_bCanMoveRight)
+	if (KEY_PRESS(m_eRightMoveKey) && m_bCanMoveRight)
 	{
 		m_pRigidbody->SetHorizontalVelocity(m_fPlayerSpeed);
 	}
-	else if (KEY_UP(KEY_TYPE::D))
+	else if (KEY_UP(m_eRightMoveKey))
 	{
 		m_pRigidbody->SetHorizontalVelocity(0);
 	}

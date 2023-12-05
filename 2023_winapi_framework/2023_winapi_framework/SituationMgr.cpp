@@ -2,28 +2,62 @@
 #include "SituationMgr.h"
 #include "Situation.h"
 #include "ReverseGravitySituation.h"
+#include "ReverseInputSituation.h"
+#include "IncreseMoveSpeedSituation.h"
 #include "TimeMgr.h"
+#include "SceneMgr.h"
+#include <time.h>
 
 void SituationMgr::Init()
 {
 	m_pCurrentSituation = nullptr;
+	srand((unsigned int)time(NULL));
 
 	SITUATION_TYPE situationType;
 
-	situationType = SITUATION_TYPE::REVERSEGRAVITY;
+	situationType = SITUATION_TYPE::REVERSE_GRAVITY;
 	RegistSituation(situationType, new ReverseGravitySituation(situationType));
+	situationType = SITUATION_TYPE::REVERSE_INPUT;
+	RegistSituation(situationType, new ReverseInputSituation(situationType));
+	situationType = SITUATION_TYPE::INCREASE_MOVE_SPEED;
+	RegistSituation(situationType, new IncreseMoveSpeedSituation(situationType));
+	
 	m_fCurrentSituationTime = 0;
+	m_fSituationChagneInterval = 5.f;
+	m_fCurrentSitautionChangeTime = 0.f;
+	m_bInSituation = false;
 }
 
 void SituationMgr::Udpate()
 {
-	if (m_pCurrentSituation != nullptr)
+	if (SceneMgr::GetInst()->GetCurScene() !=
+		SceneMgr::GetInst()->GetScene(L"Start_Scene"))
 	{
-		m_pCurrentSituation->UpdateSituation();
-		m_fCurrentSituationTime += fDT;
+		return;
+	}
 
-		if (m_fCurrentSituationTime >= m_pCurrentSituation->GetDuration())
-			EndSituation();
+	if (m_bInSituation)
+	{
+		if (m_pCurrentSituation != nullptr)
+		{
+			m_pCurrentSituation->UpdateSituation();
+			m_fCurrentSituationTime += fDT;
+
+			if (m_fCurrentSituationTime >= m_pCurrentSituation->GetDuration())
+				EndSituation();
+		}
+	}
+	else
+	{
+		m_fCurrentSitautionChangeTime += fDT;
+
+		if (m_fCurrentSitautionChangeTime >= m_fSituationChagneInterval)
+		{
+			m_fCurrentSitautionChangeTime = 0.f;
+			int type = rand() % (int)SITUATION_TYPE::END;
+			SetSituation((SITUATION_TYPE)type);
+			StartSituation();
+		}
 	}
 }
 
@@ -34,6 +68,12 @@ void SituationMgr::Release()
 
 void SituationMgr::StartSituation()
 {
+	if (SceneMgr::GetInst()->GetCurScene() !=
+		SceneMgr::GetInst()->GetScene(L"Start_Scene"))
+	{
+		return;
+	}
+
 	m_fCurrentSituationTime = 0;
 
 	if (m_pCurrentSituation != nullptr)
@@ -46,6 +86,7 @@ void SituationMgr::EndSituation()
 		m_pCurrentSituation->EndSituation();
 
 	m_pCurrentSituation = nullptr;
+	m_bInSituation = false;
 }
 
 void SituationMgr::SetSituation(SITUATION_TYPE _situationType)
@@ -54,4 +95,5 @@ void SituationMgr::SetSituation(SITUATION_TYPE _situationType)
 		return;
 
 	m_pCurrentSituation = m_umSituationMap[_situationType];
+	m_bInSituation = true;
 }

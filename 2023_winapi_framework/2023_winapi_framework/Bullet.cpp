@@ -11,7 +11,7 @@ Bullet::Bullet()
 	, m_iDmg(1)
 	, m_pTex(nullptr)
 {
-	m_pTex = ResMgr::GetInst()->TexLoad(L"Bullet", L"Texture\\Bullet.bmp");
+	m_pTex = ResMgr::GetInst()->TexLoad(L"MyBullet", L"Texture\\MyBullet.bmp");
 	CreateCollider();
 }
 
