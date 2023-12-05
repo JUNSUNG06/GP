@@ -11,6 +11,7 @@
 #include "Rigidbody.h"
 #include "PixelCollision.h"
 #include "Texture.h"
+#include "Core.h"
 
 Player2::Player2()
 	: m_pTex(nullptr)
@@ -59,6 +60,16 @@ void Player2::Update()
 			Attack();
 			m_fCurFireDelay = 0;
 		}
+	}
+
+	POINT pRes = Core::GetInst()->GetResolution();
+
+	if (vPos.x < 0 || vPos.y < 0 || vPos.x > pRes.x || vPos.y > pRes.y)
+	{
+		m_iHP = 0;
+		m_bIsDie = true;
+		ResultMgr::GetInst()->PlayerDied(1);
+		EventMgr::GetInst()->DeleteObject(this);
 	}
 }
 
