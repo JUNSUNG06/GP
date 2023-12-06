@@ -75,9 +75,6 @@ void Start_Scene::Init()
 	CollisionMgr::GetInst()->CheckGroup(OBJECT_GROUP::PLAYER, OBJECT_GROUP::BULLET2);
 	CollisionMgr::GetInst()->CheckGroup(OBJECT_GROUP::PLAYER2, OBJECT_GROUP::BULLET);
 
-	SituationMgr::GetInst()->SetSituation(SITUATION_TYPE::REVERSE_GRAVITY);
-	SituationMgr::GetInst()->StartSituation();
-
 	//ui
 	ResMgr::GetInst()->TexLoad(L"Heart", L"Texture\\Heart.bmp");
 }
