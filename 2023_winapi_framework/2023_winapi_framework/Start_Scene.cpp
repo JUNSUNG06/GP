@@ -87,7 +87,7 @@ void Start_Scene::Update()
 {
 	Scene::Update();
 	if (KEY_DOWN(KEY_TYPE::H)) {
-		CameraMgr::GetInst()->CameraShake(20, 5);
+		CameraMgr::GetInst()->CameraShake(20, 2);
 	}
 	//if(KEY_DOWN(KEY_TYPE::ENTER))
 	//	// ¾À º¯°æ
