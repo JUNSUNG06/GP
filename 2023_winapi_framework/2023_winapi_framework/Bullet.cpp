@@ -7,7 +7,7 @@ Bullet::Bullet()
 //	: m_fDir(-1.f)
 	: m_fTheta(0.f)
 	, m_vDir(Vec2(0.f, 0.f))
-	, m_fSpeed(500.f)
+	, m_fSpeed(1000.f)
 	, m_iDmg(1)
 	, m_pTex(nullptr)
 {

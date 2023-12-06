@@ -101,23 +101,6 @@ void Player2::Render(HDC _dc)
 		, 0, 0, m_pTex->GetWidth(), m_pTex->GetHeight(), RGB(255, 0, 255));
 
 #pragma region hand
-	/*if (vDir.x > 0)
-	{
-		StretchBlt(_dc
-			, (int)(vPos.x - m_pHandTex->GetWidth() / 2) + vDir.x * m_fHandDis
-			, (int)(vPos.y - m_pHandTex->GetHeight() / 2) + vDir.y * m_fHandDis
-			, m_pHandTex->GetWidth(), m_pHandTex->GetHeight(), m_pHandTex->GetDC()
-			, 0, 0, m_pHandTex->GetWidth(), m_pHandTex->GetHeight(), SRCCOPY);
-	}
-	else
-	{
-		StretchBlt(_dc
-			, (int)(vPos.x - m_pHandTex->GetWidth() / 2) + vDir.x * m_fHandDis + m_pHandTex->GetWidth()
-			, (int)(vPos.y - m_pHandTex->GetHeight() / 2) + vDir.y * m_fHandDis
-			, -m_pHandTex->GetWidth(), m_pHandTex->GetHeight(), m_pHandTex->GetDC()
-			, 0, 0, m_pHandTex->GetWidth(), m_pHandTex->GetHeight(), SRCCOPY);
-	}*/
-
 	HBITMAP hMemBtiamp = CreateCompatibleBitmap(m_pHandTex->GetDC(), m_pHandTex->GetWidth(), m_pHandTex->GetHeight());
 	HDC hMemDc = CreateCompatibleDC(m_pHandTex->GetDC());
 	SelectObject(hMemDc, hMemBtiamp);
@@ -149,16 +132,6 @@ void Player2::Render(HDC _dc)
 		, m_pHandTex->GetHeight()
 		, RGB(255, 0, 255));
 #pragma endregion
-
-	//TransparentBlt(_dc
-	//	, (int)(vPos.x - vScale.x / 2) + vDir.x * m_fHandDis
-	//	, (int)(vPos.y - vScale.y / 2) + vDir.y * m_fHandDis
-	//	, -m_pHandTex->GetWidth(), m_pHandTex->GetHeight(), m_pHandTex->GetDC()
-	//	, 0, 0, m_pHandTex->GetWidth(), m_pHandTex->GetHeight(), RGB(255, 0, 255));
-
-	/*Rectangle(_dc,
-		vPos.x - vScale.x / 2 + 5, vPos.y - vScale.y / 2,
-		vPos.x + vScale.x / 2 - 5, vPos.y);*/
 }
 
 void Player2::EnterCollision(Collider* _pOther)
@@ -166,6 +139,7 @@ void Player2::EnterCollision(Collider* _pOther)
 	const Object* pOtherObj = _pOther->GetObj();
 	if (pOtherObj->GetName() == L"Player1_Bullet")
 	{
+		ResMgr::GetInst()->Play(L"Hit");
 		m_iHP--;
 		if (m_iHP <= 0) {
 			m_bIsDie = true;
@@ -197,6 +171,7 @@ void Player2::Attack()
 		pBullet->SetDir({ m_pEnemy->GetPos().x - GetPos().x, m_pEnemy->GetPos().y - GetPos().y });
 	pBullet->SetName(L"Player2_Bullet");
 	SceneMgr::GetInst()->GetCurScene()->AddObject(pBullet, OBJECT_GROUP::BULLET2);
+	ResMgr::GetInst()->Play(L"Attack");
 }
 
 void Player2::Move()
@@ -214,8 +189,7 @@ void Player2::Move()
 	{
 		m_pRigidbody->SetHorizontalVelocity(0);
 	}
-
-	if (KEY_PRESS(m_eRightMoveKey) && m_bCanMoveRight)
+	else if (KEY_PRESS(m_eRightMoveKey) && m_bCanMoveRight)
 	{
 		m_pRigidbody->SetHorizontalVelocity(m_fPlayerSpeed);
 	}
@@ -294,8 +268,6 @@ void Player2::Move()
 		m_bCanMoveRight = true;
 	}
 #pragma endregion
-
-
 }
 
 void Player2::Jump()

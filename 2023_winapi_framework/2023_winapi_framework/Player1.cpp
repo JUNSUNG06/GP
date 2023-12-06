@@ -22,7 +22,7 @@ Player1::Player1()
 	, m_fCurFireDelay(3.f)
 	, m_fBulletSpeed(3.f)
 	, m_pEnemy(nullptr)
-	, m_fJumpPower(400.f)
+	, m_fJumpPower(250.f)
 	, m_bIsGround(false)
 	, m_bCanMoveLeft(true)
 	, m_bCanMoveRight(true)
@@ -48,12 +48,12 @@ void Player1::Update()
 {
 	Vec2 vPos = GetPos();
 
+	CheckCanMove();
 	Move();
 	Jump();
 
 	vPos += m_pRigidbody->GetVelocity() * fDT;
 	SetPos(vPos);
-
 
 	m_fCurFireDelay += fDT;
 	if (m_fCurFireDelay >= m_fFireDelay && m_pEnemy != nullptr) {
@@ -105,10 +105,6 @@ void Player1::Render(HDC _dc)
 	HDC hMemDc = CreateCompatibleDC(m_pHandTex->GetDC());
 	SelectObject(hMemDc, hMemBtiamp);
 
-	/*HBITMAP hMemBtiamp2 = CreateCompatibleBitmap(m_pHandTex->GetDC(), m_pHandTex->GetWidth(), m_pHandTex->GetHeight());
-	HDC hMemDc2 = CreateCompatibleDC(m_pHandTex->GetDC());
-	SelectObject(hMemDc2, hMemBtiamp2);*/
-
 	if (vDir.x > 0)
 	{
 		StretchBlt(hMemDc
@@ -140,16 +136,6 @@ void Player1::Render(HDC _dc)
 	DeleteObject(hMemBtiamp);
 	DeleteDC(hMemDc);
 #pragma endregion
-
-	//TransparentBlt(_dc
-	//	, (int)(vPos.x - vScale.x / 2) + vDir.x * m_fHandDis
-	//	, (int)(vPos.y - vScale.y / 2) + vDir.y * m_fHandDis
-	//	, -m_pHandTex->GetWidth(), m_pHandTex->GetHeight(), m_pHandTex->GetDC()
-	//	, 0, 0, m_pHandTex->GetWidth(), m_pHandTex->GetHeight(), RGB(255, 0, 255));
-	
-	/*Rectangle(_dc,
-		vPos.x - vScale.x / 2 + 5, vPos.y - vScale.y / 2,
-		vPos.x + vScale.x / 2 - 5, vPos.y);*/
 }
 
 void Player1::EnterCollision(Collider* _pOther)
@@ -157,6 +143,7 @@ void Player1::EnterCollision(Collider* _pOther)
 	const Object* pOtherObj = _pOther->GetObj();
 	if (pOtherObj->GetName() == L"Player2_Bullet")
 	{
+		ResMgr::GetInst()->Play(L"Hit");
 		m_iHP--;
 		if (m_iHP <= 0) {
 			m_bIsDie = true;
@@ -188,33 +175,14 @@ void Player1::Attack()
 		pBullet->SetDir({ m_pEnemy->GetPos().x - GetPos().x, m_pEnemy->GetPos().y - GetPos().y });
 	pBullet->SetName(L"Player1_Bullet");
 	SceneMgr::GetInst()->GetCurScene()->AddObject(pBullet, OBJECT_GROUP::BULLET);
+	ResMgr::GetInst()->Play(L"Attack");
 }
 
-void Player1::Move()
+void Player1::CheckCanMove()
 {
 	Vec2 vPos = GetPos();
 	Vec2 vScale = GetScale();
 	POINT checkedPoint = {};
-
-#pragma region move
-	if (KEY_PRESS(m_eLeftMoveKey) && m_bCanMoveLeft)
-	{
-		m_pRigidbody->SetHorizontalVelocity(-m_fPlayerSpeed);
-	}
-	else if (KEY_UP(m_eLeftMoveKey))
-	{
-		m_pRigidbody->SetHorizontalVelocity(0);
-	}
-
-	if (KEY_PRESS(m_eRightMoveKey) && m_bCanMoveRight)
-	{
-		m_pRigidbody->SetHorizontalVelocity(m_fPlayerSpeed);
-	}
-	else if (KEY_UP(m_eRightMoveKey))
-	{
-		m_pRigidbody->SetHorizontalVelocity(0);
-	}
-#pragma endregion
 
 #pragma region check ground, ceiling
 	RECT groundCheckRect;
@@ -223,7 +191,7 @@ void Player1::Move()
 	if (!m_pRigidbody->GetReverseGravity())
 	{
 		groundCheckRect = { (LONG)(vPos.x - vScale.x / 2 + 5), (LONG)(vPos.y),
-							(LONG)(vPos.x + vScale.x / 2 - 5), (LONG)(vPos.y + vScale.y / 2)};
+							(LONG)(vPos.x + vScale.x / 2 - 5), (LONG)(vPos.y + vScale.y / 2) };
 		ceilingCheckRect = { (LONG)(vPos.x - vScale.x / 2 + 5), (LONG)(vPos.y - vScale.y / 2),
 							(LONG)(vPos.x + vScale.x / 2 - 5), (LONG)(vPos.y) };
 	}
@@ -290,8 +258,31 @@ void Player1::Move()
 		m_bCanMoveRight = true;
 	}
 #pragma endregion
+}
 
+void Player1::Move()
+{
+	Vec2 vPos = GetPos();
+	Vec2 vScale = GetScale();
+	POINT checkedPoint = {};
 
+	if (KEY_PRESS(m_eLeftMoveKey) && m_bCanMoveLeft)
+	{
+		m_pRigidbody->SetHorizontalVelocity(-m_fPlayerSpeed);
+	}
+	else if (KEY_UP(m_eLeftMoveKey))
+	{
+		m_pRigidbody->SetHorizontalVelocity(0);
+	}
+
+	if (KEY_PRESS(m_eRightMoveKey) && m_bCanMoveRight)
+	{
+		m_pRigidbody->SetHorizontalVelocity(m_fPlayerSpeed);
+	}
+	else if (KEY_UP(m_eRightMoveKey))
+	{
+		m_pRigidbody->SetHorizontalVelocity(0);
+	}
 }
 
 void Player1::Jump()
