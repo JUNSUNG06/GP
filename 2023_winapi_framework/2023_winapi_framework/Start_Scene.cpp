@@ -13,6 +13,7 @@
 #include "PixelCollision.h"
 #include "GameMgr.h"
 #include "SituationMgr.h"
+#include "CameraMgr.h"
 
 void Start_Scene::Init()
 {
@@ -85,6 +86,9 @@ void Start_Scene::Init()
 void Start_Scene::Update()
 {
 	Scene::Update();
+	if (KEY_DOWN(KEY_TYPE::H)) {
+		CameraMgr::GetInst()->CameraShake(20, 5);
+	}
 	//if(KEY_DOWN(KEY_TYPE::ENTER))
 	//	// ¾À º¯°æ
 }
@@ -92,7 +96,8 @@ void Start_Scene::Update()
 void Start_Scene::Render(HDC _dc)
 {
 	Scene::Render(_dc);
-
+	wstring s = L"power:" + std::to_wstring(CameraMgr::GetInst()->m_fCurPower) + L"time:" + std::to_wstring(CameraMgr::GetInst()->m_fCurTime);
+	TextOut(_dc, 100, 100, s.c_str(), s.length());
 	//heart ui
 	long long player1hp = GameMgr::GetInst()->GetPlayer1()->GetPlayerHP();
 	int Width = ResMgr::GetInst()->TexFind(L"Heart")->GetWidth();
