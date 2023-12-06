@@ -110,6 +110,7 @@ void Core::Render()
 	//TextOut(m_hbackDC, 10, 10, mousebuf, wcslen(mousebuf));
 
 	// 3. ¿Å±ä´Ù.
+	SituationMgr::GetInst()->Render(m_hbackDC);
 	BitBlt(m_hDC, 0,0, m_ptResolution.x, m_ptResolution.y, 
 		m_hbackDC, 0,0, SRCCOPY);
 	EventMgr::GetInst()->Update();

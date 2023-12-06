@@ -71,6 +71,15 @@ void Player2::Update()
 		ResultMgr::GetInst()->PlayerDied(1);
 		EventMgr::GetInst()->DeleteObject(this);
 	}
+
+	if (m_pEnemy != nullptr)
+	{
+		Vec2 vDir = { m_pEnemy->GetPos().x - GetPos().x,
+		m_pEnemy->GetPos().y - GetPos().y };
+		vDir = vDir.Normalize();
+
+		m_vecHandPos = vDir * m_fHandDis;
+	}
 }
 
 void Player2::Render(HDC _dc)
@@ -176,6 +185,7 @@ void Player2::Attack()
 {
 	Bullet* pBullet = new Bullet;
 	Vec2 vBulletPos = GetPos();
+	vBulletPos += m_vecHandPos;
 	pBullet->SetPos(vBulletPos);
 	pBullet->SetScale(Vec2(25.f, 25.f));
 	//	pBullet->SetDir(M_PI / 4 * 7);

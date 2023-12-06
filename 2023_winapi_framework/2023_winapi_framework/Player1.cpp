@@ -71,6 +71,15 @@ void Player1::Update()
 		ResultMgr::GetInst()->PlayerDied(1);
 		EventMgr::GetInst()->DeleteObject(this);
 	}
+
+	if (m_pEnemy != nullptr)
+	{
+		Vec2 vDir = { m_pEnemy->GetPos().x - GetPos().x,
+		m_pEnemy->GetPos().y - GetPos().y };
+		vDir = vDir.Normalize();
+
+		m_vecHandPos = vDir * m_fHandDis;
+	}
 }
 
 void Player1::Render(HDC _dc)
@@ -94,6 +103,10 @@ void Player1::Render(HDC _dc)
 	HDC hMemDc = CreateCompatibleDC(m_pHandTex->GetDC());
 	SelectObject(hMemDc, hMemBtiamp);
 
+	/*HBITMAP hMemBtiamp2 = CreateCompatibleBitmap(m_pHandTex->GetDC(), m_pHandTex->GetWidth(), m_pHandTex->GetHeight());
+	HDC hMemDc2 = CreateCompatibleDC(m_pHandTex->GetDC());
+	SelectObject(hMemDc2, hMemBtiamp2);*/
+
 	if (vDir.x > 0)
 	{
 		StretchBlt(hMemDc
@@ -112,8 +125,8 @@ void Player1::Render(HDC _dc)
 	}
 
 	TransparentBlt(_dc
-		, (int)(vPos.x - m_pHandTex->GetWidth() / 2) + vDir.x * m_fHandDis
-		, (int)(vPos.y - m_pHandTex->GetHeight() / 2) + vDir.y * m_fHandDis
+		, (int)(vPos.x - m_pHandTex->GetWidth() / 2) + m_vecHandPos.x
+		, (int)(vPos.y - m_pHandTex->GetHeight() / 2) + m_vecHandPos.y
 		, m_pHandTex->GetWidth()
 		, m_pHandTex->GetHeight()
 		, hMemDc
@@ -121,6 +134,9 @@ void Player1::Render(HDC _dc)
 		, m_pHandTex->GetWidth()
 		, m_pHandTex->GetHeight()
 		, RGB(255, 0, 255));
+
+	DeleteObject(hMemBtiamp);
+	DeleteDC(hMemDc);
 #pragma endregion
 
 	//TransparentBlt(_dc
@@ -160,6 +176,7 @@ void Player1::Attack()
 {
 	Bullet* pBullet = new Bullet;
 	Vec2 vBulletPos = GetPos();
+	vBulletPos += m_vecHandPos;
 	pBullet->SetPos(vBulletPos);
 	pBullet->SetScale(Vec2(25.f, 25.f));
 	//	pBullet->SetDir(M_PI / 4 * 7);
