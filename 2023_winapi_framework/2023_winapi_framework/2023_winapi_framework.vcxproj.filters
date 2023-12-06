@@ -204,6 +204,10 @@
     <ClInclude Include="Explanation_Scene.h">
       <Filter>Engine\05. Scene\MainScene</Filter>
     </ClInclude>
+    <ClInclude Include="IncreseMoveSpeedSituation.h" />
+    <ClInclude Include="ReverseInputSituation.h" />
+    <ClInclude Include="RotateMapSituation.h" />
+    <ClInclude Include="CameraMgr.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="2023_winapi_framework.rc">
@@ -326,5 +330,9 @@
     <ClCompile Include="Explanation_Scene.cpp">
       <Filter>Engine\05. Scene\MainScene</Filter>
     </ClCompile>
+    <ClCompile Include="IncreseMoveSpeedSituation.cpp" />
+    <ClCompile Include="ReverseInputSituation.cpp" />
+    <ClCompile Include="RotateMapSituation.cpp" />
+    <ClCompile Include="CameraMgr.cpp" />
   </ItemGroup>
 </Project>

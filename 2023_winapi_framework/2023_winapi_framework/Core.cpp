@@ -10,6 +10,9 @@
 #include "PixelCollision.h"
 #include "SituationMgr.h"
 #include "ResultMgr.h"
+#include "CameraMgr.h"
+#include <ctime>
+
 bool Core::Init(HWND _hWnd, POINT _ptResolution)
 {
 	// === 변수 초기화 === 
@@ -42,6 +45,7 @@ bool Core::Init(HWND _hWnd, POINT _ptResolution)
 	SituationMgr::GetInst()->Init();
 	PixelCollision::GetInst()->Init();
 	ResultMgr::GetInst()->Init();
+	CameraMgr::GetInst()->Init();
 
 	return true;
 }
@@ -62,6 +66,7 @@ void Core::GameLoop()
 }
 
 
+
 void Core::Update()
 {
 
@@ -72,6 +77,7 @@ void Core::Update()
 	CollisionMgr::GetInst()->Update();
 	SituationMgr::GetInst()->Udpate();
 	ResultMgr::GetInst()->Update();
+	CameraMgr::GetInst()->Update();
 //	Vec2 vPos = m_obj.GetPos();
 //
 ////	if (GetAsyncKeyState(VK_LEFT) & 0x8000)
@@ -121,6 +127,14 @@ void Core::Render()
 	//RECT_RENDER(m_obj.m_ptPos.x, m_obj.m_ptPos.y, m_obj.m_ptScale.x, m_obj.m_ptScale.y, m_hDC);
 	//Rectangle(m_hDC
 	//	, m_obj.m_ptPos.x - ERROR_CANT_CROSS_RM_BOUNDARY,50,150,150);
+
+	if (CameraMgr::GetInst()->GetIsCameraShaking() && CameraMgr::GetInst()->GetShakePower() > 1) {
+		srand((unsigned int)time(NULL));
+		BitBlt(m_hDC, (rand() % (int)CameraMgr::GetInst()->GetShakePower() * 2) - (int)CameraMgr::GetInst()->GetShakePower()
+			, (rand() % (int)CameraMgr::GetInst()->GetShakePower() * 2) - (int)CameraMgr::GetInst()->GetShakePower()
+			, m_ptResolution.x, m_ptResolution.y,
+			m_hbackDC, 0, 0, SRCCOPY);
+	}
 }
 
 void Core::CreateGDI()
