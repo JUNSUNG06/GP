@@ -71,7 +71,7 @@ void SituationMgr::Render(HDC _dc)
 		HFONT hFont = CreateFont(75, 0, 0, 0, 0, 0, 0, 0, HANGEUL_CHARSET, 0, 0, 0,
 			VARIABLE_PITCH | FF_ROMAN, TEXT("±Ã¼­"));
 		HFONT hOldFont = (HFONT)SelectObject(_dc, hFont);
-
+		SetBkMode(_dc, TRANSPARENT);
 		DrawText(_dc, m_pCurrentSituation->GetDescription().c_str(), -1, &rt
 			, DT_CENTER | DT_VCENTER | DT_SINGLELINE);
 

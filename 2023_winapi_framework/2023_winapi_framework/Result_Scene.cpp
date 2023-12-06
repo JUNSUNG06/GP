@@ -46,6 +46,8 @@ void Result_Scene::Render(HDC _dc)
 
 	Scene::Render(_dc);
 
+	SetBkMode(_dc, TRANSPARENT);
+
 	if (!ResultMgr::GetInst()->GetMatchEnd()) {
 		wstring score = std::to_wstring(ResultMgr::GetInst()->GetPlayer1Wins()) + L" : " + std::to_wstring(ResultMgr::GetInst()->GetPlayer2Wins());
 		TextOut(_dc, (Core::GetInst()->GetResolution().x / 2) - score.length() * 5.2,
