@@ -46,6 +46,8 @@ void Result_Scene::Render(HDC _dc)
 
 	Scene::Render(_dc);
 
+	SetBkMode(_dc, TRANSPARENT);
+
 	if (!ResultMgr::GetInst()->GetMatchEnd()) {
 		RECT_RENDER(Core::GetInst()->GetResolution().x / 2, Core::GetInst()->GetResolution().y / 2 , 100, 50, _dc);
 

@@ -32,7 +32,7 @@ void Start_Scene::Init()
 
 
 	Player2* pObj1 = new Player2;
-	pObj1->SetPos((Vec2({ Core::GetInst()->GetResolution().x / 4, (Core::GetInst()->GetResolution().y / 2) })));
+	pObj1->SetPos((Vec2({ Core::GetInst()->GetResolution().x / 4 * 1, (Core::GetInst()->GetResolution().y / 2) })));
 	pObj1->SetScale(Vec2(50.f, 50.f));
 	pObj1->SetPlayerSpeed(100.f);
 	//pObj1->SetFireDelay(3.f);

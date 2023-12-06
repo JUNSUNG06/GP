@@ -7,6 +7,7 @@
 #include "TimeMgr.h"
 #include "SceneMgr.h"
 #include <time.h>
+#include "Core.h"
 
 void SituationMgr::Init()
 {
@@ -58,6 +59,24 @@ void SituationMgr::Udpate()
 			SetSituation((SITUATION_TYPE)type);
 			StartSituation();
 		}
+	}
+}
+
+void SituationMgr::Render(HDC _dc)
+{
+	if (m_pCurrentSituation != nullptr)
+	{
+		POINT pRes = Core::GetInst()->GetResolution();
+		RECT rt = { 0, 30, pRes.x, 105};
+		HFONT hFont = CreateFont(75, 0, 0, 0, 0, 0, 0, 0, HANGEUL_CHARSET, 0, 0, 0,
+			VARIABLE_PITCH | FF_ROMAN, TEXT("±Ã¼­"));
+		HFONT hOldFont = (HFONT)SelectObject(_dc, hFont);
+		SetBkMode(_dc, TRANSPARENT);
+		DrawText(_dc, m_pCurrentSituation->GetDescription().c_str(), -1, &rt
+			, DT_CENTER | DT_VCENTER | DT_SINGLELINE);
+
+		SelectObject(_dc, hOldFont);
+		DeleteObject(hFont);
 	}
 }
 

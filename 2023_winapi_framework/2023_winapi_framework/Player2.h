@@ -47,6 +47,7 @@ private:
     bool m_bIsGround;
     bool m_bCanMoveRight;
     bool m_bCanMoveLeft;
+    Vec2 m_vecHandPos;
     //
     Object* m_pEnemy;
     //

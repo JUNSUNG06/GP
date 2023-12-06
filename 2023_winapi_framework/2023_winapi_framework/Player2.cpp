@@ -71,6 +71,15 @@ void Player2::Update()
 		ResultMgr::GetInst()->PlayerDied(1);
 		EventMgr::GetInst()->DeleteObject(this);
 	}
+
+	if (m_pEnemy != nullptr)
+	{
+		Vec2 vDir = { m_pEnemy->GetPos().x - GetPos().x,
+		m_pEnemy->GetPos().y - GetPos().y };
+		vDir = vDir.Normalize();
+
+		m_vecHandPos = vDir * m_fHandDis;
+	}
 }
 
 void Player2::Render(HDC _dc)
@@ -90,7 +99,7 @@ void Player2::Render(HDC _dc)
 		, 0, 0, m_pTex->GetWidth(), m_pTex->GetHeight(), RGB(255, 0, 255));
 
 #pragma region hand
-	if (vDir.x > 0)
+	/*if (vDir.x > 0)
 	{
 		StretchBlt(_dc
 			, (int)(vPos.x - m_pHandTex->GetWidth() / 2) + vDir.x * m_fHandDis
@@ -105,7 +114,38 @@ void Player2::Render(HDC _dc)
 			, (int)(vPos.y - m_pHandTex->GetHeight() / 2) + vDir.y * m_fHandDis
 			, -m_pHandTex->GetWidth(), m_pHandTex->GetHeight(), m_pHandTex->GetDC()
 			, 0, 0, m_pHandTex->GetWidth(), m_pHandTex->GetHeight(), SRCCOPY);
+	}*/
+
+	HBITMAP hMemBtiamp = CreateCompatibleBitmap(m_pHandTex->GetDC(), m_pHandTex->GetWidth(), m_pHandTex->GetHeight());
+	HDC hMemDc = CreateCompatibleDC(m_pHandTex->GetDC());
+	SelectObject(hMemDc, hMemBtiamp);
+
+	if (vDir.x > 0)
+	{
+		StretchBlt(hMemDc
+			, 0
+			, 0
+			, m_pHandTex->GetWidth(), m_pHandTex->GetHeight(), m_pHandTex->GetDC()
+			, 0, 0, m_pHandTex->GetWidth(), m_pHandTex->GetHeight(), SRCCOPY);
 	}
+	else
+	{
+		StretchBlt(hMemDc
+			, m_pHandTex->GetWidth() - 1
+			, 0
+			, -m_pHandTex->GetWidth(), m_pHandTex->GetHeight(), m_pHandTex->GetDC()
+			, 0, 0, m_pHandTex->GetWidth(), m_pHandTex->GetHeight(), SRCCOPY);
+	}
+
+	TransparentBlt(_dc, (int)(vPos.x - m_pHandTex->GetWidth() / 2) + vDir.x * m_fHandDis
+		, (int)(vPos.y - m_pHandTex->GetHeight() / 2) + vDir.y * m_fHandDis
+		, m_pHandTex->GetWidth()
+		, m_pHandTex->GetHeight()
+		, hMemDc
+		, 0, 0
+		, m_pHandTex->GetWidth()
+		, m_pHandTex->GetHeight()
+		, RGB(255, 0, 255));
 #pragma endregion
 
 	//TransparentBlt(_dc
@@ -145,6 +185,7 @@ void Player2::Attack()
 {
 	Bullet* pBullet = new Bullet;
 	Vec2 vBulletPos = GetPos();
+	vBulletPos += m_vecHandPos;
 	pBullet->SetPos(vBulletPos);
 	pBullet->SetScale(Vec2(25.f, 25.f));
 	//	pBullet->SetDir(M_PI / 4 * 7);

@@ -17,6 +17,7 @@ public:
 public:
 	void Init();
 	void Udpate();
+	void Render(HDC _dc);
 	void Release();
 	void SetSituation(SITUATION_TYPE _situationType);
 	void StartSituation();
