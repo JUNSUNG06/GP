@@ -4,7 +4,7 @@
 
 Rigidbody::Rigidbody(Object* _pOwner)
 	: m_pOwner(nullptr)
-	, m_fGravityScale(800.f)
+	, m_fGravityScale(1200.f)
 	, m_fBounciness(0)
 	, m_bUseGravity(true)
 	, m_bApplyGravity(true)

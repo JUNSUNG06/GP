@@ -24,7 +24,7 @@ void Start_Scene::Init()
 	Player1* pObj = new Player1;
 	pObj->SetPos((Vec2({ Core::GetInst()->GetResolution().x / 4 * 3, (Core::GetInst()->GetResolution().y / 2) })));
 	pObj->SetScale(Vec2(50.f, 50.f));
-	pObj->SetPlayerSpeed(100.f);
+	pObj->SetPlayerSpeed(200.f);
 	//pObj->SetFireDelay(3.f);
 	pObj->SetName(L"Player1");
 	AddObject(pObj, OBJECT_GROUP::PLAYER);
@@ -34,7 +34,7 @@ void Start_Scene::Init()
 	Player2* pObj1 = new Player2;
 	pObj1->SetPos((Vec2({ Core::GetInst()->GetResolution().x / 4 * 1, (Core::GetInst()->GetResolution().y / 2) })));
 	pObj1->SetScale(Vec2(50.f, 50.f));
-	pObj1->SetPlayerSpeed(100.f);
+	pObj1->SetPlayerSpeed(200.f);
 	//pObj1->SetFireDelay(3.f);
 	pObj1->SetName(L"Player2");
 	AddObject(pObj1, OBJECT_GROUP::PLAYER2);

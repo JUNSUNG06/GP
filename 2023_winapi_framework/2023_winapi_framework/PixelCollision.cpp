@@ -8,7 +8,7 @@ void PixelCollision::Init()
 	m_texColorImgae = nullptr;
 }
 
-bool PixelCollision::CheckCollision(int startX, int startY, int endX, int endY)
+bool PixelCollision::CheckCollision(int startX, int startY, int endX, int endY, POINT* checkedPoint)
 {
 	if (m_texColorImgae == nullptr)
 		return false;
@@ -24,7 +24,10 @@ bool PixelCollision::CheckCollision(int startX, int startY, int endX, int endY)
 			int b = GetBValue(color);
 
 			if (r == 0 && g == 255 && b == 255)
+			{
+				*checkedPoint = { x, y };
 				return true;
+			}
 		}
 	}
 	

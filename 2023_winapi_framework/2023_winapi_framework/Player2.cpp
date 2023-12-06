@@ -16,13 +16,13 @@
 Player2::Player2()
 	: m_pTex(nullptr)
 	, m_iHP(5)
+	, m_fPlayerSpeed(500.f)
 	, m_bIsDie(false)
-	, m_fPlayerSpeed(100.f)
 	, m_fFireDelay(1.f)
 	, m_fCurFireDelay(3.f)
 	, m_fBulletSpeed(3.f)
 	, m_pEnemy(nullptr)
-	, m_fJumpPower(370.f)
+	, m_fJumpPower(400.f)
 	, m_bIsGround(false)
 	, m_bCanMoveLeft(true)
 	, m_bCanMoveRight(true)
@@ -203,63 +203,7 @@ void Player2::Move()
 {
 	Vec2 vPos = GetPos();
 	Vec2 vScale = GetScale();
-
-#pragma region check ground
-	RECT groundCheckRect;
-	if (!m_pRigidbody->GetReverseGravity())
-	{
-		groundCheckRect = { (LONG)(vPos.x - vScale.x / 2 + 5), (LONG)(vPos.y),
-							(LONG)(vPos.x + vScale.x / 2 - 5), (LONG)(vPos.y + vScale.y / 2) };
-	}
-	else
-	{
-		groundCheckRect = { (LONG)(vPos.x - vScale.x / 2 + 5), (LONG)(vPos.y - vScale.y / 2),
-							(LONG)(vPos.x + vScale.x / 2 - 5), (LONG)(vPos.y) };
-	}
-
-	if (PixelCollision::GetInst()->CheckCollision(groundCheckRect.left, groundCheckRect.top,
-		groundCheckRect.right, groundCheckRect.bottom))
-	{
-		m_pRigidbody->SetApplyGravity(false);
-		m_pRigidbody->SetVerticalVelocity(0.f);
-		m_iCurrentJumpCount = 0;
-		m_bIsGround = true;
-	}
-	else
-	{
-		m_pRigidbody->SetApplyGravity(true);
-		m_bIsGround = false;
-	}
-	m_pRigidbody->Update();
-#pragma endregion
-
-#pragma region check left move
-	if (PixelCollision::GetInst()->CheckCollision(
-		vPos.x - vScale.x / 2.f, vPos.y - vScale.y / 2.f + 5,
-		vPos.x - vScale.x / 3.f, vPos.y + vScale.y / 2.f - 5))
-	{
-		m_bCanMoveLeft = false;
-		m_pRigidbody->SetHorizontalVelocity(0);
-	}
-	else
-	{
-		m_bCanMoveLeft = true;
-	}
-#pragma endregion
-
-#pragma region check right move
-	if (PixelCollision::GetInst()->CheckCollision(
-		vPos.x + vScale.x / 3.f, vPos.y - vScale.y / 2.f + 5,
-		vPos.x + vScale.x / 2.f, vPos.y + vScale.y / 2.f - 5))
-	{
-		m_bCanMoveRight = false;
-		m_pRigidbody->SetHorizontalVelocity(0);
-	}
-	else
-	{
-		m_bCanMoveRight = true;
-	}
-#pragma endregion
+	POINT checkedPoint = {};
 
 #pragma region move
 	if (KEY_PRESS(m_eLeftMoveKey) && m_bCanMoveLeft)
@@ -280,6 +224,78 @@ void Player2::Move()
 		m_pRigidbody->SetHorizontalVelocity(0);
 	}
 #pragma endregion
+
+#pragma region check ground, ceiling
+	RECT groundCheckRect;
+	RECT ceilingCheckRect;
+
+	if (!m_pRigidbody->GetReverseGravity())
+	{
+		groundCheckRect = { (LONG)(vPos.x - vScale.x / 2 + 5), (LONG)(vPos.y),
+							(LONG)(vPos.x + vScale.x / 2 - 5), (LONG)(vPos.y + vScale.y / 2) };
+		ceilingCheckRect = { (LONG)(vPos.x - vScale.x / 2 + 5), (LONG)(vPos.y - vScale.y / 2),
+							(LONG)(vPos.x + vScale.x / 2 - 5), (LONG)(vPos.y) };
+	}
+	else
+	{
+		groundCheckRect = { (LONG)(vPos.x - vScale.x / 2 + 5), (LONG)(vPos.y - vScale.y / 2),
+							(LONG)(vPos.x + vScale.x / 2 - 5), (LONG)(vPos.y) };
+		ceilingCheckRect = { (LONG)(vPos.x - vScale.x / 2 + 5), (LONG)(vPos.y),
+							(LONG)(vPos.x + vScale.x / 2 - 5), (LONG)(vPos.y + vScale.y / 2) };
+	}
+
+	if (PixelCollision::GetInst()->CheckCollision(groundCheckRect.left, groundCheckRect.top,
+		groundCheckRect.right, groundCheckRect.bottom, &checkedPoint))
+	{
+		m_pRigidbody->SetApplyGravity(false);
+		m_pRigidbody->SetVerticalVelocity(0.f);
+		m_iCurrentJumpCount = 0;
+		m_bIsGround = true;
+	}
+	else
+	{
+		m_pRigidbody->SetApplyGravity(true);
+		m_bIsGround = false;
+	}
+
+	if (PixelCollision::GetInst()->CheckCollision(ceilingCheckRect.left, ceilingCheckRect.top,
+		ceilingCheckRect.right, ceilingCheckRect.bottom, &checkedPoint))
+	{
+		m_pRigidbody->SetVerticalVelocity(0.f);
+	}
+
+	m_pRigidbody->Update();
+#pragma endregion
+
+#pragma region check left move
+	if (PixelCollision::GetInst()->CheckCollision(
+		vPos.x - vScale.x / 2.f, vPos.y - vScale.y / 2.f + 5,
+		vPos.x - vScale.x / 3.f, vPos.y + vScale.y / 2.f - 5, &checkedPoint))
+	{
+		m_bCanMoveLeft = false;
+		m_pRigidbody->SetHorizontalVelocity(0);
+	}
+	else
+	{
+		m_bCanMoveLeft = true;
+	}
+#pragma endregion
+
+#pragma region check right move
+	if (PixelCollision::GetInst()->CheckCollision(
+		vPos.x + vScale.x / 3.f, vPos.y - vScale.y / 2.f + 5,
+		vPos.x + vScale.x / 2.f, vPos.y + vScale.y / 2.f - 5, &checkedPoint))
+	{
+		m_bCanMoveRight = false;
+		m_pRigidbody->SetHorizontalVelocity(0);
+	}
+	else
+	{
+		m_bCanMoveRight = true;
+	}
+#pragma endregion
+
+
 }
 
 void Player2::Jump()
