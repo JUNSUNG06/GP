@@ -43,6 +43,8 @@ private:
     float m_fCurFireDelay;
     float m_fBulletSpeed;
     float m_fJumpPower;
+    int m_iJumpCount;
+    int m_iCurrentJumpCount;
     float m_fHandDis;
     bool m_bIsGround;
     bool m_bCanMoveRight;

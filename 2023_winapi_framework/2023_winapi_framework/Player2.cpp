@@ -22,10 +22,12 @@ Player2::Player2()
 	, m_fCurFireDelay(3.f)
 	, m_fBulletSpeed(3.f)
 	, m_pEnemy(nullptr)
-	, m_fJumpPower(250.f)
+	, m_fJumpPower(370.f)
 	, m_bIsGround(false)
 	, m_bCanMoveLeft(true)
 	, m_bCanMoveRight(true)
+	, m_iJumpCount(2)
+	, m_iCurrentJumpCount(0)
 {
 	m_pHandTex = ResMgr::GetInst()->TexLoad(L"Player2_Hand", L"Texture\\Player2_Hand.bmp");
 	CreateCollider();
@@ -220,6 +222,7 @@ void Player2::Move()
 	{
 		m_pRigidbody->SetApplyGravity(false);
 		m_pRigidbody->SetVerticalVelocity(0.f);
+		m_iCurrentJumpCount = 0;
 		m_bIsGround = true;
 	}
 	else
@@ -284,8 +287,12 @@ void Player2::Jump()
 	float jumpPower = m_pRigidbody->GetReverseGravity() ?
 		m_fJumpPower : -m_fJumpPower;
 
-	if (KEY_PRESS(KEY_TYPE::W) && m_bIsGround == true)
+	if (KEY_DOWN(KEY_TYPE::W) && m_iCurrentJumpCount < m_iJumpCount)
 	{
+		if (!m_bIsGround && m_iCurrentJumpCount == 0)
+			m_iCurrentJumpCount++;
+		m_iCurrentJumpCount++;
+
 		m_pRigidbody->SetVerticalVelocity(jumpPower);
 	}
 }

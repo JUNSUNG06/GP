@@ -7,10 +7,12 @@
 #include "Core.h"
 #include "KeyMgr.h"
 #include "Button.h"
+#include "SituationMgr.h"
 
 void Result_Scene::Init()
 {
 	m_fCurTime = 0;
+	SituationMgr::GetInst()->EndSituation();
 	SetBackground(L"Background_Intro", L"Texture\\Background_Intro.bmp");
 	if (ResultMgr::GetInst()->GetMatchEnd()) {
 		Object* btn = new Button([]() {
@@ -22,8 +24,6 @@ void Result_Scene::Init()
 		btn->SetScale(Vec2(100.f, 30.f));
 		AddObject(btn, OBJECT_GROUP::UI);
 	}
-
-
 }
 
 void Result_Scene::Update()

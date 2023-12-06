@@ -18,10 +18,10 @@ void SituationMgr::Init()
 
 	situationType = SITUATION_TYPE::REVERSE_GRAVITY;
 	RegistSituation(situationType, new ReverseGravitySituation(situationType));
-	situationType = SITUATION_TYPE::REVERSE_INPUT;
-	RegistSituation(situationType, new ReverseInputSituation(situationType));
-	situationType = SITUATION_TYPE::INCREASE_MOVE_SPEED;
-	RegistSituation(situationType, new IncreseMoveSpeedSituation(situationType));
+	//situationType = SITUATION_TYPE::REVERSE_INPUT;
+	//RegistSituation(situationType, new ReverseInputSituation(situationType));
+	//situationType = SITUATION_TYPE::INCREASE_MOVE_SPEED;
+	//RegistSituation(situationType, new IncreseMoveSpeedSituation(situationType));
 	
 	m_fCurrentSituationTime = 0;
 	m_fSituationChagneInterval = 5.f;
@@ -55,7 +55,7 @@ void SituationMgr::Udpate()
 		if (m_fCurrentSitautionChangeTime >= m_fSituationChagneInterval)
 		{
 			m_fCurrentSitautionChangeTime = 0.f;
-			int type = rand() % (int)SITUATION_TYPE::END;
+			int type = 0;//rand() % (int)SITUATION_TYPE::END;
 			SetSituation((SITUATION_TYPE)type);
 			StartSituation();
 		}
