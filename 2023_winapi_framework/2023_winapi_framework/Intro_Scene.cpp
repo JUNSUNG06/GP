@@ -8,6 +8,7 @@
 #include "ResMgr.h"
 #include "Explanation_Scene.h"
 #include "ResultMgr.h" // add
+#include "LinearActionMgr.h"
 void Intro_Scene::Init()
 {
 	SetBackground(L"Background_Intro", L"Texture\\Background_Intro.bmp");
@@ -38,6 +39,9 @@ void Intro_Scene::Init()
 	obj->SetPos((Vec2({ Core::GetInst()->GetResolution().x / 2, Core::GetInst()->GetResolution().y / 2 + 120 })));
 	obj->SetScale(Vec2(100.f, 30.f));
 	AddObject(obj, OBJECT_GROUP::UI);
+
+	LinearActionMgr::GetInst()->CreateLinearAction(L"Tset", 
+		[](float _fTime) { if (_fTime >= 1.5f) SceneMgr::GetInst()->LoadScene(L"Start_Scene"); }, 3.f);
 }
 
 void Intro_Scene::Render(HDC _dc)
