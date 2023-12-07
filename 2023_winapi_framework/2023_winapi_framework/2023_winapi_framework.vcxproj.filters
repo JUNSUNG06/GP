@@ -77,6 +77,9 @@
     <Filter Include="Engine\03. Manager\GameMgr">
       <UniqueIdentifier>{f7eb17eb-1399-47a7-b52c-5494c9dc5d1c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\04. Object\UI">
+      <UniqueIdentifier>{90fcdd49-c534-41b7-af41-8f6e994ae2b1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -204,10 +207,15 @@
     <ClInclude Include="Explanation_Scene.h">
       <Filter>Engine\05. Scene\MainScene</Filter>
     </ClInclude>
-    <ClInclude Include="IncreseMoveSpeedSituation.h" />
-    <ClInclude Include="ReverseInputSituation.h" />
-    <ClInclude Include="RotateMapSituation.h" />
-    <ClInclude Include="CameraMgr.h" />
+    <ClInclude Include="IncreseMoveSpeedSituation.h">
+      <Filter>Engine\09. ETC\Situation</Filter>
+    </ClInclude>
+    <ClInclude Include="ReverseInputSituation.h">
+      <Filter>Engine\09. ETC\Situation</Filter>
+    </ClInclude>
+    <ClInclude Include="RotateMapSituation.h">
+      <Filter>Engine\09. ETC\Situation</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="2023_winapi_framework.rc">
@@ -330,9 +338,14 @@
     <ClCompile Include="Explanation_Scene.cpp">
       <Filter>Engine\05. Scene\MainScene</Filter>
     </ClCompile>
-    <ClCompile Include="IncreseMoveSpeedSituation.cpp" />
-    <ClCompile Include="ReverseInputSituation.cpp" />
-    <ClCompile Include="RotateMapSituation.cpp" />
-    <ClCompile Include="CameraMgr.cpp" />
+    <ClCompile Include="IncreseMoveSpeedSituation.cpp">
+      <Filter>Engine\09. ETC\Situation</Filter>
+    </ClCompile>
+    <ClCompile Include="ReverseInputSituation.cpp">
+      <Filter>Engine\09. ETC\Situation</Filter>
+    </ClCompile>
+    <ClCompile Include="RotateMapSituation.cpp">
+      <Filter>Engine\09. ETC\Situation</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
