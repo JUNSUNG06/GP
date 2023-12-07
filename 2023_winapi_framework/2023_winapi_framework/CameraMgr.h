@@ -10,7 +10,7 @@ public:
 	bool GetIsCameraShaking() { return m_bIsShaking; }
 	float GetShakePower() { return m_fCurPower; }
 
-public: // private
+private:
 	float m_fCurTime;
 	float m_fTime;
 	float m_fCurPower;

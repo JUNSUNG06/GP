@@ -12,6 +12,7 @@
 #include "PixelCollision.h"
 #include "Texture.h"
 #include "Core.h"
+#include "CameraMgr.h"
 
 Player2::Player2()
 	: m_pTex(nullptr)
@@ -167,6 +168,7 @@ void Player2::EnterCollision(Collider* _pOther)
 	if (pOtherObj->GetName() == L"Player1_Bullet")
 	{
 		m_iHP--;
+		CameraMgr::GetInst()->CameraShake(10, 0.5f);
 		if (m_iHP <= 0) {
 			m_bIsDie = true;
 			ResultMgr::GetInst()->PlayerDied(2);
