@@ -40,8 +40,8 @@ void Intro_Scene::Init()
 	obj->SetScale(Vec2(100.f, 30.f));
 	AddObject(obj, OBJECT_GROUP::UI);
 
-	LinearActionMgr::GetInst()->CreateLinearAction(L"Tset", 
-		[](float _fTime) { if (_fTime >= 1.5f) SceneMgr::GetInst()->LoadScene(L"Start_Scene"); }, 3.f);
+	/*LinearActionMgr::GetInst()->CreateLinearAction(L"Tset", 
+		[](float _fTime) { if (_fTime >= 1.5f) SceneMgr::GetInst()->LoadScene(L"Start_Scene"); }, 3.f);*/
 }
 
 void Intro_Scene::Render(HDC _dc)
