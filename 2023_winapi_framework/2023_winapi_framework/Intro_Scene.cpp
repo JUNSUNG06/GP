@@ -28,7 +28,8 @@ void Intro_Scene::Init()
 	obj->SetScale(Vec2(100.f, 30.f));
 	AddObject(obj, OBJECT_GROUP::UI);
 
-	obj = new Button([]() { SceneMgr::GetInst()->LoadScene(L"Explanation_Scene"); }, L"게임 설명"); 
+	obj = new Button([]() 
+		{ SceneMgr::GetInst()->LoadScene(L"Explanation_Scene"); }, L"게임 설명"); 
 	obj->SetPos((Vec2({ Core::GetInst()->GetResolution().x / 2, Core::GetInst()->GetResolution().y / 2 + 60 })));
 	obj->SetScale(Vec2(100.f, 30.f));
 	AddObject(obj, OBJECT_GROUP::UI);
