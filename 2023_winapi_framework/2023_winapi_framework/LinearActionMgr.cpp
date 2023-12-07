@@ -9,29 +9,18 @@ void LinearActionMgr::Init()
 
 void LinearActionMgr::Update()
 {
-	/*for (auto iter = m_mLienrActions.begin(); iter != m_mLienrActions.end(); iter++)
-	{
-		if (!iter->second->DoAciton())
-		{
-			wstring _strName = iter->second->m_strName;
-
-			delete m_mLienrActions[_strName];
-			m_mLienrActions.erase(m_mLienrActions.find(_strName));
-			iter--;
-		}
-	}*/
-
+	//invoke
 	for (auto pair : m_mLienrActions)
 	{
 		if (!pair.second->DoAciton())
 		{
 			wstring _strName = pair.second->m_strName;
 
-			//m_mLienrActions.erase(m_mLienrActions.find(_strName));
 			m_vecClearVec.push_back(_strName);
 		}
 	}
 
+	//erase
 	for (auto name : m_vecClearVec)
 	{
 		if (m_mLienrActions.find(name) != m_mLienrActions.end())
