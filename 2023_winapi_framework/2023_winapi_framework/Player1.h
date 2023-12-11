@@ -48,6 +48,9 @@ private:
     int m_iCurrentJumpCount;
     float m_fHandDis;
     bool m_bIsGround;
+    bool m_bBeforeGround;
+    bool m_bIsCeiling;
+    bool m_bBeforeCeiling;
     bool m_bCanMoveRight;
     bool m_bCanMoveLeft;
     Vec2 m_vecHandPos;
