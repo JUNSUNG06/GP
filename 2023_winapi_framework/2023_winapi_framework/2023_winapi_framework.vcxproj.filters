@@ -216,6 +216,10 @@
     <ClInclude Include="RotateMapSituation.h">
       <Filter>Engine\09. ETC\Situation</Filter>
     </ClInclude>
+    <ClInclude Include="CameraMgr.h" />
+    <ClInclude Include="LinearAction.h" />
+    <ClInclude Include="LinearActionMgr.h" />
+    <ClInclude Include="PausePanel.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="2023_winapi_framework.rc">
@@ -347,5 +351,9 @@
     <ClCompile Include="RotateMapSituation.cpp">
       <Filter>Engine\09. ETC\Situation</Filter>
     </ClCompile>
+    <ClCompile Include="CameraMgr.cpp" />
+    <ClCompile Include="LinearAction.cpp" />
+    <ClCompile Include="LinearActionMgr.cpp" />
+    <ClCompile Include="PausePanel.cpp" />
   </ItemGroup>
 </Project>

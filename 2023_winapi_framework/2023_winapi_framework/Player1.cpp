@@ -57,7 +57,7 @@ void Player1::Update()
 	SetPos(vPos);
 
 	m_fCurFireDelay += fDT;
-	if (m_fCurFireDelay >= m_fFireDelay && m_pEnemy != nullptr) {
+	if (m_fCurFireDelay >= m_fFireDelay && m_pEnemy != nullptr && !TimeMgr::GetInst()->GetIsPause()) {
 		if (KEY_PRESS(KEY_TYPE::DOWN))
 		{
 			Attack();
@@ -292,7 +292,7 @@ void Player1::Jump()
 	float jumpPower = m_pRigidbody->GetReverseGravity() ?
 		m_fJumpPower : -m_fJumpPower;
 
-	if (KEY_DOWN(KEY_TYPE::UP) && m_iCurrentJumpCount < m_iJumpCount)
+	if (KEY_DOWN(KEY_TYPE::UP) && m_iCurrentJumpCount < m_iJumpCount && !TimeMgr::GetInst()->GetIsPause())
 	{
 		m_iCurrentJumpCount++;
 		if(!m_bIsGround && m_iCurrentJumpCount == 0)

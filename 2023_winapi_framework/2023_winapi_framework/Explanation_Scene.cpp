@@ -7,7 +7,6 @@
 
 #include "Player1.h"
 #include "Player2.h"
-#include "Object.h"
 
 
 void Explanation_Scene::Init()

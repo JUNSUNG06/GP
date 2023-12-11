@@ -192,6 +192,7 @@
     <ClInclude Include="Monster.h" />
     <ClInclude Include="Object.h" />
     <ClInclude Include="PathMgr.h" />
+    <ClInclude Include="PausePanel.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="PixelCollision.h" />
     <ClInclude Include="Player.h" />
@@ -240,6 +241,7 @@
     <ClCompile Include="Monster.cpp" />
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="PathMgr.cpp" />
+    <ClCompile Include="PausePanel.cpp" />
     <ClCompile Include="PixelCollision.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Player1.cpp" />

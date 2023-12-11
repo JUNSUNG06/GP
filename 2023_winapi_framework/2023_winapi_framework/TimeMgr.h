@@ -7,6 +7,8 @@ public:
 	void Update();
 public:
 	const float& GetDT() const { return m_dT; }
+	const bool& GetIsPause() const { return m_bIsPause; }
+	void SetIsPause(bool value) { m_bIsPause = value; }
 private:
 	// DT(1프레임당 시간: Delta time)
 	LARGE_INTEGER m_llPrevCount; // 이전시간

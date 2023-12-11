@@ -26,12 +26,11 @@ void TimeMgr::Update()
 {
 	QueryPerformanceCounter(&m_llCurCount);
 
-	if (KEY_PRESS(KEY_TYPE::ESC))
-		m_bIsPause = !m_bIsPause;
-
-	if(!m_bIsPause)
-	// Delta Time: 한 프레임에 걸린 시간.
-	m_dT = (float)(m_llCurCount.QuadPart - m_llPrevCount.QuadPart) / (float)m_llFrequency.QuadPart;
+	if (!m_bIsPause)
+		// Delta Time: 한 프레임에 걸린 시간.
+		m_dT = (float)(m_llCurCount.QuadPart - m_llPrevCount.QuadPart) / (float)m_llFrequency.QuadPart;
+	else
+		m_dT = 0;
 
 	// FPS: Frame Per Second
 	m_llPrevCount = m_llCurCount;

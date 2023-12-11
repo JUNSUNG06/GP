@@ -14,6 +14,8 @@
 #include "GameMgr.h"
 #include "SituationMgr.h"
 #include "CameraMgr.h"
+#include "TimeMgr.h"
+#include "PausePanel.h"
 
 void Start_Scene::Init()
 {
@@ -21,6 +23,11 @@ void Start_Scene::Init()
 	m_pCollisionTexture = ResMgr::GetInst()->TexLoad(L"LevelCollision", L"Texture\\LevelCollision.bmp");
 	//m_pLevelTexture = ResMgr::GetInst()->TexLoad(L"Level", L"Texture\\Level.bmp");
 	PixelCollision::GetInst()->SetColorImage(m_pCollisionTexture);
+
+	PausePanel* pspn = new PausePanel;
+	pspn->SetPos(Vec2({ Core::GetInst()->GetResolution().x / 2, Core::GetInst()->GetResolution().y / 2 }));
+	pspn->SetScale(Vec2(300, 300));
+	AddObject(pspn, OBJECT_GROUP::UI);
 
 	Player1* pObj = new Player1;
 	pObj->SetPos((Vec2({ Core::GetInst()->GetResolution().x / 4 * 3, (Core::GetInst()->GetResolution().y / 2) })));
@@ -92,6 +99,10 @@ void Start_Scene::Update()
 void Start_Scene::Render(HDC _dc)
 {
 	Scene::Render(_dc);
+
+	wstring s = L"isPause: " + std::to_wstring(TimeMgr::GetInst()->GetIsPause()) + L" dt: " + std::to_wstring(TimeMgr::GetInst()->GetDT());
+	TextOut(_dc, 100, 100, s.c_str(), s.length());
+
 	//heart ui
 	long long player1hp = GameMgr::GetInst()->GetPlayer1()->GetPlayerHP();
 	int Width = ResMgr::GetInst()->TexFind(L"Heart")->GetWidth();
