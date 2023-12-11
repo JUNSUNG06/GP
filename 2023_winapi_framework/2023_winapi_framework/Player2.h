@@ -16,7 +16,6 @@ public:
     virtual void ExitCollision(Collider* _pOther)  override;
     virtual void StayCollision(Collider* _pOther)  override;
     void CheckCanMove();
-    void AdjustPos();
 public:
     void SetPlayerHP(int _hp) { m_iHP = _hp; }
     int GetPlayerHP() { return m_iHP; } // 추가한거

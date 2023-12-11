@@ -56,8 +56,6 @@ void Player2::Update()
 	vPos += m_pRigidbody->GetVelocity() * fDT;
 	SetPos(vPos);
 
-	//AdjustPos();
-
 	m_fCurFireDelay += fDT;
 	if (m_fCurFireDelay >= m_fFireDelay && m_pEnemy != nullptr) {
 		if (KEY_PRESS(KEY_TYPE::S))
