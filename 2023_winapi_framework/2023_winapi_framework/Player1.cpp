@@ -99,7 +99,7 @@ void Player1::Render(HDC _dc)
 		, (int)(vPos.x - vScale.x / 2)
 		, (int)(vPos.y - vScale.y / 2)
 		, m_pTex->GetWidth(), m_pTex->GetHeight(), m_pTex->GetDC()
-		, 0, 0, m_pTex->GetWidth(), m_pTex->GetHeight(), RGB(255,0,255));
+		, 0, 0, m_pTex->GetWidth(), m_pTex->GetHeight(), RGB(255, 0, 255));
 
 #pragma region hand
 	HBITMAP hMemBtiamp = CreateCompatibleBitmap(m_pHandTex->GetDC(), m_pHandTex->GetWidth(), m_pHandTex->GetHeight());
@@ -189,10 +189,14 @@ void Player1::CheckCanMove()
 	Vec2 vScale = GetScale();
 	POINT checkedPoint = {};
 
-#pragma region check ground, ceiling
+#pragma region check ground
 	RECT groundCheckRect;
 	RECT ceilingCheckRect;
 
+	m_bBeforeGround = m_bIsGround;
+	m_bBeforeCeiling = m_bIsCeiling;
+
+	//set check rect
 	if (!m_pRigidbody->GetReverseGravity())
 	{
 		groundCheckRect = { (LONG)(vPos.x - vScale.x / 2 + 5), (LONG)(vPos.y),
@@ -208,18 +212,23 @@ void Player1::CheckCanMove()
 							(LONG)(vPos.x + vScale.x / 2 - 5), (LONG)(vPos.y + vScale.y / 2) };
 	}
 
+	if (PixelCollision::GetInst()->CheckCollision(ceilingCheckRect.left, ceilingCheckRect.top,
+		ceilingCheckRect.right, ceilingCheckRect.bottom, &checkedPoint))
+	{
+		m_bIsCeiling = true;
+	}
+	else
+	{
+		m_bIsCeiling = false;
+	}
+
+	//check ground
 	if (PixelCollision::GetInst()->CheckCollision(groundCheckRect.left, groundCheckRect.top,
 		groundCheckRect.right, groundCheckRect.bottom, &checkedPoint))
 	{
 		m_pRigidbody->SetApplyGravity(false);
-		m_pRigidbody->SetVerticalVelocity(0.f);
 		m_iCurrentJumpCount = 0;
 		m_bIsGround = true;
-
-		float adjustPos = m_pRigidbody->GetReverseGravity()
-			? checkedPoint.y - groundCheckRect.top : checkedPoint.y - groundCheckRect.bottom;
-
-		SetPos(vPos + Vec2({ 0.f, adjustPos }));
 	}
 	else
 	{
@@ -227,13 +236,14 @@ void Player1::CheckCanMove()
 		m_bIsGround = false;
 	}
 
-	if (PixelCollision::GetInst()->CheckCollision(ceilingCheckRect.left, ceilingCheckRect.top,
-		ceilingCheckRect.right, ceilingCheckRect.bottom, &checkedPoint))
+	//set vertical velocity
+	if ((m_bIsGround && !m_bBeforeGround) || (m_bIsCeiling && !m_bBeforeCeiling))
 	{
 		m_pRigidbody->SetVerticalVelocity(0.f);
 	}
 
 	m_pRigidbody->Update();
+	
 #pragma endregion
 
 #pragma region check left move
@@ -298,7 +308,7 @@ void Player1::Jump()
 	if (KEY_DOWN(KEY_TYPE::UP) && m_iCurrentJumpCount < m_iJumpCount && !TimeMgr::GetInst()->GetIsPause())
 	{
 		m_iCurrentJumpCount++;
-		if(!m_bIsGround && m_iCurrentJumpCount == 0)
+		if(!m_bIsGround && !m_bIsCeiling && m_iCurrentJumpCount == 0)
 			m_iCurrentJumpCount++;
 
 		m_pRigidbody->SetVerticalVelocity(jumpPower);
