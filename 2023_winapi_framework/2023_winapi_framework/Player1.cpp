@@ -144,6 +144,9 @@ void Player1::EnterCollision(Collider* _pOther)
 	const Object* pOtherObj = _pOther->GetObj();
 	if (pOtherObj->GetName() == L"Player2_Bullet")
 	{
+		const Object* cBullet = _pOther->GetObj();
+		Object* ncBullet = const_cast<Object*>(cBullet);
+		EventMgr::GetInst()->DeleteObject(ncBullet);
 		ResMgr::GetInst()->Play(L"Hit");
 		m_iHP--;
 		CameraMgr::GetInst()->CameraShake(10, 0.5f);

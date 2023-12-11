@@ -3,6 +3,8 @@
 #include "TimeMgr.h"
 #include "ResMgr.h"
 #include "Texture.h"
+#include "PixelCollision.h"
+#include "EventMgr.h"
 Bullet::Bullet()
 //	: m_fDir(-1.f)
 	: m_fTheta(0.f)
@@ -22,6 +24,9 @@ Bullet::~Bullet()
 void Bullet::Update()
 {
 	Vec2 vPos = GetPos();
+	Vec2 vScale = GetScale();
+	POINT checkedPoint = {};
+
 	//vPos.x += 500.f * fDT * m_fDir;
 	//vPos.y += 500.f * fDT * m_fDir;
 	//vPos.x += 500.f * fDT * cosf(m_fTheta);
@@ -29,6 +34,11 @@ void Bullet::Update()
 	vPos.x += m_fSpeed * fDT * m_vDir.x;
 	vPos.y += m_fSpeed * fDT * m_vDir.y;
 	SetPos(vPos);
+
+	if (PixelCollision::GetInst()->CheckCollision(vPos.x - vScale.x / 2, vPos.y - vScale.y / 2,
+		vPos.x + vScale.x / 2, vPos.y + vScale.y / 2, &checkedPoint)) {
+		EventMgr::GetInst()->DeleteObject(this);
+	}
 }
 
 void Bullet::Render(HDC _dc)
