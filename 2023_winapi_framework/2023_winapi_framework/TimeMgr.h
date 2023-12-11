@@ -13,6 +13,7 @@ private:
 	LARGE_INTEGER m_llCurCount; // 현재시간
 	LARGE_INTEGER m_llFrequency; // 주파수
 	float m_dT; // 프레임간의 시간 값
+	bool m_bIsPause;
 
 	// FPS
 	UINT  m_fps; // FPS

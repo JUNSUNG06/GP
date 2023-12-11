@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "TimeMgr.h"
 #include "Core.h"
+#include "KeyMgr.h"
 //#include <chrono> // ns
 void TimeMgr::Init()
 {
@@ -10,6 +11,7 @@ void TimeMgr::Init()
 	m_frameCount = 0;
 	m_fps = 0;
 	m_accFrameTime = 0.f;
+	m_bIsPause = false;
 	// 현재 카운트의 틱을 가져온다.(지난시간)
 	// 1초 2초 이런 초가 아니야. Frequency로 알아야해.
 	QueryPerformanceCounter(&m_llPrevCount);
@@ -24,6 +26,10 @@ void TimeMgr::Update()
 {
 	QueryPerformanceCounter(&m_llCurCount);
 
+	if (KEY_PRESS(KEY_TYPE::ESC))
+		m_bIsPause = !m_bIsPause;
+
+	if(!m_bIsPause)
 	// Delta Time: 한 프레임에 걸린 시간.
 	m_dT = (float)(m_llCurCount.QuadPart - m_llPrevCount.QuadPart) / (float)m_llFrequency.QuadPart;
 
