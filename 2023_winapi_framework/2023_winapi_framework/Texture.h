@@ -12,6 +12,8 @@ public:
     const LONG& GetWidth() const { return (m_bitInfo.bmWidth); }
     const LONG& GetHeight() const { return (m_bitInfo.bmHeight); }
     const HDC& GetDC() const { return m_hDC; }
+    void Draw(HDC _dc, Vec2 _vPos, Vec2 _vScale);
+    void DrawRotate(HDC _dc, Vec2 _vPos, Vec2 _vScale, float _fAngle);
 private:
     HBITMAP m_hBit;
     HDC     m_hDC;

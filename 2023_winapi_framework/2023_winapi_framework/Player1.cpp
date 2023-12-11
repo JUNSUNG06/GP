@@ -93,14 +93,9 @@ void Player1::Render(HDC _dc)
 		m_pEnemy->GetPos().y - GetPos().y };
 	vDir = vDir.Normalize();
 
-	Component_Render(_dc);
+	//Component_Render(_dc);
 
-	TransparentBlt(_dc
-		, (int)(vPos.x - vScale.x / 2)
-		, (int)(vPos.y - vScale.y / 2)
-		, m_pTex->GetWidth(), m_pTex->GetHeight(), m_pTex->GetDC()
-		, 0, 0, m_pTex->GetWidth(), m_pTex->GetHeight(), RGB(255, 0, 255));
-
+	m_pTex->Draw(_dc, GetPos(), GetScale());
 #pragma region hand
 	HBITMAP hMemBtiamp = CreateCompatibleBitmap(m_pHandTex->GetDC(), m_pHandTex->GetWidth(), m_pHandTex->GetHeight());
 	HDC hMemDc = CreateCompatibleDC(m_pHandTex->GetDC());
@@ -209,6 +204,7 @@ void Player1::CheckCanMove()
 							(LONG)(vPos.x + vScale.x / 2 - 5), (LONG)(vPos.y + vScale.y / 2) };
 	}
 
+	//check ceiling 
 	if (PixelCollision::GetInst()->CheckCollision(ceilingCheckRect.left, ceilingCheckRect.top,
 		ceilingCheckRect.right, ceilingCheckRect.bottom, &checkedPoint))
 	{
@@ -248,11 +244,13 @@ void Player1::CheckCanMove()
 		vPos.x - vScale.x / 2.f, vPos.y - vScale.y / 2.f + 5,
 		vPos.x - vScale.x / 3.f, vPos.y + vScale.y / 2.f - 5, &checkedPoint))
 	{
+		//block move
 		m_bCanMoveLeft = false;
 		m_pRigidbody->SetHorizontalVelocity(0);
 	}
 	else
 	{
+		//enable move
 		m_bCanMoveLeft = true;
 	}
 #pragma endregion
@@ -262,11 +260,13 @@ void Player1::CheckCanMove()
 		vPos.x + vScale.x / 3.f, vPos.y - vScale.y / 2.f + 5,
 		vPos.x + vScale.x / 2.f, vPos.y + vScale.y / 2.f - 5, &checkedPoint))
 	{
+		//block move
 		m_bCanMoveRight = false;
 		m_pRigidbody->SetHorizontalVelocity(0);
 	}
 	else
 	{
+		//enable move
 		m_bCanMoveRight = true;
 	}
 #pragma endregion
@@ -278,6 +278,7 @@ void Player1::Move()
 	Vec2 vScale = GetScale();
 	POINT checkedPoint = {};
 
+	//set velocity
 	if (KEY_PRESS(m_eLeftMoveKey) && m_bCanMoveLeft)
 	{
 		m_pRigidbody->SetHorizontalVelocity(-m_fPlayerSpeed);
@@ -299,9 +300,11 @@ void Player1::Move()
 
 void Player1::Jump()
 {
+	//set jump power
 	float jumpPower = m_pRigidbody->GetReverseGravity() ?
 		m_fJumpPower : -m_fJumpPower;
 
+	//jump
 	if (KEY_DOWN(KEY_TYPE::UP) && m_iCurrentJumpCount < m_iJumpCount)
 	{
 		m_iCurrentJumpCount++;

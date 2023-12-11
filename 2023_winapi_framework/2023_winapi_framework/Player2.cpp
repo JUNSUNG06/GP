@@ -268,54 +268,6 @@ void Player2::CheckCanMove()
 #pragma endregion
 }
 
-void Player2::AdjustPos()
-{
-	Vec2 vPos = GetPos();
-	Vec2 vScale = GetScale();
-	POINT checkedPoint = {};
-	RECT groundCheckRect;
-	RECT ceilingCheckRect;
-
-	//set check rect
-	if (!m_pRigidbody->GetReverseGravity())
-	{
-		groundCheckRect = { (LONG)(vPos.x - vScale.x / 2 + 5), (LONG)(vPos.y),
-							(LONG)(vPos.x + vScale.x / 2 - 5), (LONG)(vPos.y + vScale.y / 2) };
-		ceilingCheckRect = { (LONG)(vPos.x - vScale.x / 2 + 5), (LONG)(vPos.y - vScale.y / 2),
-							(LONG)(vPos.x + vScale.x / 2 - 5), (LONG)(vPos.y) };
-	}
-	else
-	{
-		groundCheckRect = { (LONG)(vPos.x - vScale.x / 2 + 5), (LONG)(vPos.y - vScale.y / 2),
-							(LONG)(vPos.x + vScale.x / 2 - 5), (LONG)(vPos.y) };
-		ceilingCheckRect = { (LONG)(vPos.x - vScale.x / 2 + 5), (LONG)(vPos.y),
-							(LONG)(vPos.x + vScale.x / 2 - 5), (LONG)(vPos.y + vScale.y / 2) };
-	}
-
-	if (PixelCollision::GetInst()->CheckCollision(ceilingCheckRect.left, ceilingCheckRect.top,
-		ceilingCheckRect.right, ceilingCheckRect.bottom, &checkedPoint))
-	{
-		m_pRigidbody->SetVerticalVelocity(0.f);
-
-		float adjustPos = m_pRigidbody->GetReverseGravity()
-			? checkedPoint.y - ceilingCheckRect.bottom : checkedPoint.y - ceilingCheckRect.top;
-
-		SetPos(vPos + Vec2({ 0.f, adjustPos }));
-	}
-
-	//check ground
-	if (PixelCollision::GetInst()->CheckCollision(groundCheckRect.left, groundCheckRect.top,
-		groundCheckRect.right, groundCheckRect.bottom, &checkedPoint))
-	{
-		m_pRigidbody->SetVerticalVelocity(0.f);
-
-		float adjustPos = m_pRigidbody->GetReverseGravity()
-			? checkedPoint.y - groundCheckRect.top : checkedPoint.y - groundCheckRect.bottom;
-
-		SetPos(vPos + Vec2({ 0.f, adjustPos }));
-	}
-}
-
 void Player2::Move()
 {
 	Vec2 vPos = GetPos();

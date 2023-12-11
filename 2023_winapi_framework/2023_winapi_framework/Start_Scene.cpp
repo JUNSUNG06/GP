@@ -85,8 +85,6 @@ void Start_Scene::Init()
 void Start_Scene::Update()
 {
 	Scene::Update();
-	//if(KEY_DOWN(KEY_TYPE::ENTER))
-	//	// ¾À º¯°æ
 }
 
 void Start_Scene::Render(HDC _dc)
@@ -125,15 +123,6 @@ void Start_Scene::Render(HDC _dc)
 			, 0, 0, Width, Height, RGB(255, 0, 255));
 		vPos.x -= Width + 10;
 	}
-
-	/*TransparentBlt(_dc, 0, 0,
-		m_pLevelTexture->GetWidth(),
-		m_pLevelTexture->GetHeight(),
-		m_pLevelTexture->GetDC(),
-		0, 0,
-		m_pLevelTexture->GetWidth(),
-		m_pLevelTexture->GetHeight(),
-		RGB(255, 0, 255));*/
 }
 
 void Start_Scene::Release()
