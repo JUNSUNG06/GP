@@ -11,6 +11,7 @@
 #include "SituationMgr.h"
 #include "ResultMgr.h"
 #include "CameraMgr.h"
+#include "LinearActionMgr.h"
 #include <ctime>
 
 bool Core::Init(HWND _hWnd, POINT _ptResolution)
@@ -41,6 +42,7 @@ bool Core::Init(HWND _hWnd, POINT _ptResolution)
 	TimeMgr::GetInst()->Init();
 	KeyMgr::GetInst()->Init();
 	ResMgr::GetInst()->Init();
+	LinearActionMgr::GetInst()->Init();
 	SceneMgr::GetInst()->Init();
 	SituationMgr::GetInst()->Init();
 	PixelCollision::GetInst()->Init();
@@ -73,6 +75,7 @@ void Core::Update()
 	// === Manager Update === 
 	TimeMgr::GetInst()->Update();
 	KeyMgr::GetInst()->Update();
+	LinearActionMgr::GetInst()->Update();
 	SceneMgr::GetInst()->Update();
 	CollisionMgr::GetInst()->Update();
 	SituationMgr::GetInst()->Udpate();
@@ -120,7 +123,6 @@ void Core::Render()
 	BitBlt(m_hDC, 0,0, m_ptResolution.x, m_ptResolution.y, 
 		m_hbackDC, 0,0, SRCCOPY);
 	EventMgr::GetInst()->Update();
-
 	//TransparentBlt();
 	//StretchBlt();
 	// 
@@ -171,4 +173,5 @@ void Core::Release()
 	ResMgr::GetInst()->Release();
 	SituationMgr::GetInst()->Release();
 	PixelCollision::GetInst()->Release();
+	LinearActionMgr::GetInst()->Release();
 }

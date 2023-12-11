@@ -78,6 +78,8 @@ void Start_Scene::Init()
 
 	//ui
 	ResMgr::GetInst()->TexLoad(L"Heart", L"Texture\\Heart.bmp");
+	ResMgr::GetInst()->LoadSound(L"Attack", L"Sound\\Attack.wav", false);
+	ResMgr::GetInst()->LoadSound(L"Hit", L"Sound\\Hit.wav", false);
 }
 
 void Start_Scene::Update()

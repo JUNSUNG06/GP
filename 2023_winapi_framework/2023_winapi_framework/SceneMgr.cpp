@@ -6,6 +6,7 @@
 #include "Result_Scene.h"
 #include "Explanation_Scene.h"
 #include "SelectGDI.h"
+
 void SceneMgr::Init()
 {
 	m_pCurScene = nullptr;
