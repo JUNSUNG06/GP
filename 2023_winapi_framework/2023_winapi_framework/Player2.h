@@ -15,6 +15,8 @@ public:
     virtual void EnterCollision(Collider* _pOther) override;
     virtual void ExitCollision(Collider* _pOther)  override;
     virtual void StayCollision(Collider* _pOther)  override;
+    void CheckCanMove();
+    void AdjustPos();
 public:
     void SetPlayerHP(int _hp) { m_iHP = _hp; }
     int GetPlayerHP() { return m_iHP; } // 추가한거
@@ -47,6 +49,9 @@ private:
     int m_iCurrentJumpCount;
     float m_fHandDis;
     bool m_bIsGround;
+    bool m_bBeforeGround;
+    bool m_bIsCeiling;
+    bool m_bBeforeCeiling;
     bool m_bCanMoveRight;
     bool m_bCanMoveLeft;
     Vec2 m_vecHandPos;

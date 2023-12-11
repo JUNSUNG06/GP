@@ -25,3 +25,4 @@ public:							\
 #define KEY_UP(key) KEY_CHECK(key, KEY_STATE::UP)
 #define KEY_DOWN(key) KEY_CHECK(key, KEY_STATE::DOWN)
 #define KEY_PRESS(key) KEY_CHECK(key, KEY_STATE::PRESS)
+#define PI 3.141592
