@@ -1,4 +1,5 @@
 #pragma once
+#include <functional>
 class LinearAction;
 
 class LinearActionMgr
@@ -11,7 +12,7 @@ public:
 	void Release();
 
 public:
-	void CreateLinearAction(wstring _strName, void (*_pAction)(float _fTime), float _fTime);
+	void CreateLinearAction(wstring _strName, std::function<void(float)> _pAction, float _fTime);
 	void RemoveLinerAction(wstring _strName);
 
 private:
