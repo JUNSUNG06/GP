@@ -6,9 +6,12 @@ class TagMgr
 
 public:
 	void ChooseRandomTagger();
-	void ChangeTagger(Object* _caughtPlayer);
+	void ChangeTaggerToPlayer1();
+	void ChangeTaggerToPlayer2();
 	Object* GetTagger() { return m_ptTagger; }
+
 private:
 	Object* m_ptTagger;
+public: bool test;
 };
 

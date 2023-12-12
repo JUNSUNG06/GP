@@ -16,6 +16,7 @@
 #include "CameraMgr.h"
 #include "TimeMgr.h"
 #include "PausePanel.h"
+#include "TagMgr.h"
 
 void Start_Scene::Init()
 {
@@ -28,7 +29,7 @@ void Start_Scene::Init()
 
 	m_pCollisionTexture = ResMgr::GetInst()->TexLoad(L"LevelCollision", L"Texture\\LevelCollision.bmp");
 	PixelCollision::GetInst()->SetColorImage(m_pCollisionTexture);
-	
+
 	Player1* pObj = new Player1;
 	pObj->SetPos((Vec2({ Core::GetInst()->GetResolution().x / 4 * 3, (Core::GetInst()->GetResolution().y / 2) })));
 	pObj->SetScale(Vec2(50.f, 50.f));
@@ -51,6 +52,10 @@ void Start_Scene::Init()
 
 	pObj->SetEnemy(pObj1);
 	pObj1->SetEnemy(pObj);
+
+
+	TagMgr::GetInst()->ChooseRandomTagger();
+	TagMgr::GetInst()->test = 0;
 
 	// 몬스터 세팅 마구마구 배치를 해봅시다.
 
@@ -79,9 +84,10 @@ void Start_Scene::Init()
 	//ResMgr::GetInst()->Play(L"BGM");
 
 	// 충돌체크해야되는것들을 설정하자.
-	CollisionMgr::GetInst()->CheckGroup(OBJECT_GROUP::BULLET, OBJECT_GROUP::MONSTER);
 	CollisionMgr::GetInst()->CheckGroup(OBJECT_GROUP::PLAYER, OBJECT_GROUP::BULLET2);
 	CollisionMgr::GetInst()->CheckGroup(OBJECT_GROUP::PLAYER2, OBJECT_GROUP::BULLET);
+	CollisionMgr::GetInst()->CheckGroup(OBJECT_GROUP::PLAYER, OBJECT_GROUP::PLAYER2);
+	//CollisionMgr::GetInst()->CheckGroup(OBJECT_GROUP::PLAYER2, OBJECT_GROUP::PLAYER);
 
 	//ui
 	ResMgr::GetInst()->TexLoad(L"Heart", L"Texture\\Heart.bmp");
@@ -98,7 +104,9 @@ void Start_Scene::Render(HDC _dc)
 {
 	Scene::Render(_dc);
 
-	wstring s = L"isPause: " + std::to_wstring(TimeMgr::GetInst()->GetIsPause()) + L" dt: " + std::to_wstring(TimeMgr::GetInst()->GetDT());
+	//wstring s = L"isPause: " + std::to_wstring(TimeMgr::GetInst()->GetIsPause()) + L" dt: " + std::to_wstring(TimeMgr::GetInst()->GetDT());
+	//TextOut(_dc, 100, 100, s.c_str(), s.length());
+	wstring s = L"Tagger: " + TagMgr::GetInst()->GetTagger()->GetName() + L" C: " + std::to_wstring(TagMgr::GetInst()->test);
 	TextOut(_dc, 100, 100, s.c_str(), s.length());
 
 	//heart ui

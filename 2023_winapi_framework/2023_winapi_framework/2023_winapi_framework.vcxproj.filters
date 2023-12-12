@@ -80,6 +80,9 @@
     <Filter Include="Engine\04. Object\UI">
       <UniqueIdentifier>{90fcdd49-c534-41b7-af41-8f6e994ae2b1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\03. Manager\TagManager">
+      <UniqueIdentifier>{03ebab50-9f0c-44b8-b9c6-899fbcb95120}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -220,6 +223,7 @@
     <ClInclude Include="LinearAction.h" />
     <ClInclude Include="LinearActionMgr.h" />
     <ClInclude Include="PausePanel.h" />
+    <ClInclude Include="TagMgr.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="2023_winapi_framework.rc">
@@ -355,5 +359,6 @@
     <ClCompile Include="LinearAction.cpp" />
     <ClCompile Include="LinearActionMgr.cpp" />
     <ClCompile Include="PausePanel.cpp" />
+    <ClCompile Include="TagMgr.cpp" />
   </ItemGroup>
 </Project>

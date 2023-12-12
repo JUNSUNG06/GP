@@ -14,7 +14,12 @@ void TagMgr::ChooseRandomTagger()
 	}
 }
 
-void TagMgr::ChangeTagger(Object* _caughtPlayer)
+void TagMgr::ChangeTaggerToPlayer1()
 {
-	m_ptTagger = _caughtPlayer;
+	m_ptTagger = GameMgr::GetInst()->GetPlayer1();
+}
+
+void TagMgr::ChangeTaggerToPlayer2()
+{
+	m_ptTagger = GameMgr::GetInst()->GetPlayer2();
 }

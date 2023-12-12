@@ -13,6 +13,7 @@
 #include "Texture.h"
 #include "Core.h"
 #include "CameraMgr.h"
+#include "TagMgr.h"
 
 Player1::Player1()
 	: m_pTex(nullptr)
@@ -137,10 +138,20 @@ void Player1::Render(HDC _dc)
 void Player1::EnterCollision(Collider* _pOther)
 {
 	const Object* pOtherObj = _pOther->GetObj();
+	if (pOtherObj->GetName() == L"Player2")//tag system
+	{
+		if (TagMgr::GetInst()->GetTagger() == this) {
+			TagMgr::GetInst()->ChangeTaggerToPlayer2();
+		}
+		else {
+			TagMgr::GetInst()->ChangeTaggerToPlayer1();
+		}
+	}
+	TagMgr::GetInst()->test = true;
+
 	if (pOtherObj->GetName() == L"Player2_Bullet")
 	{
-		const Object* cBullet = _pOther->GetObj();
-		Object* ncBullet = const_cast<Object*>(cBullet);
+		Object* ncBullet = const_cast<Object*>(pOtherObj);
 		EventMgr::GetInst()->DeleteObject(ncBullet);
 		ResMgr::GetInst()->Play(L"Hit");
 		m_iHP--;

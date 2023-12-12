@@ -13,6 +13,7 @@
 #include "Texture.h"
 #include "Core.h"
 #include "CameraMgr.h"
+#include "TagMgr.h"
 
 Player2::Player2()
 	: m_pTex(nullptr)
@@ -49,6 +50,7 @@ void Player2::Update()
 {
 	Vec2 vPos = GetPos();
 
+	CheckCanMove();
 	Move();
 	Jump();
 
@@ -138,6 +140,7 @@ void Player2::Render(HDC _dc)
 void Player2::EnterCollision(Collider* _pOther)
 {
 	const Object* pOtherObj = _pOther->GetObj();
+
 	if (pOtherObj->GetName() == L"Player1_Bullet")
 	{
 		const Object* cBullet = _pOther->GetObj();
@@ -179,7 +182,7 @@ void Player2::Attack()
 	ResMgr::GetInst()->Play(L"Attack");
 }
 
-void Player2::Move()
+void Player2::CheckCanMove()
 {
 	Vec2 vPos = GetPos();
 	Vec2 vScale = GetScale();
