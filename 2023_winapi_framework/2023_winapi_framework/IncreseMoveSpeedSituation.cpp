@@ -27,19 +27,19 @@ void IncreseMoveSpeedSituation::StartSituation()
 	m_pPlayer2 = GameMgr::GetInst()->GetPlayer2();
 
 	if (m_pPlayer1 != nullptr)
-		m_pPlayer1->SetPlayerSpeed(m_pPlayer1->GetPlayerSPeed() * 2);
+		m_pPlayer1->SetPlayerSpeed(m_pPlayer1->GetPlayerSPeed() * 1.3f);
 	if (m_pPlayer2 != nullptr)
-		m_pPlayer2->SetPlayerSpeed(m_pPlayer1->GetPlayerSPeed() * 2);
+		m_pPlayer2->SetPlayerSpeed(m_pPlayer1->GetPlayerSPeed() * 1.3f);
 }
 
 void IncreseMoveSpeedSituation::UpdateSituation()
 {
 }
 
-void IncreseMoveSpeedSituation::EndSituation()
+void IncreseMoveSpeedSituation::EndSituation()	
 {
 	if (m_pPlayer1 != nullptr)
-		m_pPlayer1->SetPlayerSpeed(m_pPlayer1->GetPlayerSPeed() * 0.5f);
+		m_pPlayer1->SetPlayerSpeed(m_pPlayer1->GetPlayerSPeed() * 0.66f);
 	if (m_pPlayer2 != nullptr)
-		m_pPlayer2->SetPlayerSpeed(m_pPlayer1->GetPlayerSPeed() * 0.5f);
+		m_pPlayer2->SetPlayerSpeed(m_pPlayer1->GetPlayerSPeed() * 0.66f);
 }

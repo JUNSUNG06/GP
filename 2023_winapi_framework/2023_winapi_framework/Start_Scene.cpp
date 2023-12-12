@@ -16,6 +16,7 @@
 #include "CameraMgr.h"
 #include "TimeMgr.h"
 #include "PausePanel.h"
+#include "JumpPad.h"
 
 void Start_Scene::Init()
 {
@@ -48,6 +49,16 @@ void Start_Scene::Init()
 	AddObject(pObj1, OBJECT_GROUP::PLAYER2);
 	GameMgr::GetInst()->SetPlayer2(pObj1);
 
+	JumpPad* pad = new JumpPad;
+	pad->SetPos(Vec2({16 + 25, 836}));
+	pad->SetScale(Vec2({50, 24}));
+	pad->SetName(L"JumpPad1");
+	AddObject(pad, OBJECT_GROUP::JUMPPAD);
+	JumpPad* pad2 = new JumpPad;
+	pad2->SetPos(Vec2({ Core::GetInst()->GetResolution().x - 16 - 25, 836}));
+	pad2->SetScale(Vec2({ 50, 24 }));
+	pad2->SetName(L"JumpPad2");
+	AddObject(pad2, OBJECT_GROUP::JUMPPAD);
 
 	pObj->SetEnemy(pObj1);
 	pObj1->SetEnemy(pObj);
@@ -82,6 +93,8 @@ void Start_Scene::Init()
 	CollisionMgr::GetInst()->CheckGroup(OBJECT_GROUP::BULLET, OBJECT_GROUP::MONSTER);
 	CollisionMgr::GetInst()->CheckGroup(OBJECT_GROUP::PLAYER, OBJECT_GROUP::BULLET2);
 	CollisionMgr::GetInst()->CheckGroup(OBJECT_GROUP::PLAYER2, OBJECT_GROUP::BULLET);
+	CollisionMgr::GetInst()->CheckGroup(OBJECT_GROUP::JUMPPAD, OBJECT_GROUP::PLAYER);
+	CollisionMgr::GetInst()->CheckGroup(OBJECT_GROUP::JUMPPAD, OBJECT_GROUP::PLAYER2);
 
 	//ui
 	ResMgr::GetInst()->TexLoad(L"Heart", L"Texture\\Heart.bmp");

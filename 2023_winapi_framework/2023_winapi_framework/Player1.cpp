@@ -23,7 +23,7 @@ Player1::Player1()
 	, m_fCurFireDelay(3.f)
 	, m_fBulletSpeed(3.f)
 	, m_pEnemy(nullptr)
-	, m_fJumpPower(400.f)
+	, m_fJumpPower(340.f)
 	, m_bIsGround(false)
 	, m_bCanMoveLeft(true)
 	, m_bCanMoveRight(true)
@@ -89,9 +89,9 @@ void Player1::Render(HDC _dc)
 {
 	Vec2 vPos = GetPos();
 	Vec2 vScale = GetScale();
-	Vec2 vDir = { m_pEnemy->GetPos().x - GetPos().x,
+	/*Vec2 vDir = { m_pEnemy->GetPos().x - GetPos().x,
 		m_pEnemy->GetPos().y - GetPos().y };
-	vDir = vDir.Normalize();
+	vDir = vDir.Normalize();*/
 
 	//Component_Render(_dc);
 
@@ -305,12 +305,8 @@ void Player1::Jump()
 		m_fJumpPower : -m_fJumpPower;
 
 	//jump
-	if (KEY_DOWN(KEY_TYPE::UP) && m_iCurrentJumpCount < m_iJumpCount)
+	if (KEY_DOWN(KEY_TYPE::UP) && m_bIsGround)
 	{
-		m_iCurrentJumpCount++;
-		if (!m_bIsGround && !m_bIsCeiling && m_iCurrentJumpCount == 0)
-			m_iCurrentJumpCount++;
-
 		m_pRigidbody->SetVerticalVelocity(jumpPower);
 	}
 }
