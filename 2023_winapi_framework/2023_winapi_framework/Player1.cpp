@@ -57,7 +57,7 @@ void Player1::Update()
 	SetPos(vPos);
 
 	m_fCurFireDelay += fDT;
-	if (m_fCurFireDelay >= m_fFireDelay && m_pEnemy != nullptr && !TimeMgr::GetInst()->GetIsPause()) {
+	if (m_fCurFireDelay >= m_fFireDelay && m_pEnemy != nullptr) {
 		if (KEY_PRESS(KEY_TYPE::DOWN))
 		{
 			Attack();
@@ -112,7 +112,7 @@ void Player1::Render(HDC _dc)
 	else
 	{
 		StretchBlt(hMemDc
-			, m_pHandTex->GetWidth()- 1
+			, m_pHandTex->GetWidth() - 1
 			, 0
 			, -m_pHandTex->GetWidth(), m_pHandTex->GetHeight(), m_pHandTex->GetDC()
 			, 0, 0, m_pHandTex->GetWidth(), m_pHandTex->GetHeight(), SRCCOPY);
@@ -139,9 +139,6 @@ void Player1::EnterCollision(Collider* _pOther)
 	const Object* pOtherObj = _pOther->GetObj();
 	if (pOtherObj->GetName() == L"Player2_Bullet")
 	{
-		const Object* cBullet = _pOther->GetObj();
-		Object* ncBullet = const_cast<Object*>(cBullet);
-		EventMgr::GetInst()->DeleteObject(ncBullet);
 		ResMgr::GetInst()->Play(L"Hit");
 		m_iHP--;
 		CameraMgr::GetInst()->CameraShake(10, 0.5f);
@@ -239,7 +236,7 @@ void Player1::CheckCanMove()
 	}
 
 	m_pRigidbody->Update();
-	
+
 #pragma endregion
 
 #pragma region check left move
@@ -307,10 +304,11 @@ void Player1::Jump()
 	float jumpPower = m_pRigidbody->GetReverseGravity() ?
 		m_fJumpPower : -m_fJumpPower;
 
-	if (KEY_DOWN(KEY_TYPE::UP) && m_iCurrentJumpCount < m_iJumpCount && !TimeMgr::GetInst()->GetIsPause())
+	//jump
+	if (KEY_DOWN(KEY_TYPE::UP) && m_iCurrentJumpCount < m_iJumpCount)
 	{
 		m_iCurrentJumpCount++;
-		if(!m_bIsGround && !m_bIsCeiling && m_iCurrentJumpCount == 0)
+		if (!m_bIsGround && !m_bIsCeiling && m_iCurrentJumpCount == 0)
 			m_iCurrentJumpCount++;
 
 		m_pRigidbody->SetVerticalVelocity(jumpPower);

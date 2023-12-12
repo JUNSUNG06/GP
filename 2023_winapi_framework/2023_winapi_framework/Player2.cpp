@@ -17,13 +17,13 @@
 Player2::Player2()
 	: m_pTex(nullptr)
 	, m_iHP(5)
-	, m_fPlayerSpeed(500.f)
 	, m_bIsDie(false)
+	, m_fPlayerSpeed(500.f)
 	, m_fFireDelay(1.f)
 	, m_fCurFireDelay(3.f)
 	, m_fBulletSpeed(3.f)
 	, m_pEnemy(nullptr)
-	, m_fJumpPower(400.f)
+	, m_fJumpPower(250.f)
 	, m_bIsGround(false)
 	, m_bCanMoveLeft(true)
 	, m_bCanMoveRight(true)
@@ -49,16 +49,16 @@ void Player2::Update()
 {
 	Vec2 vPos = GetPos();
 
+	CheckCanMove();
 	Move();
 	Jump();
 
 	vPos += m_pRigidbody->GetVelocity() * fDT;
 	SetPos(vPos);
 
-
 	m_fCurFireDelay += fDT;
-	if (m_fCurFireDelay >= m_fFireDelay && m_fFireDelay && m_pEnemy != nullptr && !TimeMgr::GetInst()->GetIsPause()) {
-		if (KEY_PRESS(KEY_TYPE::S))
+	if (m_fCurFireDelay >= m_fFireDelay && m_pEnemy != nullptr) {
+		if (KEY_PRESS(KEY_TYPE::DOWN))
 		{
 			Attack();
 			m_fCurFireDelay = 0;
@@ -93,14 +93,9 @@ void Player2::Render(HDC _dc)
 		m_pEnemy->GetPos().y - GetPos().y };
 	vDir = vDir.Normalize();
 
-	Component_Render(_dc);
+	//Component_Render(_dc);
 
-	TransparentBlt(_dc
-		, (int)(vPos.x - vScale.x / 2)
-		, (int)(vPos.y - vScale.y / 2)
-		, m_pTex->GetWidth(), m_pTex->GetHeight(), m_pTex->GetDC()
-		, 0, 0, m_pTex->GetWidth(), m_pTex->GetHeight(), RGB(255, 0, 255));
-
+	m_pTex->Draw(_dc, GetPos(), GetScale());
 #pragma region hand
 	HBITMAP hMemBtiamp = CreateCompatibleBitmap(m_pHandTex->GetDC(), m_pHandTex->GetWidth(), m_pHandTex->GetHeight());
 	HDC hMemDc = CreateCompatibleDC(m_pHandTex->GetDC());
@@ -123,8 +118,9 @@ void Player2::Render(HDC _dc)
 			, 0, 0, m_pHandTex->GetWidth(), m_pHandTex->GetHeight(), SRCCOPY);
 	}
 
-	TransparentBlt(_dc, (int)(vPos.x - m_pHandTex->GetWidth() / 2) + vDir.x * m_fHandDis
-		, (int)(vPos.y - m_pHandTex->GetHeight() / 2) + vDir.y * m_fHandDis
+	TransparentBlt(_dc
+		, (int)(vPos.x - m_pHandTex->GetWidth() / 2) + m_vecHandPos.x
+		, (int)(vPos.y - m_pHandTex->GetHeight() / 2) + m_vecHandPos.y
 		, m_pHandTex->GetWidth()
 		, m_pHandTex->GetHeight()
 		, hMemDc
@@ -132,23 +128,23 @@ void Player2::Render(HDC _dc)
 		, m_pHandTex->GetWidth()
 		, m_pHandTex->GetHeight()
 		, RGB(255, 0, 255));
+
+	DeleteObject(hMemBtiamp);
+	DeleteDC(hMemDc);
 #pragma endregion
 }
 
 void Player2::EnterCollision(Collider* _pOther)
 {
 	const Object* pOtherObj = _pOther->GetObj();
-	if (pOtherObj->GetName() == L"Player1_Bullet")
+	if (pOtherObj->GetName() == L"Player2_Bullet")
 	{
-		const Object* cBullet = _pOther->GetObj();
-		Object* ncBullet = const_cast<Object*>(cBullet);
-		EventMgr::GetInst()->DeleteObject(ncBullet);
 		ResMgr::GetInst()->Play(L"Hit");
 		m_iHP--;
 		CameraMgr::GetInst()->CameraShake(10, 0.5f);
 		if (m_iHP <= 0) {
 			m_bIsDie = true;
-			ResultMgr::GetInst()->PlayerDied(2);
+			ResultMgr::GetInst()->PlayerDied(1);
 			EventMgr::GetInst()->DeleteObject(this);
 		}
 	}
@@ -174,40 +170,25 @@ void Player2::Attack()
 	//pBullet->SetDir(Vec2(-10.f, -15.f));
 	if (Vec2({ m_pEnemy->GetPos().x - GetPos().x, m_pEnemy->GetPos().y - GetPos().y }).Length() != 0)
 		pBullet->SetDir({ m_pEnemy->GetPos().x - GetPos().x, m_pEnemy->GetPos().y - GetPos().y });
-	pBullet->SetName(L"Player2_Bullet");
-	SceneMgr::GetInst()->GetCurScene()->AddObject(pBullet, OBJECT_GROUP::BULLET2);
+	pBullet->SetName(L"Player1_Bullet");
+	SceneMgr::GetInst()->GetCurScene()->AddObject(pBullet, OBJECT_GROUP::BULLET);
 	ResMgr::GetInst()->Play(L"Attack");
 }
 
-void Player2::Move()
+void Player2::CheckCanMove()
 {
 	Vec2 vPos = GetPos();
 	Vec2 vScale = GetScale();
 	POINT checkedPoint = {};
 
-#pragma region move
-	if (KEY_PRESS(m_eLeftMoveKey) && m_bCanMoveLeft)
-	{
-		m_pRigidbody->SetHorizontalVelocity(-m_fPlayerSpeed);
-	}
-	else if (KEY_UP(m_eLeftMoveKey))
-	{
-		m_pRigidbody->SetHorizontalVelocity(0);
-	}
-	else if (KEY_PRESS(m_eRightMoveKey) && m_bCanMoveRight)
-	{
-		m_pRigidbody->SetHorizontalVelocity(m_fPlayerSpeed);
-	}
-	else if (KEY_UP(m_eRightMoveKey))
-	{
-		m_pRigidbody->SetHorizontalVelocity(0);
-	}
-#pragma endregion
-
-#pragma region check ground, ceiling
+#pragma region check ground
 	RECT groundCheckRect;
 	RECT ceilingCheckRect;
 
+	m_bBeforeGround = m_bIsGround;
+	m_bBeforeCeiling = m_bIsCeiling;
+
+	//set check rect
 	if (!m_pRigidbody->GetReverseGravity())
 	{
 		groundCheckRect = { (LONG)(vPos.x - vScale.x / 2 + 5), (LONG)(vPos.y),
@@ -223,11 +204,22 @@ void Player2::Move()
 							(LONG)(vPos.x + vScale.x / 2 - 5), (LONG)(vPos.y + vScale.y / 2) };
 	}
 
+	//check ceiling 
+	if (PixelCollision::GetInst()->CheckCollision(ceilingCheckRect.left, ceilingCheckRect.top,
+		ceilingCheckRect.right, ceilingCheckRect.bottom, &checkedPoint))
+	{
+		m_bIsCeiling = true;
+	}
+	else
+	{
+		m_bIsCeiling = false;
+	}
+
+	//check ground
 	if (PixelCollision::GetInst()->CheckCollision(groundCheckRect.left, groundCheckRect.top,
 		groundCheckRect.right, groundCheckRect.bottom, &checkedPoint))
 	{
 		m_pRigidbody->SetApplyGravity(false);
-		m_pRigidbody->SetVerticalVelocity(0.f);
 		m_iCurrentJumpCount = 0;
 		m_bIsGround = true;
 	}
@@ -237,13 +229,14 @@ void Player2::Move()
 		m_bIsGround = false;
 	}
 
-	if (PixelCollision::GetInst()->CheckCollision(ceilingCheckRect.left, ceilingCheckRect.top,
-		ceilingCheckRect.right, ceilingCheckRect.bottom, &checkedPoint))
+	//set vertical velocity
+	if ((m_bIsGround && !m_bBeforeGround) || (m_bIsCeiling && !m_bBeforeCeiling))
 	{
 		m_pRigidbody->SetVerticalVelocity(0.f);
 	}
 
 	m_pRigidbody->Update();
+
 #pragma endregion
 
 #pragma region check left move
@@ -251,11 +244,13 @@ void Player2::Move()
 		vPos.x - vScale.x / 2.f, vPos.y - vScale.y / 2.f + 5,
 		vPos.x - vScale.x / 3.f, vPos.y + vScale.y / 2.f - 5, &checkedPoint))
 	{
+		//block move
 		m_bCanMoveLeft = false;
 		m_pRigidbody->SetHorizontalVelocity(0);
 	}
 	else
 	{
+		//enable move
 		m_bCanMoveLeft = true;
 	}
 #pragma endregion
@@ -265,11 +260,13 @@ void Player2::Move()
 		vPos.x + vScale.x / 3.f, vPos.y - vScale.y / 2.f + 5,
 		vPos.x + vScale.x / 2.f, vPos.y + vScale.y / 2.f - 5, &checkedPoint))
 	{
+		//block move
 		m_bCanMoveRight = false;
 		m_pRigidbody->SetHorizontalVelocity(0);
 	}
 	else
 	{
+		//enable move
 		m_bCanMoveRight = true;
 	}
 #pragma endregion
@@ -281,6 +278,7 @@ void Player2::Move()
 	Vec2 vScale = GetScale();
 	POINT checkedPoint = {};
 
+	//set velocity
 	if (KEY_PRESS(m_eLeftMoveKey) && m_bCanMoveLeft)
 	{
 		m_pRigidbody->SetHorizontalVelocity(-m_fPlayerSpeed);
@@ -302,14 +300,16 @@ void Player2::Move()
 
 void Player2::Jump()
 {
+	//set jump power
 	float jumpPower = m_pRigidbody->GetReverseGravity() ?
 		m_fJumpPower : -m_fJumpPower;
 
-	if (KEY_DOWN(KEY_TYPE::W) && m_iCurrentJumpCount < m_iJumpCount && !TimeMgr::GetInst()->GetIsPause())
+	//jump
+	if (KEY_DOWN(KEY_TYPE::W) && m_iCurrentJumpCount < m_iJumpCount)
 	{
-		if (!m_bIsGround && m_iCurrentJumpCount == 0)
-			m_iCurrentJumpCount++;
 		m_iCurrentJumpCount++;
+		if (!m_bIsGround && !m_bIsCeiling && m_iCurrentJumpCount == 0)
+			m_iCurrentJumpCount++;
 
 		m_pRigidbody->SetVerticalVelocity(jumpPower);
 	}
