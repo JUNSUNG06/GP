@@ -86,6 +86,11 @@ void SituationMgr::Render(HDC _dc)
 void SituationMgr::Release()
 {
 	delete m_pCurrentSituation;
+	
+	for (auto s : m_umSituationMap)
+	{
+		delete s.second;
+	}
 }
 
 void SituationMgr::StartSituation()
