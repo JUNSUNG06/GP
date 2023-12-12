@@ -275,6 +275,31 @@ void Player2::Move()
 #pragma endregion
 }
 
+void Player2::Move()
+{
+	Vec2 vPos = GetPos();
+	Vec2 vScale = GetScale();
+	POINT checkedPoint = {};
+
+	if (KEY_PRESS(m_eLeftMoveKey) && m_bCanMoveLeft)
+	{
+		m_pRigidbody->SetHorizontalVelocity(-m_fPlayerSpeed);
+	}
+	else if (KEY_UP(m_eLeftMoveKey))
+	{
+		m_pRigidbody->SetHorizontalVelocity(0);
+	}
+
+	if (KEY_PRESS(m_eRightMoveKey) && m_bCanMoveRight)
+	{
+		m_pRigidbody->SetHorizontalVelocity(m_fPlayerSpeed);
+	}
+	else if (KEY_UP(m_eRightMoveKey))
+	{
+		m_pRigidbody->SetHorizontalVelocity(0);
+	}
+}
+
 void Player2::Jump()
 {
 	float jumpPower = m_pRigidbody->GetReverseGravity() ?

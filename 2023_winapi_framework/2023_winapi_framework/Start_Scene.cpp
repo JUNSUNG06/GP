@@ -20,15 +20,15 @@
 void Start_Scene::Init()
 {
 	SetBackground(L"Level_1", L"Texture\\Level_1.bmp");
-	m_pCollisionTexture = ResMgr::GetInst()->TexLoad(L"LevelCollision", L"Texture\\LevelCollision.bmp");
-	//m_pLevelTexture = ResMgr::GetInst()->TexLoad(L"Level", L"Texture\\Level.bmp");
-	PixelCollision::GetInst()->SetColorImage(m_pCollisionTexture);
 
 	PausePanel* pspn = new PausePanel;
 	pspn->SetPos(Vec2({ Core::GetInst()->GetResolution().x / 2, Core::GetInst()->GetResolution().y / 2 }));
 	pspn->SetScale(Vec2(300, 300));
 	AddObject(pspn, OBJECT_GROUP::UI);
 
+	m_pCollisionTexture = ResMgr::GetInst()->TexLoad(L"LevelCollision", L"Texture\\LevelCollision.bmp");
+	PixelCollision::GetInst()->SetColorImage(m_pCollisionTexture);
+	
 	Player1* pObj = new Player1;
 	pObj->SetPos((Vec2({ Core::GetInst()->GetResolution().x / 4 * 3, (Core::GetInst()->GetResolution().y / 2) })));
 	pObj->SetScale(Vec2(50.f, 50.f));
@@ -92,8 +92,6 @@ void Start_Scene::Init()
 void Start_Scene::Update()
 {
 	Scene::Update();
-	//if(KEY_DOWN(KEY_TYPE::ENTER))
-	//	// ¾À º¯°æ
 }
 
 void Start_Scene::Render(HDC _dc)
@@ -136,15 +134,6 @@ void Start_Scene::Render(HDC _dc)
 			, 0, 0, Width, Height, RGB(255, 0, 255));
 		vPos.x -= Width + 10;
 	}
-
-	/*TransparentBlt(_dc, 0, 0,
-		m_pLevelTexture->GetWidth(),
-		m_pLevelTexture->GetHeight(),
-		m_pLevelTexture->GetDC(),
-		0, 0,
-		m_pLevelTexture->GetWidth(),
-		m_pLevelTexture->GetHeight(),
-		RGB(255, 0, 255));*/
 }
 
 void Start_Scene::Release()

@@ -4,6 +4,7 @@
 #include "ReverseGravitySituation.h"
 #include "ReverseInputSituation.h"
 #include "IncreseMoveSpeedSituation.h"
+#include "RotateMapSituation.h"
 #include "TimeMgr.h"
 #include "SceneMgr.h"
 #include <time.h>
@@ -18,10 +19,12 @@ void SituationMgr::Init()
 
 	situationType = SITUATION_TYPE::REVERSE_GRAVITY;
 	RegistSituation(situationType, new ReverseGravitySituation(situationType));
-	//situationType = SITUATION_TYPE::REVERSE_INPUT;
-	//RegistSituation(situationType, new ReverseInputSituation(situationType));
-	//situationType = SITUATION_TYPE::INCREASE_MOVE_SPEED;
-	//RegistSituation(situationType, new IncreseMoveSpeedSituation(situationType));
+	situationType = SITUATION_TYPE::REVERSE_INPUT;
+	RegistSituation(situationType, new ReverseInputSituation(situationType));
+	situationType = SITUATION_TYPE::INCREASE_MOVE_SPEED;
+	RegistSituation(situationType, new IncreseMoveSpeedSituation(situationType));
+	situationType = SITUATION_TYPE::ROTATE_MAP;
+	RegistSituation(situationType, new RotateMapSituation(situationType));
 	
 	m_fCurrentSituationTime = 0;
 	m_fSituationChagneInterval = 5.f;
@@ -55,7 +58,7 @@ void SituationMgr::Udpate()
 		if (m_fCurrentSitautionChangeTime >= m_fSituationChagneInterval)
 		{
 			m_fCurrentSitautionChangeTime = 0.f;
-			int type = 0;//rand() % (int)SITUATION_TYPE::END;
+			int type = 4;
 			SetSituation((SITUATION_TYPE)type);
 			StartSituation();
 		}
@@ -83,6 +86,11 @@ void SituationMgr::Render(HDC _dc)
 void SituationMgr::Release()
 {
 	delete m_pCurrentSituation;
+	
+	for (auto s : m_umSituationMap)
+	{
+		delete s.second;
+	}
 }
 
 void SituationMgr::StartSituation()

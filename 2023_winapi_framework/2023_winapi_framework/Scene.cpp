@@ -2,6 +2,7 @@
 #include "Scene.h"
 #include "Object.h"
 #include "Texture.h"
+#include "Core.h"
 
 Scene::Scene()
 	: m_pBackground(nullptr)
@@ -39,7 +40,14 @@ void Scene::FinalUpdate()
 void Scene::Render(HDC _dc)
 {
 	if (m_pBackground != nullptr)
-		BitBlt(_dc, 0, 0, m_pBackground->GetWidth(), m_pBackground->GetHeight(), m_pBackground->GetDC(), 0, 0, SRCCOPY);
+	{
+		Vec2 scale = Vec2({ Core::GetInst()->GetResolution().x 
+			, Core::GetInst()->GetResolution().y});
+
+		m_pBackground->Draw(_dc
+			, Vec2({ scale.x / 2, scale.y / 2 })
+			, scale);
+	}
 
 	for (UINT i = 0; i < (UINT)OBJECT_GROUP::END; ++i)
 	{
