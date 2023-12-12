@@ -20,6 +20,7 @@ public:
     void SetPlayerHP(int _hp) { m_iHP = _hp; }
     int GetPlayerHP() { return m_iHP; } // 추가한거
     void SetPlayerSpeed(float _speed) { m_fPlayerSpeed = _speed; }
+    float GetPlayerSPeed() { return m_fPlayerSpeed; }
     void SetFireDelay(float _delay) { m_fFireDelay = _delay; }
     void SetJumpPower(float _fValue) { m_fJumpPower = _fValue; }
     void SetMoveKey(KEY_TYPE rightKey, KEY_TYPE leftKey)

@@ -18,12 +18,12 @@ Player2::Player2()
 	: m_pTex(nullptr)
 	, m_iHP(5)
 	, m_bIsDie(false)
-	, m_fPlayerSpeed(500.f)
+	, m_fPlayerSpeed(750.f)
 	, m_fFireDelay(1.f)
 	, m_fCurFireDelay(3.f)
 	, m_fBulletSpeed(3.f)
 	, m_pEnemy(nullptr)
-	, m_fJumpPower(250.f)
+	, m_fJumpPower(390.f)
 	, m_bIsGround(false)
 	, m_bCanMoveLeft(true)
 	, m_bCanMoveRight(true)
@@ -96,42 +96,42 @@ void Player2::Render(HDC _dc)
 	//Component_Render(_dc);
 
 	m_pTex->Draw(_dc, GetPos(), GetScale());
-#pragma region hand
-	HBITMAP hMemBtiamp = CreateCompatibleBitmap(m_pHandTex->GetDC(), m_pHandTex->GetWidth(), m_pHandTex->GetHeight());
-	HDC hMemDc = CreateCompatibleDC(m_pHandTex->GetDC());
-	SelectObject(hMemDc, hMemBtiamp);
-
-	if (vDir.x > 0)
-	{
-		StretchBlt(hMemDc
-			, 0
-			, 0
-			, m_pHandTex->GetWidth(), m_pHandTex->GetHeight(), m_pHandTex->GetDC()
-			, 0, 0, m_pHandTex->GetWidth(), m_pHandTex->GetHeight(), SRCCOPY);
-	}
-	else
-	{
-		StretchBlt(hMemDc
-			, m_pHandTex->GetWidth() - 1
-			, 0
-			, -m_pHandTex->GetWidth(), m_pHandTex->GetHeight(), m_pHandTex->GetDC()
-			, 0, 0, m_pHandTex->GetWidth(), m_pHandTex->GetHeight(), SRCCOPY);
-	}
-
-	TransparentBlt(_dc
-		, (int)(vPos.x - m_pHandTex->GetWidth() / 2) + m_vecHandPos.x
-		, (int)(vPos.y - m_pHandTex->GetHeight() / 2) + m_vecHandPos.y
-		, m_pHandTex->GetWidth()
-		, m_pHandTex->GetHeight()
-		, hMemDc
-		, 0, 0
-		, m_pHandTex->GetWidth()
-		, m_pHandTex->GetHeight()
-		, RGB(255, 0, 255));
-
-	DeleteObject(hMemBtiamp);
-	DeleteDC(hMemDc);
-#pragma endregion
+//#pragma region hand
+//	HBITMAP hMemBtiamp = CreateCompatibleBitmap(m_pHandTex->GetDC(), m_pHandTex->GetWidth(), m_pHandTex->GetHeight());
+//	HDC hMemDc = CreateCompatibleDC(m_pHandTex->GetDC());
+//	SelectObject(hMemDc, hMemBtiamp);
+//
+//	if (vDir.x > 0)
+//	{
+//		StretchBlt(hMemDc
+//			, 0
+//			, 0
+//			, m_pHandTex->GetWidth(), m_pHandTex->GetHeight(), m_pHandTex->GetDC()
+//			, 0, 0, m_pHandTex->GetWidth(), m_pHandTex->GetHeight(), SRCCOPY);
+//	}
+//	else
+//	{
+//		StretchBlt(hMemDc
+//			, m_pHandTex->GetWidth() - 1
+//			, 0
+//			, -m_pHandTex->GetWidth(), m_pHandTex->GetHeight(), m_pHandTex->GetDC()
+//			, 0, 0, m_pHandTex->GetWidth(), m_pHandTex->GetHeight(), SRCCOPY);
+//	}
+//
+//	TransparentBlt(_dc
+//		, (int)(vPos.x - m_pHandTex->GetWidth() / 2) + m_vecHandPos.x
+//		, (int)(vPos.y - m_pHandTex->GetHeight() / 2) + m_vecHandPos.y
+//		, m_pHandTex->GetWidth()
+//		, m_pHandTex->GetHeight()
+//		, hMemDc
+//		, 0, 0
+//		, m_pHandTex->GetWidth()
+//		, m_pHandTex->GetHeight()
+//		, RGB(255, 0, 255));
+//
+//	DeleteObject(hMemBtiamp);
+//	DeleteDC(hMemDc);
+//#pragma endregion
 }
 
 void Player2::EnterCollision(Collider* _pOther)
@@ -191,17 +191,17 @@ void Player2::CheckCanMove()
 	//set check rect
 	if (!m_pRigidbody->GetReverseGravity())
 	{
-		groundCheckRect = { (LONG)(vPos.x - vScale.x / 2 + 5), (LONG)(vPos.y),
-							(LONG)(vPos.x + vScale.x / 2 - 5), (LONG)(vPos.y + vScale.y / 2) };
-		ceilingCheckRect = { (LONG)(vPos.x - vScale.x / 2 + 5), (LONG)(vPos.y - vScale.y / 2),
-							(LONG)(vPos.x + vScale.x / 2 - 5), (LONG)(vPos.y) };
+		groundCheckRect = { (LONG)(vPos.x - vScale.x / 2 + 1), (LONG)(vPos.y),
+							(LONG)(vPos.x + vScale.x / 2 - 1), (LONG)(vPos.y + vScale.y / 2) };
+		ceilingCheckRect = { (LONG)(vPos.x - vScale.x / 2 + 1), (LONG)(vPos.y - vScale.y / 2),
+							(LONG)(vPos.x + vScale.x / 2 - 1), (LONG)(vPos.y) };
 	}
 	else
 	{
-		groundCheckRect = { (LONG)(vPos.x - vScale.x / 2 + 5), (LONG)(vPos.y - vScale.y / 2),
-							(LONG)(vPos.x + vScale.x / 2 - 5), (LONG)(vPos.y) };
-		ceilingCheckRect = { (LONG)(vPos.x - vScale.x / 2 + 5), (LONG)(vPos.y),
-							(LONG)(vPos.x + vScale.x / 2 - 5), (LONG)(vPos.y + vScale.y / 2) };
+		groundCheckRect = { (LONG)(vPos.x - vScale.x / 2 + 1), (LONG)(vPos.y - vScale.y / 2),
+							(LONG)(vPos.x + vScale.x / 2 - 1), (LONG)(vPos.y) };
+		ceilingCheckRect = { (LONG)(vPos.x - vScale.x / 2 + 1), (LONG)(vPos.y),
+							(LONG)(vPos.x + vScale.x / 2 - 1), (LONG)(vPos.y + vScale.y / 2) };
 	}
 
 	//check ceiling 
