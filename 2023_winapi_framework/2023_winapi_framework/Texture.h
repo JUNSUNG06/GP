@@ -14,9 +14,12 @@ public:
     const HDC& GetDC() const { return m_hDC; }
     void Draw(HDC _dc, Vec2 _vPos, Vec2 _vScale);
     void DrawRotate(HDC _dc, Vec2 _vPos, Vec2 _vScale, float _fAngle);
+    void SetAngle(float _fAngle) { m_fAngle = _fAngle; }
+    float GetAngle() { return m_fAngle; }
 private:
     HBITMAP m_hBit;
     HDC     m_hDC;
     BITMAP  m_bitInfo;
+    float m_fAngle;
 };
 

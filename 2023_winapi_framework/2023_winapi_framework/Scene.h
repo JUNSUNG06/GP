@@ -29,6 +29,7 @@ public:
 	{
 		m_pBackground = ResMgr::GetInst()->TexLoad(name, path);
 	}
+	Texture* GetBackground() { return m_pBackground; }
 private:
 //	Object*  m_obj;
 	vector<Object*> m_vecObj[(UINT)OBJECT_GROUP::END];

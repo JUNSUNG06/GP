@@ -41,7 +41,7 @@ void LinearActionMgr::Release()
 	}
 }
 
-void LinearActionMgr::CreateLinearAction(wstring _strName, void(*_pAction)(float _fTime), float _fTime)
+void LinearActionMgr::CreateLinearAction(wstring _strName, std::function<void(float)> _pAction, float _fTime)
 {
 	if (m_mLienrActions.find(_strName) != m_mLienrActions.end())
 		return;

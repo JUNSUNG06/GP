@@ -18,10 +18,10 @@
 void Start_Scene::Init()
 {
 	SetBackground(L"Level_1", L"Texture\\Level_1.bmp");
-	m_pCollisionTexture = ResMgr::GetInst()->TexLoad(L"LevelCollision", L"Texture\\LevelCollision.bmp");
-	//m_pLevelTexture = ResMgr::GetInst()->TexLoad(L"Level", L"Texture\\Level.bmp");
-	PixelCollision::GetInst()->SetColorImage(m_pCollisionTexture);
 
+	m_pCollisionTexture = ResMgr::GetInst()->TexLoad(L"LevelCollision", L"Texture\\LevelCollision.bmp");
+	PixelCollision::GetInst()->SetColorImage(m_pCollisionTexture);
+	
 	Player1* pObj = new Player1;
 	pObj->SetPos((Vec2({ Core::GetInst()->GetResolution().x / 4 * 3, (Core::GetInst()->GetResolution().y / 2) })));
 	pObj->SetScale(Vec2(50.f, 50.f));
