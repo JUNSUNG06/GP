@@ -12,6 +12,7 @@
 #include "ResultMgr.h"
 #include "CameraMgr.h"
 #include "LinearActionMgr.h"
+#include "GameMgr.h"
 #include <ctime>
 
 bool Core::Init(HWND _hWnd, POINT _ptResolution)
@@ -48,6 +49,7 @@ bool Core::Init(HWND _hWnd, POINT _ptResolution)
 	PixelCollision::GetInst()->Init();
 	ResultMgr::GetInst()->Init();
 	CameraMgr::GetInst()->Init();
+	GameMgr::GetInst()->Init();
 
 	return true;
 }
@@ -81,6 +83,7 @@ void Core::Update()
 	SituationMgr::GetInst()->Udpate();
 	ResultMgr::GetInst()->Update();
 	CameraMgr::GetInst()->Update();
+	GameMgr::GetInst()->Update();
 	//	Vec2 vPos = m_obj.GetPos();
 	//
 	////	if (GetAsyncKeyState(VK_LEFT) & 0x8000)
@@ -120,6 +123,7 @@ void Core::Render()
 
 	// 3. ¿Å±ä´Ù.
 	SituationMgr::GetInst()->Render(m_hbackDC);
+	GameMgr::GetInst()->Render(m_hbackDC);
 	BitBlt(m_hDC, 0, 0, m_ptResolution.x, m_ptResolution.y,
 		m_hbackDC, 0, 0, SRCCOPY);
 	EventMgr::GetInst()->Update();

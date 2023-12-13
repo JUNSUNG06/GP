@@ -18,6 +18,7 @@
 #include "PausePanel.h"
 #include "TagMgr.h"
 #include "JumpPad.h"
+#include "GameMgr.h"
 
 void Start_Scene::Init()
 {
@@ -106,6 +107,8 @@ void Start_Scene::Init()
 	ResMgr::GetInst()->TexLoad(L"Heart", L"Texture\\Heart.bmp");
 	ResMgr::GetInst()->LoadSound(L"Attack", L"Sound\\Attack.wav", false);
 	ResMgr::GetInst()->LoadSound(L"Hit", L"Sound\\Hit.wav", false);
+
+	GameMgr::GetInst()->StartGame();
 }
 
 void Start_Scene::Update()
