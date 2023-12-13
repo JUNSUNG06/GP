@@ -12,6 +12,5 @@ public:
 
 private:
 	Object* m_ptTagger;
-public: bool test;
 };
 

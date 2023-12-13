@@ -147,7 +147,6 @@ void Player1::EnterCollision(Collider* _pOther)
 			TagMgr::GetInst()->ChangeTaggerToPlayer1();
 		}
 	}
-	TagMgr::GetInst()->test = true;
 
 	if (pOtherObj->GetName() == L"Player2_Bullet")
 	{

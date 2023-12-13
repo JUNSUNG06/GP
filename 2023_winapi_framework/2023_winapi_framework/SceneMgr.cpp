@@ -30,7 +30,7 @@ void SceneMgr::Update()
 void SceneMgr::Render(HDC _dc)
 {
 	//폰트 바꿔보기!
-	//AddFontResource(L"Texture\\한국기계연구원_bold.ttf"); // 한번만 하면 되는건가
+	AddFontResource(L"Texture\\한국기계연구원_bold.ttf"); // 한번만 하면 되는건가
 	HFONT hFont = CreateFont(20, 0, 0, 0, 0, 0, 0, 0, HANGEUL_CHARSET, 0, 0, 0, VARIABLE_PITCH | FF_ROMAN, L"한국기계연구원_bold");
 	//SelectObject(_dc, hFont);
 	SelectGDI selectFont(_dc, hFont);
