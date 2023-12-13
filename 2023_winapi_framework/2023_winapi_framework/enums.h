@@ -28,6 +28,7 @@ enum class OBJECT_GROUP
 	BULLET,
 	BULLET2,
 	MONSTER,
+	JUMPPAD,
 	UI,
 	END = 30
 };
