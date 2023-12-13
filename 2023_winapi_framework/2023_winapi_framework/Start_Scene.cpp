@@ -17,6 +17,7 @@
 #include "TimeMgr.h"
 #include "PausePanel.h"
 #include "TagMgr.h"
+#include "JumpPad.h"
 
 void Start_Scene::Init()
 {
@@ -32,8 +33,8 @@ void Start_Scene::Init()
 
 	Player1* pObj = new Player1;
 	pObj->SetPos((Vec2({ Core::GetInst()->GetResolution().x / 4 * 3, (Core::GetInst()->GetResolution().y / 2) })));
-	pObj->SetScale(Vec2(50.f, 50.f));
-	pObj->SetPlayerSpeed(200.f);
+	pObj->SetScale(Vec2(25.f, 25.f));
+	pObj->SetPlayerSpeed(250.f);
 	//pObj->SetFireDelay(3.f);
 	pObj->SetName(L"Player1");
 	AddObject(pObj, OBJECT_GROUP::PLAYER);
@@ -42,13 +43,23 @@ void Start_Scene::Init()
 
 	Player2* pObj1 = new Player2;
 	pObj1->SetPos((Vec2({ Core::GetInst()->GetResolution().x / 4 * 1, (Core::GetInst()->GetResolution().y / 2) })));
-	pObj1->SetScale(Vec2(50.f, 50.f));
-	pObj1->SetPlayerSpeed(200.f);
+	pObj1->SetScale(Vec2(25.f, 25.f));
+	pObj1->SetPlayerSpeed(250.f);
 	//pObj1->SetFireDelay(3.f);
 	pObj1->SetName(L"Player2");
 	AddObject(pObj1, OBJECT_GROUP::PLAYER2);
 	GameMgr::GetInst()->SetPlayer2(pObj1);
 
+	JumpPad* pad = new JumpPad;
+	pad->SetPos(Vec2({16 + 25, 836}));
+	pad->SetScale(Vec2({50, 24}));
+	pad->SetName(L"JumpPad1");
+	AddObject(pad, OBJECT_GROUP::JUMPPAD);
+	JumpPad* pad2 = new JumpPad;
+	pad2->SetPos(Vec2({ Core::GetInst()->GetResolution().x - 16 - 25, 836}));
+	pad2->SetScale(Vec2({ 50, 24 }));
+	pad2->SetName(L"JumpPad2");
+	AddObject(pad2, OBJECT_GROUP::JUMPPAD);
 
 	pObj->SetEnemy(pObj1);
 	pObj1->SetEnemy(pObj);
@@ -88,6 +99,8 @@ void Start_Scene::Init()
 	CollisionMgr::GetInst()->CheckGroup(OBJECT_GROUP::PLAYER2, OBJECT_GROUP::BULLET);
 	CollisionMgr::GetInst()->CheckGroup(OBJECT_GROUP::PLAYER, OBJECT_GROUP::PLAYER2);
 	//CollisionMgr::GetInst()->CheckGroup(OBJECT_GROUP::PLAYER2, OBJECT_GROUP::PLAYER);
+	CollisionMgr::GetInst()->CheckGroup(OBJECT_GROUP::JUMPPAD, OBJECT_GROUP::PLAYER);
+	CollisionMgr::GetInst()->CheckGroup(OBJECT_GROUP::JUMPPAD, OBJECT_GROUP::PLAYER2);
 
 	//ui
 	ResMgr::GetInst()->TexLoad(L"Heart", L"Texture\\Heart.bmp");
