@@ -7,13 +7,14 @@
 #include "SelectGDI.h"
 #include "ResMgr.h"
 #include "Explanation_Scene.h"
-#include "ResultMgr.h" // add
+#include "ResultMgr.h"
 #include "LinearActionMgr.h"
 void Intro_Scene::Init()
 {
 	SetBackground(L"Background_Intro", L"Texture\\Background_Intro.bmp");
 
 	//사운드
+	ResMgr::GetInst()->Stop(SOUND_CHANNEL::BGM);
 	ResMgr::GetInst()->LoadSound(L"Main_Menu_BGM", L"Sound\\Main_Menu_BGM.wav", true);
 	ResMgr::GetInst()->LoadSound(L"Button_Click", L"Sound\\Button_Click.wav", false);
 
@@ -22,7 +23,6 @@ void Intro_Scene::Init()
 	Object* obj = new Button([]()
 		{
 			SceneMgr::GetInst()->LoadScene(L"Start_Scene");
-			ResMgr::GetInst()->Stop(SOUND_CHANNEL::BGM);
 		}
 	, L"게임 시작");
 	obj->SetPos((Vec2({ Core::GetInst()->GetResolution().x / 2, Core::GetInst()->GetResolution().y / 2 })));

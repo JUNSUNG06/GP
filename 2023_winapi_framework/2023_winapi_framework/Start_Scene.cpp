@@ -66,7 +66,6 @@ void Start_Scene::Init()
 
 
 	TagMgr::GetInst()->ChooseRandomTagger();
-	TagMgr::GetInst()->test = 0;
 
 	// 몬스터 세팅 마구마구 배치를 해봅시다.
 
@@ -90,9 +89,10 @@ void Start_Scene::Init()
 	//	AddObject(pMonster, OBJECT_GROUP::MONSTER);
 	//}
 	// 사운드 세팅
-	ResMgr::GetInst()->LoadSound(L"BGM", L"Sound\\Retro_bgm.wav", true);
+	ResMgr::GetInst()->Stop(SOUND_CHANNEL::BGM);
+	ResMgr::GetInst()->LoadSound(L"Game_Scene_BGM", L"Sound\\Game_Scene_BGM.wav", true);
 	ResMgr::GetInst()->LoadSound(L"Shoot", L"Sound\\laserShoot.wav", false);
-	//ResMgr::GetInst()->Play(L"BGM");
+	ResMgr::GetInst()->Play(L"Game_Scene_BGM");
 
 	// 충돌체크해야되는것들을 설정하자.
 	CollisionMgr::GetInst()->CheckGroup(OBJECT_GROUP::PLAYER, OBJECT_GROUP::BULLET2);
@@ -119,7 +119,7 @@ void Start_Scene::Render(HDC _dc)
 
 	//wstring s = L"isPause: " + std::to_wstring(TimeMgr::GetInst()->GetIsPause()) + L" dt: " + std::to_wstring(TimeMgr::GetInst()->GetDT());
 	//TextOut(_dc, 100, 100, s.c_str(), s.length());
-	wstring s = L"Tagger: " + TagMgr::GetInst()->GetTagger()->GetName() + L" C: " + std::to_wstring(TagMgr::GetInst()->test);
+	wstring s = L"Tagger: " + TagMgr::GetInst()->GetTagger()->GetName();
 	TextOut(_dc, 100, 100, s.c_str(), s.length());
 
 	//heart ui
