@@ -58,7 +58,7 @@ void SituationMgr::Udpate()
 		if (m_fCurrentSitautionChangeTime >= m_fSituationChagneInterval)
 		{
 			m_fCurrentSitautionChangeTime = 0.f;
-			int type = rand() % ((int)SITUATION_TYPE::END - 1);
+			int type = 0;//rand() % ((int)SITUATION_TYPE::END - 1);
 			SetSituation((SITUATION_TYPE)type);
 			StartSituation();
 		}

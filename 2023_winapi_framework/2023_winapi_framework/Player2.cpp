@@ -33,7 +33,7 @@ Player2::Player2()
 {
 	m_pHandTex = ResMgr::GetInst()->TexLoad(L"Player2_Hand", L"Texture\\Player2_Hand.bmp");
 	CreateCollider();
-	GetCollider()->SetScale(Vec2(20.f, 30.f));
+	GetCollider()->SetScale(Vec2(25.f, 25.f));
 	m_pRigidbody = new Rigidbody(this);
 	m_pTex = ResMgr::GetInst()->TexLoad(L"Player2", L"Texture\\Player2.bmp");
 	SetMoveKey(KEY_TYPE::D, KEY_TYPE::A);
