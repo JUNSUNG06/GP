@@ -33,7 +33,7 @@ Player1::Player1()
 {
 	m_pHandTex = ResMgr::GetInst()->TexLoad(L"Player1_Hand", L"Texture\\Player1_Hand.bmp");
 	CreateCollider();
-	GetCollider()->SetScale(Vec2(20.f, 30.f));
+	GetCollider()->SetScale(Vec2(25.f, 25.f));
 	m_pRigidbody = new Rigidbody(this);
 	m_pTex = ResMgr::GetInst()->TexLoad(L"Player1", L"Texture\\Player1.bmp");
 	SetMoveKey(KEY_TYPE::RIGHT, KEY_TYPE::LEFT);
@@ -48,42 +48,39 @@ Player1::~Player1()
 
 void Player1::Update()
 {
+	CheckCanMove();
+	Jump();
+	Move();
+
 	Vec2 vPos = GetPos();
 
-	CheckCanMove();
-	Move();
-	Jump();
-
-	vPos += m_pRigidbody->GetVelocity() * fDT;
-	SetPos(vPos);
-
-	m_fCurFireDelay += fDT;
+	/*m_fCurFireDelay += fDT;
 	if (m_fCurFireDelay >= m_fFireDelay && m_pEnemy != nullptr) {
 		if (KEY_PRESS(KEY_TYPE::DOWN))
 		{
 			Attack();
 			m_fCurFireDelay = 0;
 		}
-	}
+	}*/
 
 	POINT pRes = Core::GetInst()->GetResolution();
 
-	if (vPos.x < 0 || vPos.y < 0 || vPos.x > pRes.x || vPos.y > pRes.y)
+	/*if (vPos.x < 0 || vPos.y < 0 || vPos.x > pRes.x || vPos.y > pRes.y)
 	{
 		m_iHP = 0;
 		m_bIsDie = true;
 		ResultMgr::GetInst()->PlayerDied(1);
 		EventMgr::GetInst()->DeleteObject(this);
-	}
+	}*/
 
-	if (m_pEnemy != nullptr)
+	/*if (m_pEnemy != nullptr)
 	{
 		Vec2 vDir = { m_pEnemy->GetPos().x - GetPos().x,
 		m_pEnemy->GetPos().y - GetPos().y };
 		vDir = vDir.Normalize();
 
 		m_vecHandPos = vDir * m_fHandDis;
-	}
+	}*/
 }
 
 void Player1::Render(HDC _dc)
@@ -194,6 +191,49 @@ void Player1::CheckCanMove()
 	Vec2 vScale = GetScale();
 	POINT checkedPoint = {};
 
+#pragma region check left move
+	RECT leftCheckRect = { vPos.x - vScale.x / 2.f, vPos.y - vScale.y / 2.f + 2,
+		vPos.x - vScale.x / 3.f, vPos.y + vScale.y / 2.f - 2 };
+
+	if (PixelCollision::GetInst()->CheckCollision(
+		leftCheckRect.left, leftCheckRect.top, leftCheckRect.right, leftCheckRect.bottom, &checkedPoint, true))
+	{
+		//block move
+		m_bCanMoveLeft = false;
+		m_pRigidbody->SetHorizontalVelocity(0);
+
+		float adjustValue = checkedPoint.x - leftCheckRect.left;
+
+		vPos += Vec2({ adjustValue, 0.f});
+	}
+	else
+	{
+		//enable move
+		m_bCanMoveLeft = true;
+	}
+#pragma endregion
+
+#pragma region check right move
+	RECT rightCheckRect = { vPos.x + vScale.x / 3.f, vPos.y - vScale.y / 2.f + 2,
+		vPos.x + vScale.x / 2.f, vPos.y + vScale.y / 2.f - 2 };
+
+	if (PixelCollision::GetInst()->CheckCollision(
+		rightCheckRect.left, rightCheckRect.top, rightCheckRect.right, rightCheckRect.bottom, &checkedPoint))
+	{
+		//block move
+		m_bCanMoveRight = false;
+		m_pRigidbody->SetHorizontalVelocity(0);
+
+		float adjustValue = checkedPoint.x - rightCheckRect.right;
+
+		vPos += Vec2({ adjustValue, 0.f });
+	}
+	else
+	{
+		//enable move
+		m_bCanMoveRight = true;
+	}
+#pragma endregion
 #pragma region check ground
 	RECT groundCheckRect;
 	RECT ceilingCheckRect;
@@ -206,6 +246,7 @@ void Player1::CheckCanMove()
 	{
 		groundCheckRect = { (LONG)(vPos.x - vScale.x / 2 + 1), (LONG)(vPos.y),
 							(LONG)(vPos.x + vScale.x / 2 - 1), (LONG)(vPos.y + vScale.y / 2) };
+
 		ceilingCheckRect = { (LONG)(vPos.x - vScale.x / 2 + 1), (LONG)(vPos.y - vScale.y / 2),
 							(LONG)(vPos.x + vScale.x / 2 - 1), (LONG)(vPos.y) };
 	}
@@ -213,6 +254,7 @@ void Player1::CheckCanMove()
 	{
 		groundCheckRect = { (LONG)(vPos.x - vScale.x / 2 + 1), (LONG)(vPos.y - vScale.y / 2),
 							(LONG)(vPos.x + vScale.x / 2 - 1), (LONG)(vPos.y) };
+
 		ceilingCheckRect = { (LONG)(vPos.x - vScale.x / 2 + 1), (LONG)(vPos.y),
 							(LONG)(vPos.x + vScale.x / 2 - 1), (LONG)(vPos.y + vScale.y / 2) };
 	}
@@ -230,11 +272,17 @@ void Player1::CheckCanMove()
 
 	//check ground
 	if (PixelCollision::GetInst()->CheckCollision(groundCheckRect.left, groundCheckRect.top,
-		groundCheckRect.right, groundCheckRect.bottom, &checkedPoint))
+		groundCheckRect.right, groundCheckRect.bottom, &checkedPoint, GetRigidbody()->GetReverseGravity()))
 	{
 		m_pRigidbody->SetApplyGravity(false);
 		m_iCurrentJumpCount = 0;
 		m_bIsGround = true;
+
+		float adjustValue = GetRigidbody()->GetReverseGravity()
+			? checkedPoint.y - groundCheckRect.top
+			: checkedPoint.y - groundCheckRect.bottom;
+
+		vPos += Vec2({ 0.f, adjustValue });
 	}
 	else
 	{
@@ -252,37 +300,7 @@ void Player1::CheckCanMove()
 
 #pragma endregion
 
-#pragma region check left move
-	if (PixelCollision::GetInst()->CheckCollision(
-		vPos.x - vScale.x / 2.f, vPos.y - vScale.y / 2.f + 5,
-		vPos.x - vScale.x / 3.f, vPos.y + vScale.y / 2.f - 5, &checkedPoint))
-	{
-		//block move
-		m_bCanMoveLeft = false;
-		m_pRigidbody->SetHorizontalVelocity(0);
-	}
-	else
-	{
-		//enable move
-		m_bCanMoveLeft = true;
-	}
-#pragma endregion
-
-#pragma region check right move
-	if (PixelCollision::GetInst()->CheckCollision(
-		vPos.x + vScale.x / 3.f, vPos.y - vScale.y / 2.f + 5,
-		vPos.x + vScale.x / 2.f, vPos.y + vScale.y / 2.f - 5, &checkedPoint))
-	{
-		//block move
-		m_bCanMoveRight = false;
-		m_pRigidbody->SetHorizontalVelocity(0);
-	}
-	else
-	{
-		//enable move
-		m_bCanMoveRight = true;
-	}
-#pragma endregion
+	SetPos(vPos);
 }
 
 void Player1::Move()
@@ -309,6 +327,9 @@ void Player1::Move()
 	{
 		m_pRigidbody->SetHorizontalVelocity(0);
 	}
+
+	vPos += m_pRigidbody->GetVelocity() * fDT;
+	SetPos(vPos);
 }
 
 void Player1::Jump()

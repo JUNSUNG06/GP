@@ -133,7 +133,7 @@ void Start_Scene::Render(HDC _dc)
 	TextOut(_dc, 100, 200, ss.c_str(), ss.length());
 
 	//heart ui
-	long long player1hp = GameMgr::GetInst()->GetPlayer1()->GetPlayerHP();
+	/*long long player1hp = GameMgr::GetInst()->GetPlayer1()->GetPlayerHP();
 	int Width = ResMgr::GetInst()->TexFind(L"Heart")->GetWidth();
 	int Height = ResMgr::GetInst()->TexFind(L"Heart")->GetHeight();
 	Vec2 vPos = { 10, 10 };
@@ -164,7 +164,7 @@ void Start_Scene::Render(HDC _dc)
 			, Width, Height, ResMgr::GetInst()->TexFind(L"Heart")->GetDC()
 			, 0, 0, Width, Height, RGB(255, 0, 255));
 		vPos.x -= Width + 10;
-	}
+	}*/
 }
 
 void Start_Scene::Release()

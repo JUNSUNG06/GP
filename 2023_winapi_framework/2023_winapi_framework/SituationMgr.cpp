@@ -70,7 +70,7 @@ void SituationMgr::Render(HDC _dc)
 	if (m_pCurrentSituation != nullptr)
 	{
 		POINT pRes = Core::GetInst()->GetResolution();
-		RECT rt = { 0, 30, pRes.x, 105};
+		RECT rt = { 0, 100, pRes.x, 175};
 		HFONT hFont = CreateFont(75, 0, 0, 0, 0, 0, 0, 0, HANGEUL_CHARSET, 0, 0, 0,
 			VARIABLE_PITCH | FF_ROMAN, TEXT("±Ã¼­"));
 		HFONT hOldFont = (HFONT)SelectObject(_dc, hFont);
