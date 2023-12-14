@@ -20,6 +20,8 @@ void TeleportMgr::Init()
 
 void TeleportMgr::Update()
 {
+	if (SceneMgr::GetInst()->GetCurScene() != SceneMgr::GetInst()->GetScene(L"Start_Scene"))
+		return;
 	m_fCurTime += fDT;
 	if (!m_bIsSpawned) {
 		if (m_fCurTime >= m_fRegenTime) {
