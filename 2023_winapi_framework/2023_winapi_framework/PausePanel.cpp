@@ -12,12 +12,12 @@ PausePanel::PausePanel()
 {
 	m_oContinueBtn = new Button([]() {TimeMgr::GetInst()->SetIsPause(false); }, L"Continue");
 	m_oContinueBtn->SetPos(Vec2({ 0,0 }));
-	m_oContinueBtn->SetScale(Vec2(120, 40));
+	m_oContinueBtn->SetScale(Vec2(190, 50));
 	SceneMgr::GetInst()->GetCurScene()->AddObject(m_oContinueBtn, OBJECT_GROUP::UI);
 
 	m_oExitBtn = new Button([]() {SceneMgr::GetInst()->LoadScene(L"Intro_Scene"); }, L"Exit");
 	m_oExitBtn->SetPos(Vec2({ 0,0 }));
-	m_oExitBtn->SetScale(Vec2(120, 40));
+	m_oExitBtn->SetScale(Vec2(190, 50));
 	SceneMgr::GetInst()->GetCurScene()->AddObject(m_oExitBtn, OBJECT_GROUP::UI);
 }
 

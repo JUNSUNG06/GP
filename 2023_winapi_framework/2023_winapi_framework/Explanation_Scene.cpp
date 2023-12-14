@@ -28,7 +28,7 @@ void Explanation_Scene::Init()
 
 	obj = new Button([]() { SceneMgr::GetInst()->LoadScene(L"Intro_Scene"); }, L"돌아가기");
 	obj->SetPos((Vec2({ Core::GetInst()->GetResolution().x / 2, Core::GetInst()->GetResolution().y / 2 + 400 })));
-	obj->SetScale(Vec2(100.f, 30.f));
+	obj->SetScale(Vec2(190.f, 50.f));
 	AddObject(obj, OBJECT_GROUP::UI);
 
 }
