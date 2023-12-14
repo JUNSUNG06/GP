@@ -14,6 +14,7 @@
 #include "LinearActionMgr.h"
 #include "GameMgr.h"
 #include "TagMgr.h"
+#include "SelectGDI.h"
 #include "TeleportMgr.h"
 #include <ctime>
 
@@ -110,6 +111,11 @@ void Core::Update()
 
 void Core::Render()
 {
+	AddFontResource(L"Texture\\한국기계연구원_bold.ttf"); // 한번만 하면 되는건가
+	HFONT hFont = CreateFont(20, 0, 0, 0, 0, 0, 0, 0, HANGEUL_CHARSET, 0, 0, 0, VARIABLE_PITCH | FF_ROMAN, L"한국기계연구원_bold");
+	SelectGDI selectFont(m_hbackDC, hFont);
+	SetBkMode(m_hbackDC, TRANSPARENT);
+
 	// 칠한다.
 	//Rectangle(m_hbackDC, -1,-1,m_ptResolution.x +1,m_ptResolution.y + 1);
 	PatBlt(m_hbackDC, 0, 0, m_ptResolution.x, m_ptResolution.y, WHITENESS);

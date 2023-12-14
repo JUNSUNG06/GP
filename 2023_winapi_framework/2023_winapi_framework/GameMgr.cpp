@@ -29,7 +29,7 @@ void GameMgr::Render(HDC _dc)
 	if (m_bIsPlay)
 	{
 		HFONT hFont = CreateFont(45, 0, 0, 0, 0, 0, 0, 0, HANGEUL_CHARSET, 0, 0, 0,
-			VARIABLE_PITCH | FF_ROMAN, TEXT("궁서"));
+			VARIABLE_PITCH | FF_ROMAN, L"한국기계연구원_bold");
 		HFONT hOldFont = (HFONT)SelectObject(_dc, hFont);
 		SetBkMode(_dc, TRANSPARENT);
 
