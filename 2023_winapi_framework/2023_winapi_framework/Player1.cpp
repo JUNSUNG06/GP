@@ -191,6 +191,49 @@ void Player1::CheckCanMove()
 	Vec2 vScale = GetScale();
 	POINT checkedPoint = {};
 
+#pragma region check left move
+	RECT leftCheckRect = { vPos.x - vScale.x / 2.f, vPos.y - vScale.y / 2.f + 2,
+		vPos.x - vScale.x / 3.f, vPos.y + vScale.y / 2.f - 2 };
+
+	if (PixelCollision::GetInst()->CheckCollision(
+		leftCheckRect.left, leftCheckRect.top, leftCheckRect.right, leftCheckRect.bottom, &checkedPoint, true))
+	{
+		//block move
+		m_bCanMoveLeft = false;
+		m_pRigidbody->SetHorizontalVelocity(0);
+
+		float adjustValue = checkedPoint.x - leftCheckRect.left;
+
+		vPos += Vec2({ adjustValue, 0.f});
+	}
+	else
+	{
+		//enable move
+		m_bCanMoveLeft = true;
+	}
+#pragma endregion
+
+#pragma region check right move
+	RECT rightCheckRect = { vPos.x + vScale.x / 3.f, vPos.y - vScale.y / 2.f + 2,
+		vPos.x + vScale.x / 2.f, vPos.y + vScale.y / 2.f - 2 };
+
+	if (PixelCollision::GetInst()->CheckCollision(
+		rightCheckRect.left, rightCheckRect.top, rightCheckRect.right, rightCheckRect.bottom, &checkedPoint))
+	{
+		//block move
+		m_bCanMoveRight = false;
+		m_pRigidbody->SetHorizontalVelocity(0);
+
+		float adjustValue = checkedPoint.x - rightCheckRect.right;
+
+		vPos += Vec2({ adjustValue, 0.f });
+	}
+	else
+	{
+		//enable move
+		m_bCanMoveRight = true;
+	}
+#pragma endregion
 #pragma region check ground
 	RECT groundCheckRect;
 	RECT ceilingCheckRect;
@@ -201,16 +244,16 @@ void Player1::CheckCanMove()
 	//set check rect
 	if (!m_pRigidbody->GetReverseGravity())
 	{
-		groundCheckRect = { (LONG)(vPos.x - vScale.x / 2 + 2), (LONG)(vPos.y),
-							(LONG)(vPos.x + vScale.x / 2 - 2), (LONG)(vPos.y + vScale.y / 2) };
+		groundCheckRect = { (LONG)(vPos.x - vScale.x / 2 + 1), (LONG)(vPos.y),
+							(LONG)(vPos.x + vScale.x / 2 - 1), (LONG)(vPos.y + vScale.y / 2) };
 
 		ceilingCheckRect = { (LONG)(vPos.x - vScale.x / 2 + 1), (LONG)(vPos.y - vScale.y / 2),
 							(LONG)(vPos.x + vScale.x / 2 - 1), (LONG)(vPos.y) };
 	}
 	else
 	{
-		groundCheckRect = { (LONG)(vPos.x - vScale.x / 2 + 2), (LONG)(vPos.y - vScale.y / 2),
-							(LONG)(vPos.x + vScale.x / 2 - 2), (LONG)(vPos.y) };
+		groundCheckRect = { (LONG)(vPos.x - vScale.x / 2 + 1), (LONG)(vPos.y - vScale.y / 2),
+							(LONG)(vPos.x + vScale.x / 2 - 1), (LONG)(vPos.y) };
 
 		ceilingCheckRect = { (LONG)(vPos.x - vScale.x / 2 + 1), (LONG)(vPos.y),
 							(LONG)(vPos.x + vScale.x / 2 - 1), (LONG)(vPos.y + vScale.y / 2) };
@@ -255,50 +298,6 @@ void Player1::CheckCanMove()
 
 	m_pRigidbody->Update();
 
-#pragma endregion
-
-#pragma region check left move
-	RECT leftCheckRect = { vPos.x - vScale.x / 2.f, vPos.y - vScale.y / 2.f + 2,
-		vPos.x - vScale.x / 3.f, vPos.y + vScale.y / 2.f - 2 };
-
-	if (PixelCollision::GetInst()->CheckCollision(
-		leftCheckRect.left, leftCheckRect.top, leftCheckRect.right, leftCheckRect.bottom, &checkedPoint))
-	{
-		//block move
-		m_bCanMoveLeft = false;
-		m_pRigidbody->SetHorizontalVelocity(0);
-
-		float adjustValue = checkedPoint.x - leftCheckRect.left;
-
-		//vPos += Vec2({ adjustValue, 0.f});
-	}
-	else
-	{
-		//enable move
-		m_bCanMoveLeft = true;
-	}
-#pragma endregion
-
-#pragma region check right move
-	RECT rightCheckRect = { vPos.x + vScale.x / 3.f, vPos.y - vScale.y / 2.f + 2,
-		vPos.x + vScale.x / 2.f, vPos.y + vScale.y / 2.f - 2};
-
-	if (PixelCollision::GetInst()->CheckCollision(
-		rightCheckRect.left, rightCheckRect.top, rightCheckRect.right, rightCheckRect.bottom, &checkedPoint))
-	{
-		//block move
-		m_bCanMoveRight = false;
-		m_pRigidbody->SetHorizontalVelocity(0);
-
-		float adjustValue = checkedPoint.x - rightCheckRect.right;
-
-		//vPos += Vec2({ adjustValue, 0.f });
-	}
-	else
-	{
-		//enable move
-		m_bCanMoveRight = true;
-	}
 #pragma endregion
 
 	SetPos(vPos);
