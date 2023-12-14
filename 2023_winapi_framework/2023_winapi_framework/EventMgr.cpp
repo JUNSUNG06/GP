@@ -26,6 +26,9 @@ void EventMgr::DeleteObject(Object* _pObj)
 
 void EventMgr::Excute(const tEvent& _eve)
 {
+	if (!_eve.Obj)
+		return;
+
 	switch (_eve.eEve)
 	{
 	case EVENT_TYPE::DELETE_OBJECT:

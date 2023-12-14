@@ -26,18 +26,18 @@ void Intro_Scene::Init()
 		}
 	, L"게임 시작");
 	obj->SetPos((Vec2({ Core::GetInst()->GetResolution().x / 2, Core::GetInst()->GetResolution().y / 2 })));
-	obj->SetScale(Vec2(100.f, 30.f));
+	obj->SetScale(Vec2(200.f, 60.f));
 	AddObject(obj, OBJECT_GROUP::UI);
 
 	obj = new Button([]() 
 		{ SceneMgr::GetInst()->LoadScene(L"Explanation_Scene"); }, L"게임 설명"); 
-	obj->SetPos((Vec2({ Core::GetInst()->GetResolution().x / 2, Core::GetInst()->GetResolution().y / 2 + 60 })));
-	obj->SetScale(Vec2(100.f, 30.f));
+	obj->SetPos((Vec2({ Core::GetInst()->GetResolution().x / 2, Core::GetInst()->GetResolution().y / 2 + 80 })));
+	obj->SetScale(Vec2(200.f, 60.f));
 	AddObject(obj, OBJECT_GROUP::UI);
 
 	obj = new Button([]() { SendMessage(Core::GetInst()->GetHwnd(), WM_CLOSE, 0, 0); }, L"게임 종료");
-	obj->SetPos((Vec2({ Core::GetInst()->GetResolution().x / 2, Core::GetInst()->GetResolution().y / 2 + 120 })));
-	obj->SetScale(Vec2(100.f, 30.f));
+	obj->SetPos((Vec2({ Core::GetInst()->GetResolution().x / 2, Core::GetInst()->GetResolution().y / 2 + 160 })));
+	obj->SetScale(Vec2(200.f, 60.f));
 	AddObject(obj, OBJECT_GROUP::UI);
 
 	/*LinearActionMgr::GetInst()->CreateLinearAction(L"Tset", 

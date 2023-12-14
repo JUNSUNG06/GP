@@ -58,7 +58,7 @@ void SituationMgr::Udpate()
 		if (m_fCurrentSitautionChangeTime >= m_fSituationChagneInterval)
 		{
 			m_fCurrentSitautionChangeTime = 0.f;
-			int type = 0;//rand() % ((int)SITUATION_TYPE::END - 1);
+			int type = rand() % ((int)SITUATION_TYPE::END - 1);
 			SetSituation((SITUATION_TYPE)type);
 			StartSituation();
 		}
@@ -70,7 +70,7 @@ void SituationMgr::Render(HDC _dc)
 	if (m_pCurrentSituation != nullptr)
 	{
 		POINT pRes = Core::GetInst()->GetResolution();
-		RECT rt = { 0, 30, pRes.x, 105};
+		RECT rt = { 0, 100, pRes.x, 175};
 		HFONT hFont = CreateFont(75, 0, 0, 0, 0, 0, 0, 0, HANGEUL_CHARSET, 0, 0, 0,
 			VARIABLE_PITCH | FF_ROMAN, TEXT("±Ã¼­"));
 		HFONT hOldFont = (HFONT)SelectObject(_dc, hFont);

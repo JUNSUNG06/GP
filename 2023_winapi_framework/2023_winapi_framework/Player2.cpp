@@ -54,33 +54,33 @@ void Player2::Update()
 
 	Vec2 vPos = GetPos();
 
-	m_fCurFireDelay += fDT;
+	/*m_fCurFireDelay += fDT;
 	if (m_fCurFireDelay >= m_fFireDelay && m_pEnemy != nullptr) {
 		if (KEY_PRESS(KEY_TYPE::DOWN))
 		{
 			Attack();
 			m_fCurFireDelay = 0;
 		}
-	}
+	}*/
 
 	POINT pRes = Core::GetInst()->GetResolution();
 
-	if (vPos.x < 0 || vPos.y < 0 || vPos.x > pRes.x || vPos.y > pRes.y)
+	/*if (vPos.x < 0 || vPos.y < 0 || vPos.x > pRes.x || vPos.y > pRes.y)
 	{
 		m_iHP = 0;
 		m_bIsDie = true;
 		ResultMgr::GetInst()->PlayerDied(1);
 		EventMgr::GetInst()->DeleteObject(this);
-	}
+	}*/
 
-	if (m_pEnemy != nullptr)
+	/*if (m_pEnemy != nullptr)
 	{
 		Vec2 vDir = { m_pEnemy->GetPos().x - GetPos().x,
 		m_pEnemy->GetPos().y - GetPos().y };
 		vDir = vDir.Normalize();
 
 		m_vecHandPos = vDir * m_fHandDis;
-	}
+	}*/
 }
 
 void Player2::Render(HDC _dc)
