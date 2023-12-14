@@ -8,25 +8,48 @@ void PixelCollision::Init()
 	m_texColorImgae = nullptr;
 }
 
-bool PixelCollision::CheckCollision(int startX, int startY, int endX, int endY, POINT* checkedPoint)
+bool PixelCollision::CheckCollision(int startX, int startY, int endX, int endY, POINT* checkedPoint, bool _bReverse)
 {
 	if (m_texColorImgae == nullptr)
 		return false;
 
-	for (int y = startY; y < endY; y++)
+	if (_bReverse == false)
 	{
-		for (int x = startX; x < endX; x++)
+		for (int y = startY; y <= endY; y++)
 		{
-			COLORREF color = GetPixel(m_texColorImgae->GetDC(), x, y);
-
-			int r = GetRValue(color);
-			int g = GetGValue(color);
-			int b = GetBValue(color);
-
-			if (r == 0 && g == 255 && b == 255)
+			for (int x = startX; x <= endX; x++)
 			{
-				*checkedPoint = { x, y };
-				return true;
+				COLORREF color = GetPixel(m_texColorImgae->GetDC(), x, y);
+
+				int r = GetRValue(color);
+				int g = GetGValue(color);
+				int b = GetBValue(color);
+
+				if (r == 0 && g == 255 && b == 255)
+				{
+					*checkedPoint = { x, y };
+					return true;
+				}
+			}
+		}
+	}
+	else
+	{
+		for (int y = endY; y >= startY; y--)
+		{
+			for (int x = endX; x >= startX; x--)
+			{
+				COLORREF color = GetPixel(m_texColorImgae->GetDC(), x, y);
+
+				int r = GetRValue(color);
+				int g = GetGValue(color);
+				int b = GetBValue(color);
+
+				if (r == 0 && g == 255 && b == 255)
+				{
+					*checkedPoint = { x, y };
+					return true;
+				}
 			}
 		}
 	}

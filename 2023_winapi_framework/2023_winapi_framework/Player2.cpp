@@ -33,7 +33,7 @@ Player2::Player2()
 {
 	m_pHandTex = ResMgr::GetInst()->TexLoad(L"Player2_Hand", L"Texture\\Player2_Hand.bmp");
 	CreateCollider();
-	GetCollider()->SetScale(Vec2(20.f, 30.f));
+	GetCollider()->SetScale(Vec2(25.f, 25.f));
 	m_pRigidbody = new Rigidbody(this);
 	m_pTex = ResMgr::GetInst()->TexLoad(L"Player2", L"Texture\\Player2.bmp");
 	SetMoveKey(KEY_TYPE::D, KEY_TYPE::A);
@@ -48,14 +48,11 @@ Player2::~Player2()
 
 void Player2::Update()
 {
-	Vec2 vPos = GetPos();
-
 	CheckCanMove();
-	Move();
 	Jump();
+	Move();
 
-	vPos += m_pRigidbody->GetVelocity() * fDT;
-	SetPos(vPos);
+	Vec2 vPos = GetPos();
 
 	m_fCurFireDelay += fDT;
 	if (m_fCurFireDelay >= m_fFireDelay && m_pEnemy != nullptr) {
@@ -90,57 +87,68 @@ void Player2::Render(HDC _dc)
 {
 	Vec2 vPos = GetPos();
 	Vec2 vScale = GetScale();
-	Vec2 vDir = { m_pEnemy->GetPos().x - GetPos().x,
+	/*Vec2 vDir = { m_pEnemy->GetPos().x - GetPos().x,
 		m_pEnemy->GetPos().y - GetPos().y };
-	vDir = vDir.Normalize();
+	vDir = vDir.Normalize();*/
 
 	//Component_Render(_dc);
 
 	m_pTex->Draw(_dc, GetPos(), GetScale());
-//#pragma region hand
-//	HBITMAP hMemBtiamp = CreateCompatibleBitmap(m_pHandTex->GetDC(), m_pHandTex->GetWidth(), m_pHandTex->GetHeight());
-//	HDC hMemDc = CreateCompatibleDC(m_pHandTex->GetDC());
-//	SelectObject(hMemDc, hMemBtiamp);
-//
-//	if (vDir.x > 0)
-//	{
-//		StretchBlt(hMemDc
-//			, 0
-//			, 0
-//			, m_pHandTex->GetWidth(), m_pHandTex->GetHeight(), m_pHandTex->GetDC()
-//			, 0, 0, m_pHandTex->GetWidth(), m_pHandTex->GetHeight(), SRCCOPY);
-//	}
-//	else
-//	{
-//		StretchBlt(hMemDc
-//			, m_pHandTex->GetWidth() - 1
-//			, 0
-//			, -m_pHandTex->GetWidth(), m_pHandTex->GetHeight(), m_pHandTex->GetDC()
-//			, 0, 0, m_pHandTex->GetWidth(), m_pHandTex->GetHeight(), SRCCOPY);
-//	}
-//
-//	TransparentBlt(_dc
-//		, (int)(vPos.x - m_pHandTex->GetWidth() / 2) + m_vecHandPos.x
-//		, (int)(vPos.y - m_pHandTex->GetHeight() / 2) + m_vecHandPos.y
-//		, m_pHandTex->GetWidth()
-//		, m_pHandTex->GetHeight()
-//		, hMemDc
-//		, 0, 0
-//		, m_pHandTex->GetWidth()
-//		, m_pHandTex->GetHeight()
-//		, RGB(255, 0, 255));
-//
-//	DeleteObject(hMemBtiamp);
-//	DeleteDC(hMemDc);
-//#pragma endregion
+	//#pragma region hand
+	//	HBITMAP hMemBtiamp = CreateCompatibleBitmap(m_pHandTex->GetDC(), m_pHandTex->GetWidth(), m_pHandTex->GetHeight());
+	//	HDC hMemDc = CreateCompatibleDC(m_pHandTex->GetDC());
+	//	SelectObject(hMemDc, hMemBtiamp);
+	//
+	//	if (vDir.x > 0)
+	//	{
+	//		StretchBlt(hMemDc
+	//			, 0
+	//			, 0
+	//			, m_pHandTex->GetWidth(), m_pHandTex->GetHeight(), m_pHandTex->GetDC()
+	//			, 0, 0, m_pHandTex->GetWidth(), m_pHandTex->GetHeight(), SRCCOPY);
+	//	}
+	//	else
+	//	{
+	//		StretchBlt(hMemDc
+	//			, m_pHandTex->GetWidth() - 1
+	//			, 0
+	//			, -m_pHandTex->GetWidth(), m_pHandTex->GetHeight(), m_pHandTex->GetDC()
+	//			, 0, 0, m_pHandTex->GetWidth(), m_pHandTex->GetHeight(), SRCCOPY);
+	//	}
+	//
+	//	TransparentBlt(_dc
+	//		, (int)(vPos.x - m_pHandTex->GetWidth() / 2) + m_vecHandPos.x
+	//		, (int)(vPos.y - m_pHandTex->GetHeight() / 2) + m_vecHandPos.y
+	//		, m_pHandTex->GetWidth()
+	//		, m_pHandTex->GetHeight()
+	//		, hMemDc
+	//		, 0, 0
+	//		, m_pHandTex->GetWidth()
+	//		, m_pHandTex->GetHeight()
+	//		, RGB(255, 0, 255));
+	//
+	//	DeleteObject(hMemBtiamp);
+	//	DeleteDC(hMemDc);
+	//#pragma endregion
 }
 
 void Player2::EnterCollision(Collider* _pOther)
 {
 	const Object* pOtherObj = _pOther->GetObj();
-
-	if (pOtherObj->GetName() == L"Player1_Bullet")
+	if (pOtherObj->GetName() == L"Player2")//tag system
 	{
+		if (TagMgr::GetInst()->GetTagger() == this) {
+			TagMgr::GetInst()->ChangeTaggerToPlayer2();
+		}
+		else {
+			TagMgr::GetInst()->ChangeTaggerToPlayer1();
+		}
+	}
+
+	if (pOtherObj->GetName() == L"Player2_Bullet")
+	{
+		Object* ncBullet = const_cast<Object*>(pOtherObj);
+		EventMgr::GetInst()->DeleteObject(ncBullet);
 		ResMgr::GetInst()->Play(L"Hit");
 		m_iHP--;
 		CameraMgr::GetInst()->CameraShake(10, 0.5f);
@@ -183,6 +191,49 @@ void Player2::CheckCanMove()
 	Vec2 vScale = GetScale();
 	POINT checkedPoint = {};
 
+#pragma region check left move
+	RECT leftCheckRect = { vPos.x - vScale.x / 2.f, vPos.y - vScale.y / 2.f + 2,
+		vPos.x - vScale.x / 3.f, vPos.y + vScale.y / 2.f - 2 };
+
+	if (PixelCollision::GetInst()->CheckCollision(
+		leftCheckRect.left, leftCheckRect.top, leftCheckRect.right, leftCheckRect.bottom, &checkedPoint, true))
+	{
+		//block move
+		m_bCanMoveLeft = false;
+		m_pRigidbody->SetHorizontalVelocity(0);
+
+		float adjustValue = checkedPoint.x - leftCheckRect.left;
+
+		vPos += Vec2({ adjustValue, 0.f });
+	}
+	else
+	{
+		//enable move
+		m_bCanMoveLeft = true;
+	}
+#pragma endregion
+
+#pragma region check right move
+	RECT rightCheckRect = { vPos.x + vScale.x / 3.f, vPos.y - vScale.y / 2.f + 2,
+		vPos.x + vScale.x / 2.f, vPos.y + vScale.y / 2.f - 2 };
+
+	if (PixelCollision::GetInst()->CheckCollision(
+		rightCheckRect.left, rightCheckRect.top, rightCheckRect.right, rightCheckRect.bottom, &checkedPoint))
+	{
+		//block move
+		m_bCanMoveRight = false;
+		m_pRigidbody->SetHorizontalVelocity(0);
+
+		float adjustValue = checkedPoint.x - rightCheckRect.right;
+
+		vPos += Vec2({ adjustValue, 0.f });
+	}
+	else
+	{
+		//enable move
+		m_bCanMoveRight = true;
+	}
+#pragma endregion
 #pragma region check ground
 	RECT groundCheckRect;
 	RECT ceilingCheckRect;
@@ -195,6 +246,7 @@ void Player2::CheckCanMove()
 	{
 		groundCheckRect = { (LONG)(vPos.x - vScale.x / 2 + 1), (LONG)(vPos.y),
 							(LONG)(vPos.x + vScale.x / 2 - 1), (LONG)(vPos.y + vScale.y / 2) };
+
 		ceilingCheckRect = { (LONG)(vPos.x - vScale.x / 2 + 1), (LONG)(vPos.y - vScale.y / 2),
 							(LONG)(vPos.x + vScale.x / 2 - 1), (LONG)(vPos.y) };
 	}
@@ -202,6 +254,7 @@ void Player2::CheckCanMove()
 	{
 		groundCheckRect = { (LONG)(vPos.x - vScale.x / 2 + 1), (LONG)(vPos.y - vScale.y / 2),
 							(LONG)(vPos.x + vScale.x / 2 - 1), (LONG)(vPos.y) };
+
 		ceilingCheckRect = { (LONG)(vPos.x - vScale.x / 2 + 1), (LONG)(vPos.y),
 							(LONG)(vPos.x + vScale.x / 2 - 1), (LONG)(vPos.y + vScale.y / 2) };
 	}
@@ -219,11 +272,17 @@ void Player2::CheckCanMove()
 
 	//check ground
 	if (PixelCollision::GetInst()->CheckCollision(groundCheckRect.left, groundCheckRect.top,
-		groundCheckRect.right, groundCheckRect.bottom, &checkedPoint))
+		groundCheckRect.right, groundCheckRect.bottom, &checkedPoint, GetRigidbody()->GetReverseGravity()))
 	{
 		m_pRigidbody->SetApplyGravity(false);
 		m_iCurrentJumpCount = 0;
 		m_bIsGround = true;
+
+		float adjustValue = GetRigidbody()->GetReverseGravity()
+			? checkedPoint.y - groundCheckRect.top
+			: checkedPoint.y - groundCheckRect.bottom;
+
+		vPos += Vec2({ 0.f, adjustValue });
 	}
 	else
 	{
@@ -241,37 +300,7 @@ void Player2::CheckCanMove()
 
 #pragma endregion
 
-#pragma region check left move
-	if (PixelCollision::GetInst()->CheckCollision(
-		vPos.x - vScale.x / 2.f, vPos.y - vScale.y / 2.f + 5,
-		vPos.x - vScale.x / 3.f, vPos.y + vScale.y / 2.f - 5, &checkedPoint))
-	{
-		//block move
-		m_bCanMoveLeft = false;
-		m_pRigidbody->SetHorizontalVelocity(0);
-	}
-	else
-	{
-		//enable move
-		m_bCanMoveLeft = true;
-	}
-#pragma endregion
-
-#pragma region check right move
-	if (PixelCollision::GetInst()->CheckCollision(
-		vPos.x + vScale.x / 3.f, vPos.y - vScale.y / 2.f + 5,
-		vPos.x + vScale.x / 2.f, vPos.y + vScale.y / 2.f - 5, &checkedPoint))
-	{
-		//block move
-		m_bCanMoveRight = false;
-		m_pRigidbody->SetHorizontalVelocity(0);
-	}
-	else
-	{
-		//enable move
-		m_bCanMoveRight = true;
-	}
-#pragma endregion
+	SetPos(vPos);
 }
 
 void Player2::Move()
@@ -298,6 +327,9 @@ void Player2::Move()
 	{
 		m_pRigidbody->SetHorizontalVelocity(0);
 	}
+
+	vPos += m_pRigidbody->GetVelocity() * fDT;
+	SetPos(vPos);
 }
 
 void Player2::Jump()
