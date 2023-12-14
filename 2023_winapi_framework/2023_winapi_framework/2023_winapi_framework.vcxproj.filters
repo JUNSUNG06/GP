@@ -224,6 +224,9 @@
     <ClInclude Include="LinearActionMgr.h" />
     <ClInclude Include="PausePanel.h" />
     <ClInclude Include="TagMgr.h" />
+    <ClInclude Include="JumpPad.h" />
+    <ClInclude Include="TeleportObject.h" />
+    <ClInclude Include="TeleportMgr.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="2023_winapi_framework.rc">
@@ -360,5 +363,8 @@
     <ClCompile Include="LinearActionMgr.cpp" />
     <ClCompile Include="PausePanel.cpp" />
     <ClCompile Include="TagMgr.cpp" />
+    <ClCompile Include="JumpPad.cpp" />
+    <ClCompile Include="TeleportObject.cpp" />
+    <ClCompile Include="TeleportMgr.cpp" />
   </ItemGroup>
 </Project>

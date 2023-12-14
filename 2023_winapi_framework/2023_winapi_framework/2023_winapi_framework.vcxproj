@@ -216,6 +216,8 @@
     <ClInclude Include="Start_Scene.h" />
     <ClInclude Include="TagMgr.h" />
     <ClInclude Include="targetver.h" />
+    <ClInclude Include="TeleportMgr.h" />
+    <ClInclude Include="TeleportObject.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="TimeMgr.h" />
     <ClInclude Include="Vec2.h" />
@@ -264,6 +266,8 @@
     <ClCompile Include="SituationMgr.cpp" />
     <ClCompile Include="Start_Scene.cpp" />
     <ClCompile Include="TagMgr.cpp" />
+    <ClCompile Include="TeleportMgr.cpp" />
+    <ClCompile Include="TeleportObject.cpp" />
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="TimeMgr.cpp" />
     <ClCompile Include="Vec2.cpp" />

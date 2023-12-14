@@ -9,7 +9,7 @@
 void GameMgr::Init()
 {
 	m_bIsPlay = false;
-	m_fCurrentPlayTime = 11.f;
+	m_fCurrentPlayTime = 111.f;
 }
 
 

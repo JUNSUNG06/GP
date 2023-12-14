@@ -14,6 +14,7 @@
 #include "LinearActionMgr.h"
 #include "GameMgr.h"
 #include "TagMgr.h"
+#include "TeleportMgr.h"
 #include <ctime>
 
 bool Core::Init(HWND _hWnd, POINT _ptResolution)
@@ -52,6 +53,7 @@ bool Core::Init(HWND _hWnd, POINT _ptResolution)
 	CameraMgr::GetInst()->Init();
 	GameMgr::GetInst()->Init();
 	TagMgr::GetInst()->Init();
+	TeleportMgr::GetInst()->Init();
 
 	return true;
 }
@@ -86,6 +88,7 @@ void Core::Update()
 	ResultMgr::GetInst()->Update();
 	CameraMgr::GetInst()->Update();
 	GameMgr::GetInst()->Update();
+	TeleportMgr::GetInst()->Update();
 	//	Vec2 vPos = m_obj.GetPos();
 	//
 	////	if (GetAsyncKeyState(VK_LEFT) & 0x8000)

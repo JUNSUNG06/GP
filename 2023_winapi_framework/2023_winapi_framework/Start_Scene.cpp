@@ -20,6 +20,8 @@
 #include "JumpPad.h"
 #include "GameMgr.h"
 
+#include "TeleportObject.h" // test
+
 void Start_Scene::Init()
 {
 	SetBackground(L"Level_1", L"Texture\\Level_1.bmp");
@@ -102,6 +104,8 @@ void Start_Scene::Init()
 	//CollisionMgr::GetInst()->CheckGroup(OBJECT_GROUP::PLAYER2, OBJECT_GROUP::PLAYER);
 	CollisionMgr::GetInst()->CheckGroup(OBJECT_GROUP::JUMPPAD, OBJECT_GROUP::PLAYER);
 	CollisionMgr::GetInst()->CheckGroup(OBJECT_GROUP::JUMPPAD, OBJECT_GROUP::PLAYER2);
+	CollisionMgr::GetInst()->CheckGroup(OBJECT_GROUP::TELEPORT, OBJECT_GROUP::PLAYER);
+	CollisionMgr::GetInst()->CheckGroup(OBJECT_GROUP::TELEPORT, OBJECT_GROUP::PLAYER2);
 
 	//ui
 	ResMgr::GetInst()->TexLoad(L"Heart", L"Texture\\Heart.bmp");
