@@ -1,10 +1,14 @@
 #pragma once
-#include "Object.h"
+class Object;
+class Texture;
+
 class TagMgr
 {
 	SINGLE(TagMgr);
 
 public:
+	void Init();
+	void Render(HDC _dc);
 	void ChooseRandomTagger();
 	void ChangeTaggerToPlayer1();
 	void ChangeTaggerToPlayer2();
@@ -12,6 +16,7 @@ public:
 
 private:
 	Object* m_ptTagger;
+	Texture* m_pTagArrow;
 public: bool test;
 };
 

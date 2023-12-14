@@ -13,6 +13,7 @@
 #include "CameraMgr.h"
 #include "LinearActionMgr.h"
 #include "GameMgr.h"
+#include "TagMgr.h"
 #include <ctime>
 
 bool Core::Init(HWND _hWnd, POINT _ptResolution)
@@ -50,6 +51,7 @@ bool Core::Init(HWND _hWnd, POINT _ptResolution)
 	ResultMgr::GetInst()->Init();
 	CameraMgr::GetInst()->Init();
 	GameMgr::GetInst()->Init();
+	TagMgr::GetInst()->Init();
 
 	return true;
 }
@@ -122,6 +124,7 @@ void Core::Render()
 	//TextOut(m_hbackDC, 10, 10, mousebuf, wcslen(mousebuf));
 
 	// 3. ¿Å±ä´Ù.
+	TagMgr::GetInst()->Render(m_hbackDC);
 	SituationMgr::GetInst()->Render(m_hbackDC);
 	GameMgr::GetInst()->Render(m_hbackDC);
 	BitBlt(m_hDC, 0, 0, m_ptResolution.x, m_ptResolution.y,
