@@ -9,6 +9,9 @@ Button::Button(void(*_action)(), wstring _text)
 {
 	m_pAction = _action;
 	m_sText = _text;
+
+	if (ResMgr::GetInst()->TexFind(L"Button") == nullptr)
+		m_pTex = ResMgr::GetInst()->TexLoad(L"Button", L"Texture\\button.bmp");
 }
 
 Button::~Button()
@@ -36,9 +39,11 @@ void Button::Render(HDC _dc)
 {
 	Vec2 vPos = GetPos();
 	Vec2 vScale = GetScale();
-	RECT rt = { vPos.x - vScale.x / 2, vPos.y - vScale.y / 2
-		, vPos.x + vScale.x / 2, vPos.y + vScale.y / 2 };
-	RECT_RENDER(vPos.x, vPos.y, vScale.x, vScale.y, _dc);
+	//RECT rt = { vPos.x - vScale.x / 2, vPos.y - vScale.y / 2
+	//	, vPos.x + vScale.x / 2, vPos.y + vScale.y / 2 };
+	//RECT_RENDER(vPos.x, vPos.y, vScale.x, vScale.y, _dc);
+	RECT rt = RECT_MAKE(vPos.x, vPos.y, vScale.x, vScale.y);
+	m_pTex->Draw(_dc, vPos, vScale);
 	DrawText(_dc, m_sText.c_str(), -1, &rt
 		, DT_CENTER | DT_VCENTER | DT_SINGLELINE);
 }
