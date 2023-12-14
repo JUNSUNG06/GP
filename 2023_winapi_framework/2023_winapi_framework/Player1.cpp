@@ -130,10 +130,6 @@ void Player1::Render(HDC _dc)
 //	DeleteObject(hMemBtiamp);
 //	DeleteDC(hMemDc);
 //#pragma endregion
-
-
-	Rectangle(_dc, (LONG)(vPos.x - vScale.x / 2 + 2), (LONG)(vPos.y - vScale.y / 2),
-		(LONG)(vPos.x + vScale.x / 2 - 2), (LONG)(vPos.y));
 }
 
 void Player1::EnterCollision(Collider* _pOther)
@@ -242,12 +238,6 @@ void Player1::CheckCanMove()
 		float adjustValue = GetRigidbody()->GetReverseGravity()
 			? checkedPoint.y - groundCheckRect.top
 			: checkedPoint.y - groundCheckRect.bottom;
-
-		if (adjustValue > 0)
-		{
-			vPos += Vec2({ 0.f, adjustValue });
-
-		}
 
 		vPos += Vec2({ 0.f, adjustValue });
 	}
