@@ -41,13 +41,13 @@ void TeleportMgr::SetPortals()
 {
 	TeleportObject* tpObj1 = new TeleportObject;
 	tpObj1->SetPos(Vec2(rand() % ((int)Core::GetInst()->GetResolution().x - 200) + 100, rand() % ((int)Core::GetInst()->GetResolution().y - 200) + 100));
-	tpObj1->SetScale(Vec2(25, 25));
+	tpObj1->SetScale(Vec2(30, 30));
 	tpObj1->SetName(L"tpObj1");
 	SceneMgr::GetInst()->GetCurScene()->AddObject(tpObj1, OBJECT_GROUP::TELEPORT);
 
 	TeleportObject* tpObj2 = new TeleportObject;
 	tpObj2->SetPos(Vec2(rand() % ((int)Core::GetInst()->GetResolution().x - 200) + 100, rand() % ((int)Core::GetInst()->GetResolution().y - 200) + 100));
-	tpObj2->SetScale(Vec2(25, 25));
+	tpObj2->SetScale(Vec2(30, 30));
 	tpObj2->SetName(L"tpObj2");
 	SceneMgr::GetInst()->GetCurScene()->AddObject(tpObj2, OBJECT_GROUP::TELEPORT);
 

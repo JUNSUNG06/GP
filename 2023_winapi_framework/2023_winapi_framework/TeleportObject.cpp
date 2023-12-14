@@ -3,11 +3,15 @@
 #include "Collider.h"
 #include "TeleportMgr.h"
 #include "PixelCollision.h"
+#include "ResMgr.h"
+#include "Texture.h"
 
 TeleportObject::TeleportObject()
 	: m_ptrOtherTelpo(nullptr)
 	, m_bIsEntryPoint(false)
+	, m_pTex(nullptr)
 {
+	m_pTex = ResMgr::GetInst()->TexLoad(L"Portal", L"Texture\\Portal.bmp");
 	CreateCollider();
 }
 
@@ -18,9 +22,12 @@ TeleportObject::~TeleportObject()
 void TeleportObject::Render(HDC _dc)
 {
 	Vec2 vPos = GetPos();
-	Vec2 vSclae = GetScale();
-	RECT_RENDER(vPos.x, vPos.y, vSclae.x, vSclae.y, _dc);
-	Object::Component_Render(_dc);
+	Vec2 vScale = GetScale();
+	TransparentBlt(_dc
+		, (int)(vPos.x - vScale.x / 2)
+		, (int)(vPos.y - vScale.y / 2)
+		, m_pTex->GetWidth() * 2, m_pTex->GetHeight() * 2, m_pTex->GetDC()
+		, 0, 0, m_pTex->GetWidth(), m_pTex->GetHeight(), RGB(255, 0, 255));
 }
 
 void TeleportObject::EnterCollision(Collider* _pOther)

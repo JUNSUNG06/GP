@@ -4,6 +4,7 @@
 #include "ResMgr.h"
 #include "Object.h"
 #include "Texture.h"
+#include "CameraMgr.h"
 #include <ctime>
 
 void TagMgr::Init()
@@ -37,9 +38,11 @@ void TagMgr::ChooseRandomTagger()
 void TagMgr::ChangeTaggerToPlayer1()
 {
 	m_ptTagger = GameMgr::GetInst()->GetPlayer1();
+	CameraMgr::GetInst()->CameraShake(8, 0.5f);
 }
 
 void TagMgr::ChangeTaggerToPlayer2()
 {
 	m_ptTagger = GameMgr::GetInst()->GetPlayer2();
+	CameraMgr::GetInst()->CameraShake(8, 0.5f);
 }

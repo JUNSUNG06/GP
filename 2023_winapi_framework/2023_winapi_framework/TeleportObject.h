@@ -1,6 +1,7 @@
 #pragma once
 #include "Object.h"
 #include "EventMgr.h"
+class Texture;
 class TeleportObject :
     public Object
 {
@@ -22,5 +23,6 @@ private:
 private:
     TeleportObject* m_ptrOtherTelpo;
     bool m_bIsEntryPoint;
+    Texture* m_pTex;
 };
 
