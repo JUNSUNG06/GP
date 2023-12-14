@@ -25,9 +25,8 @@ void TeleportMgr::Update()
 	m_fCurTime += fDT;
 	if (!m_bIsSpawned) {
 		if (m_fCurTime >= m_fRegenTime) {
-			SetPortals();
 			m_fCurTime = 0;
-			m_bIsSpawned = true;
+			SetPortals();
 		}
 	}
 	else {
@@ -55,22 +54,26 @@ void TeleportMgr::SetPortals()
 	tpObj1->SetOtherTelpo(tpObj2);
 	tpObj2->SetOtherTelpo(tpObj1);
 
-	if (tpObj1->CheckIsOnWall() || tpObj2->CheckIsOnWall()) {
-		RemovePortals();
-		m_fCurTime = m_fRegenTime;
-		return;
-	}
-
 	m_ptrTpPoint1 = tpObj1;
 	m_ptrTpPoint2 = tpObj2;
+
+	if (tpObj1->CheckIsOnWall() || tpObj2->CheckIsOnWall()) {
+		RemovePortals();
+		m_fCurTime = m_fRegenTime - 1;
+		return;
+	}
+	m_bIsSpawned = true;
 }
 
-void TeleportMgr::RemovePortals() {
+void TeleportMgr::RemovePortals() {/*
 	EventMgr::GetInst()->DeleteObject(m_ptrTpPoint1);
-	EventMgr::GetInst()->DeleteObject(m_ptrTpPoint2);
+	EventMgr::GetInst()->DeleteObject(m_ptrTpPoint2);*/
+	if (m_ptrTpPoint1)
+		m_ptrTpPoint1->RemoveThis();
+	if (m_ptrTpPoint2)
+		m_ptrTpPoint2->RemoveThis();
 	m_ptrTpPoint1 = nullptr;
 	m_ptrTpPoint2 = nullptr;
 
-	m_fCurTime = 0;
 	m_bIsSpawned = false;
 }

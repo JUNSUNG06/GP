@@ -49,9 +49,15 @@ bool TeleportObject::CheckIsOnWall()
 	return PixelCollision::GetInst()->CheckCollision(rt.left, rt.top, rt.right, rt.bottom, &checkedPoint);
 }
 
+void TeleportObject::RemoveThis()
+{
+	EventMgr::GetInst()->DeleteObject(this);
+}
+
 void TeleportObject::Teleporting(Object* _obj)
 {
 	_obj->SetPos(m_ptrOtherTelpo->GetPos());
 	m_bIsEntryPoint = true;
+	TeleportMgr::GetInst()->ResetCurrentTime();
 	TeleportMgr::GetInst()->RemovePortals();
 }

@@ -7,10 +7,14 @@ public:
 	void Init();
 	void Update();
 public:
+	void StartSetup() { m_fCurTime = 0; m_bIsSpawned = false; }
 	void SetMaxHoldingTime(float _time) { m_fMaxHoldingTime = _time; }
 	void SetRegenTime(float _time) { m_fRegenTime = _time; }
 	void RemovePortals();
 	void SetPortals();
+	void ResetCurrentTime() { m_fCurTime = 0; }
+
+	float getcurtime() { return m_fCurTime; }
 private:
 	float m_fCurTime;
 	float m_fMaxHoldingTime; // 포탈을 타지 않을 때 사라지는 시간

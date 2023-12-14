@@ -1,5 +1,6 @@
 #pragma once
 #include "Object.h"
+#include "EventMgr.h"
 class TeleportObject :
     public Object
 {
@@ -15,6 +16,7 @@ public:
     void SetOtherTelpo(TeleportObject* _otherObj) { m_ptrOtherTelpo = _otherObj; }
     bool GetIsEntry() { return m_bIsEntryPoint; }
     bool CheckIsOnWall();
+    void RemoveThis();
 private:
     void Teleporting(Object* _obj);
 private:

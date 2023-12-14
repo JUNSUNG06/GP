@@ -20,7 +20,7 @@
 #include "JumpPad.h"
 #include "GameMgr.h"
 
-#include "TeleportObject.h" // test
+#include "TeleportMgr.h"
 
 void Start_Scene::Init()
 {
@@ -67,8 +67,9 @@ void Start_Scene::Init()
 	pObj->SetEnemy(pObj1);
 	pObj1->SetEnemy(pObj);
 
-
 	TagMgr::GetInst()->ChooseRandomTagger();
+
+	TeleportMgr::GetInst()->StartSetup();
 
 	// 몬스터 세팅 마구마구 배치를 해봅시다.
 
@@ -128,6 +129,8 @@ void Start_Scene::Render(HDC _dc)
 	//TextOut(_dc, 100, 100, s.c_str(), s.length());
 	wstring s = L"Tagger: " + TagMgr::GetInst()->GetTagger()->GetName();
 	TextOut(_dc, 100, 100, s.c_str(), s.length());
+	wstring ss = L"timer: " + std::to_wstring(TeleportMgr::GetInst()->getcurtime());
+	TextOut(_dc, 100, 200, ss.c_str(), ss.length());
 
 	//heart ui
 	long long player1hp = GameMgr::GetInst()->GetPlayer1()->GetPlayerHP();
