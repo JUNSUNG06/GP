@@ -16,4 +16,6 @@ public:
 private:
 	Player1* m_pPlayer1;
 	Player2* m_pPlayer2;
+	float m_fBeforePlayer1;
+	float m_fBeforePlayer2;
 };

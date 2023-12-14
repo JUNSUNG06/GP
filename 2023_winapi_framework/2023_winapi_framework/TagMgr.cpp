@@ -38,11 +38,11 @@ void TagMgr::ChooseRandomTagger()
 void TagMgr::ChangeTaggerToPlayer1()
 {
 	m_ptTagger = GameMgr::GetInst()->GetPlayer1();
-	CameraMgr::GetInst()->CameraShake(8, 0.5f);
+	CameraMgr::GetInst()->CameraShake(10, 0.1f);
 }
 
 void TagMgr::ChangeTaggerToPlayer2()
 {
 	m_ptTagger = GameMgr::GetInst()->GetPlayer2();
-	CameraMgr::GetInst()->CameraShake(8, 0.5f);
+	CameraMgr::GetInst()->CameraShake(10, 0.1f);
 }
