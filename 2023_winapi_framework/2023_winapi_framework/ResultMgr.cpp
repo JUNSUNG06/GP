@@ -10,7 +10,7 @@ void ResultMgr::Init()
 {
 	m_iPlayer1Win = 0;
 	m_iPlayer2Win = 0;
-	m_iMaxPoint = 3;
+	m_iMaxPoint = 1;
 	m_fCurTime = 0;
 	m_bIsGameEnded = false;
 }

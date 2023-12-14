@@ -18,4 +18,3 @@ private:
 	Object* m_ptTagger;
 	Texture* m_pTagArrow;
 };
-
