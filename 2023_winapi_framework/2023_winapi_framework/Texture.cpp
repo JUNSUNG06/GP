@@ -5,6 +5,7 @@
 Texture::Texture()
 	: m_hBit(0)
 	, m_hDC(0)
+	, m_fAngle(0.f)
 	, m_bitInfo{}
 {
 }

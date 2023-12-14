@@ -19,12 +19,15 @@ Player2::Player2()
 	: m_pTex(nullptr)
 	, m_iHP(5)
 	, m_bIsDie(false)
-	, m_fPlayerSpeed(750.f)
+	, m_fMaxPlayerSpeed(500.f)
+	, m_fCurrentPlayerSpeed(0.f)
+	, m_fAcceleration(1000.f)
+	, m_fDeceleration(1200.f)
 	, m_fFireDelay(1.f)
 	, m_fCurFireDelay(3.f)
 	, m_fBulletSpeed(3.f)
 	, m_pEnemy(nullptr)
-	, m_fJumpPower(340.f)
+	, m_fJumpPower(370.f)
 	, m_bIsGround(false)
 	, m_bCanMoveLeft(true)
 	, m_bCanMoveRight(true)
@@ -311,22 +314,30 @@ void Player2::Move()
 
 	//set velocity
 	if (KEY_PRESS(m_eLeftMoveKey) && m_bCanMoveLeft)
+		m_iMoveDir = -1;
+	else if (KEY_PRESS(m_eRightMoveKey) && m_bCanMoveRight)
+		m_iMoveDir = 1;
+	else
+		m_iMoveDir = 0;
+
+	if (m_iMoveDir != 0)
 	{
-		m_pRigidbody->SetHorizontalVelocity(-m_fPlayerSpeed);
-	}
-	else if (KEY_UP(m_eLeftMoveKey))
-	{
-		m_pRigidbody->SetHorizontalVelocity(0);
+		m_fCurrentPlayerSpeed += m_fAcceleration * m_iMoveDir * fDT;
+		m_fCurrentPlayerSpeed = abs(m_fCurrentPlayerSpeed) < m_fMaxPlayerSpeed
+			? m_fCurrentPlayerSpeed
+			: m_fMaxPlayerSpeed * m_iMoveDir;
 	}
 
-	if (KEY_PRESS(m_eRightMoveKey) && m_bCanMoveRight)
+	if (m_iMoveDir == 0 && abs(m_fCurrentPlayerSpeed) > 0)
 	{
-		m_pRigidbody->SetHorizontalVelocity(m_fPlayerSpeed);
+		int sign = m_fCurrentPlayerSpeed / abs(m_fCurrentPlayerSpeed);
+		m_fCurrentPlayerSpeed += m_fDeceleration * sign * -1 * fDT;
+
+		if (abs(m_fCurrentPlayerSpeed) <= m_fAcceleration * fDT)
+			m_fCurrentPlayerSpeed = 0;
 	}
-	else if (KEY_UP(m_eRightMoveKey))
-	{
-		m_pRigidbody->SetHorizontalVelocity(0);
-	}
+
+	m_pRigidbody->SetHorizontalVelocity(m_fCurrentPlayerSpeed);
 
 	vPos += m_pRigidbody->GetVelocity() * fDT;
 	SetPos(vPos);

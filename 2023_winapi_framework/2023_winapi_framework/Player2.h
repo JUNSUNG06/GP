@@ -19,8 +19,8 @@ public:
 public:
     void SetPlayerHP(int _hp) { m_iHP = _hp; }
     int GetPlayerHP() { return m_iHP; } // 추가한거
-    void SetPlayerSpeed(float _speed) { m_fPlayerSpeed = _speed; }
-    float GetPlayerSPeed() { return m_fPlayerSpeed; }
+    void SetPlayerSpeed(float _speed) { m_fMaxPlayerSpeed = _speed; }
+    float GetPlayerSPeed() { return m_fMaxPlayerSpeed; }
     void SetFireDelay(float _delay) { m_fFireDelay = _delay; }
     void SetJumpPower(float _fValue) { m_fJumpPower = _fValue; }
     void SetMoveKey(KEY_TYPE rightKey, KEY_TYPE leftKey)
@@ -40,7 +40,11 @@ private:
     Texture* m_pHandTex;
     int m_iHP;
     bool m_bIsDie;
-    float m_fPlayerSpeed;
+    float m_fMaxPlayerSpeed;
+    float m_fCurrentPlayerSpeed;
+    float m_fAcceleration;
+    float m_fDeceleration;
+    int m_iMoveDir;
     float m_fFireDelay;
     float m_fCurFireDelay;
     float m_fBulletSpeed;

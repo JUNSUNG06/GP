@@ -9,7 +9,7 @@
 #include "Texture.h"
 JumpPad::JumpPad()
 	: m_pTex(nullptr)
-	, m_fJumpPower(-700.f)
+	, m_fJumpPower(-800.f)
 {
 	CreateCollider();
 	GetCollider()->SetScale(Vec2(50, 24));
