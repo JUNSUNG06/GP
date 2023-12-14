@@ -16,11 +16,18 @@ public:
 	void SetPlayer2Died(bool _bValue) { m_bPlayer2Died = _bValue; }
 	bool GetPlayer1Died() { return m_bPlayer1Died; }
 	bool GetPlayer2Died() { return m_bPlayer2Died; }
+	void Init();
+	void Update();
+	void Render(HDC _dc);
+	void StartGame();
+	void EndGame();
 
 private: 
 	Player1* m_pPlayer1;
 	Player2* m_pPlayer2;
 	bool m_bPlayer1Died;
 	bool m_bPlayer2Died;
+	bool m_bIsPlay;
+	float m_fCurrentPlayTime;
 };
 
