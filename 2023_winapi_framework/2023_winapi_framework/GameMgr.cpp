@@ -45,7 +45,8 @@ void GameMgr::Render(HDC _dc)
 
 void GameMgr::StartGame()
 {
-	m_bIsPlay = true;
+	m_fCurrentPlayTime = 121.f;
+	SetIsPlay(true);
 }
 
 void GameMgr::EndGame()
@@ -63,6 +64,5 @@ void GameMgr::EndGame()
 		ResultMgr::GetInst()->PlayerDied(2);
 	}
 
-	m_bIsPlay = false;
-	m_fCurrentPlayTime = 11.f;
+	SetIsPlay(false);
 }

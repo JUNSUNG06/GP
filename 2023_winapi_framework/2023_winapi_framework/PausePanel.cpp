@@ -7,6 +7,7 @@
 #include "Object.h"
 #include "Core.h"
 #include "Scene.h"
+#include "GameMgr.h"
 
 PausePanel::PausePanel()
 {
@@ -15,7 +16,11 @@ PausePanel::PausePanel()
 	m_oContinueBtn->SetScale(Vec2(190, 50));
 	SceneMgr::GetInst()->GetCurScene()->AddObject(m_oContinueBtn, OBJECT_GROUP::UI);
 
-	m_oExitBtn = new Button([]() {SceneMgr::GetInst()->LoadScene(L"Intro_Scene"); }, L"Exit");
+	m_oExitBtn = new Button([]() 
+		{
+			SceneMgr::GetInst()->LoadScene(L"Intro_Scene"); 
+			GameMgr::GetInst()->SetIsPlay(false);
+		}, L"Exit");
 	m_oExitBtn->SetPos(Vec2({ 0,0 }));
 	m_oExitBtn->SetScale(Vec2(190, 50));
 	SceneMgr::GetInst()->GetCurScene()->AddObject(m_oExitBtn, OBJECT_GROUP::UI);

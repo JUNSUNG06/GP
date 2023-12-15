@@ -23,8 +23,6 @@ void SituationMgr::Init()
 	RegistSituation(situationType, new ReverseInputSituation(situationType));
 	situationType = SITUATION_TYPE::INCREASE_MOVE_SPEED;
 	RegistSituation(situationType, new IncreseMoveSpeedSituation(situationType));
-	//situationType = SITUATION_TYPE::ROTATE_MAP;
-	//RegistSituation(situationType, new RotateMapSituation(situationType));
 	
 	m_fCurrentSituationTime = 0;
 	m_fSituationChagneInterval = 5.f;

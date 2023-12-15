@@ -21,6 +21,7 @@ public:
 	void Render(HDC _dc);
 	void StartGame();
 	void EndGame();
+	void SetIsPlay(bool _bValue) { m_bIsPlay = _bValue; }
 
 private: 
 	Player1* m_pPlayer1;
