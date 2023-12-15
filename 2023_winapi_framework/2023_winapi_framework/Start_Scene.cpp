@@ -127,10 +127,10 @@ void Start_Scene::Render(HDC _dc)
 
 	//wstring s = L"isPause: " + std::to_wstring(TimeMgr::GetInst()->GetIsPause()) + L" dt: " + std::to_wstring(TimeMgr::GetInst()->GetDT());
 	//TextOut(_dc, 100, 100, s.c_str(), s.length());
-	wstring s = L"Tagger: " + TagMgr::GetInst()->GetTagger()->GetName();
-	TextOut(_dc, 100, 100, s.c_str(), s.length());
-	wstring ss = L"timer: " + std::to_wstring(TeleportMgr::GetInst()->getcurtime());
-	TextOut(_dc, 100, 200, ss.c_str(), ss.length());
+	//wstring s = L"Tagger: " + TagMgr::GetInst()->GetTagger()->GetName();
+	//TextOut(_dc, 100, 100, s.c_str(), s.length());
+	//wstring ss = L"timer: " + std::to_wstring(TeleportMgr::GetInst()->getcurtime());
+	//TextOut(_dc, 100, 200, ss.c_str(), ss.length());
 
 	//heart ui
 	/*long long player1hp = GameMgr::GetInst()->GetPlayer1()->GetPlayerHP();

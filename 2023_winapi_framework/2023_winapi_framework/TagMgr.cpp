@@ -10,6 +10,7 @@
 void TagMgr::Init()
 {
 	m_pTagArrow = ResMgr::GetInst()->TexLoad(L"TagArrow", L"Texture\\TaggerArrow.bmp");
+	ResMgr::GetInst()->LoadSound(L"Whip", L"Sound\\Whip.wav", false);
 }
 
 void TagMgr::Render(HDC _dc)
@@ -38,11 +39,13 @@ void TagMgr::ChooseRandomTagger()
 void TagMgr::ChangeTaggerToPlayer1()
 {
 	m_ptTagger = GameMgr::GetInst()->GetPlayer1();
+	ResMgr::GetInst()->Play(L"Whip");
 	CameraMgr::GetInst()->CameraShake(10, 0.1f);
 }
 
 void TagMgr::ChangeTaggerToPlayer2()
 {
 	m_ptTagger = GameMgr::GetInst()->GetPlayer2();
+	ResMgr::GetInst()->Play(L"Whip");
 	CameraMgr::GetInst()->CameraShake(10, 0.1f);
 }

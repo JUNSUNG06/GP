@@ -47,8 +47,8 @@ void PausePanel::Update()
 
 void PausePanel::Render(HDC _dc)
 {
-	wstring s = L"isPause in PausePanel: " + std::to_wstring(TimeMgr::GetInst()->GetIsPause());
-	TextOut(_dc, 100, 150, s.c_str(), s.length());
+	//wstring s = L"isPause in PausePanel: " + std::to_wstring(TimeMgr::GetInst()->GetIsPause());
+	//TextOut(_dc, 100, 150, s.c_str(), s.length());
 
 	//Vec2 vPos = GetPos();
 	//Vec2 vScale = GetScale();

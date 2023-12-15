@@ -12,6 +12,7 @@ TeleportObject::TeleportObject()
 	, m_pTex(nullptr)
 {
 	m_pTex = ResMgr::GetInst()->TexLoad(L"Portal", L"Texture\\Portal.bmp");
+	ResMgr::GetInst()->LoadSound(L"Sparkle", L"Sound\\Sparkle.wav", false);
 	CreateCollider();
 }
 
@@ -26,7 +27,7 @@ void TeleportObject::Render(HDC _dc)
 	TransparentBlt(_dc
 		, (int)(vPos.x - vScale.x / 2)
 		, (int)(vPos.y - vScale.y / 2)
-		, m_pTex->GetWidth() * 2, m_pTex->GetHeight() * 2, m_pTex->GetDC()
+		, m_pTex->GetWidth(), m_pTex->GetHeight(), m_pTex->GetDC()
 		, 0, 0, m_pTex->GetWidth(), m_pTex->GetHeight(), RGB(255, 0, 255));
 }
 
@@ -63,6 +64,7 @@ void TeleportObject::RemoveThis()
 
 void TeleportObject::Teleporting(Object* _obj)
 {
+	ResMgr::GetInst()->Play(L"Sparkle");
 	_obj->SetPos(m_ptrOtherTelpo->GetPos());
 	m_bIsEntryPoint = true;
 	TeleportMgr::GetInst()->ResetCurrentTime();

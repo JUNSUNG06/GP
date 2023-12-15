@@ -14,6 +14,7 @@ JumpPad::JumpPad()
 	CreateCollider();
 	GetCollider()->SetScale(Vec2(50, 24));
 	m_pTex = ResMgr::GetInst()->TexLoad(L"JumpPad", L"Texture\\JumpPad.bmp");
+	ResMgr::GetInst()->LoadSound(L"JumpPad", L"Sound\\JumpPad.wav", false);
 }
 
 JumpPad::~JumpPad()
@@ -38,10 +39,12 @@ void JumpPad::EnterCollision(Collider* _pOther)
 	const Object* pOtherObj = _pOther->GetObj();
 	if (pOtherObj->GetName() == L"Player1")
 	{
+		ResMgr::GetInst()->Play(L"JumpPad");
 		GameMgr::GetInst()->GetPlayer1()->GetRigidbody()->SetVerticalVelocity(m_fJumpPower);
 	}
 	else if (pOtherObj->GetName() == L"Player2")
 	{
+		ResMgr::GetInst()->Play(L"JumpPad");
 		GameMgr::GetInst()->GetPlayer2()->GetRigidbody()->SetVerticalVelocity(m_fJumpPower);
 	}
 }

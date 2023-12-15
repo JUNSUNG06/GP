@@ -21,7 +21,7 @@ void Result_Scene::Init()
 			},
 			L"돌아가기");
 		btn->SetPos((Vec2({ Core::GetInst()->GetResolution().x / 2, Core::GetInst()->GetResolution().y / 2 + 300 })));
-		btn->SetScale(Vec2(100.f, 30.f));
+		btn->SetScale(Vec2(190.f, 50.f));
 		AddObject(btn, OBJECT_GROUP::UI);
 	}
 }
