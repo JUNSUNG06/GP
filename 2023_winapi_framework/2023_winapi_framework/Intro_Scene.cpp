@@ -47,6 +47,19 @@ void Intro_Scene::Init()
 void Intro_Scene::Render(HDC _dc)
 {
 	Scene::Render(_dc);
+
+	POINT pRes = Core::GetInst()->GetResolution();
+	RECT rt = { 0, 180, pRes.x, 300 };
+	HFONT hFont = CreateFont(120, 0, 0, 0, 0, 0, 0, 0, HANGEUL_CHARSET, 0, 0, 0,
+		VARIABLE_PITCH | FF_ROMAN, L"한국기계연구원_bold");
+
+	HFONT hOldFont = (HFONT)SelectObject(_dc, hFont);
+	SetBkMode(_dc, TRANSPARENT);
+	DrawText(_dc, L"강강술래잡기", -1, &rt
+		, DT_CENTER | DT_VCENTER | DT_SINGLELINE);
+
+	SelectObject(_dc, hOldFont);
+	DeleteObject(hFont);
 }
 
 void Intro_Scene::Release()
