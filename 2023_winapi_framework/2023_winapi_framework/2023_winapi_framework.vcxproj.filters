@@ -230,6 +230,9 @@
     <ClInclude Include="ReverseMoveSituation.h">
       <Filter>Engine\09. ETC\Situation</Filter>
     </ClInclude>
+    <ClInclude Include="SwapPositionSituation.h">
+      <Filter>Engine\09. ETC\Situation</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="2023_winapi_framework.rc">
@@ -370,6 +373,9 @@
     <ClCompile Include="TeleportObject.cpp" />
     <ClCompile Include="TeleportMgr.cpp" />
     <ClCompile Include="ReverseMoveSituation.cpp">
+      <Filter>Engine\09. ETC\Situation</Filter>
+    </ClCompile>
+    <ClCompile Include="SwapPositionSituation.cpp">
       <Filter>Engine\09. ETC\Situation</Filter>
     </ClCompile>
   </ItemGroup>

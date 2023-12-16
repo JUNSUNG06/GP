@@ -6,6 +6,7 @@
 #include "IncreseMoveSpeedSituation.h"
 #include "RotateMapSituation.h"
 #include "ReverseMoveSituation.h"
+#include "SwapPositionSituation.h"
 #include "TimeMgr.h"
 #include "SceneMgr.h"
 #include <time.h>
@@ -26,6 +27,8 @@ void SituationMgr::Init()
 	RegistSituation(situationType, new IncreseMoveSpeedSituation(situationType));
 	situationType = SITUATION_TYPE::REVERSE_MOVE;
 	RegistSituation(situationType, new ReverseMoveSituation(situationType));
+	situationType = SITUATION_TYPE::SWAP_POS;
+	RegistSituation(situationType, new SwapPositionSituation(situationType));
 	
 	m_fCurrentSituationTime = 0;
 	m_fSituationChagneInterval = 5.f;
