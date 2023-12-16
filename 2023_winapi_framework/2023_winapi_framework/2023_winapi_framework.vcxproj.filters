@@ -227,6 +227,9 @@
     <ClInclude Include="JumpPad.h" />
     <ClInclude Include="TeleportObject.h" />
     <ClInclude Include="TeleportMgr.h" />
+    <ClInclude Include="ReverseMoveSituation.h">
+      <Filter>Engine\09. ETC\Situation</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="2023_winapi_framework.rc">
@@ -366,5 +369,8 @@
     <ClCompile Include="JumpPad.cpp" />
     <ClCompile Include="TeleportObject.cpp" />
     <ClCompile Include="TeleportMgr.cpp" />
+    <ClCompile Include="ReverseMoveSituation.cpp">
+      <Filter>Engine\09. ETC\Situation</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

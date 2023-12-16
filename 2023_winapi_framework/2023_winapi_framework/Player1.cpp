@@ -40,6 +40,7 @@ Player1::Player1()
 	m_pRigidbody = new Rigidbody(this);
 	m_pTex = ResMgr::GetInst()->TexLoad(L"Player1", L"Texture\\Player1.bmp");
 	SetMoveKey(KEY_TYPE::RIGHT, KEY_TYPE::LEFT);
+	SetJumpKey(KEY_TYPE::UP);
 	m_fHandDis = 45.f;
 }
 
@@ -350,7 +351,7 @@ void Player1::Jump()
 		m_fJumpPower : -m_fJumpPower;
 
 	//jump
-	if (KEY_DOWN(KEY_TYPE::UP) && m_bIsGround)
+	if (KEY_DOWN(m_eJumpKey) && m_bIsGround)
 	{
 		m_pRigidbody->SetVerticalVelocity(jumpPower);
 	}

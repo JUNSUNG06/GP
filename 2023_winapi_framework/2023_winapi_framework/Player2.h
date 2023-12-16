@@ -28,6 +28,7 @@ public:
         m_eRightMoveKey = rightKey;
         m_eLeftMoveKey = leftKey;
     }
+    void SetJumpKey(KEY_TYPE key) { m_eJumpKey = key; }
     void Attack();
     void Move();
     void Jump();
@@ -66,4 +67,5 @@ private:
 
     KEY_TYPE m_eRightMoveKey;
     KEY_TYPE m_eLeftMoveKey;
+    KEY_TYPE m_eJumpKey;
 };

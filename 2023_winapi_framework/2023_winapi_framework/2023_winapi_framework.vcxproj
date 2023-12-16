@@ -206,6 +206,7 @@
     <ClInclude Include="Result_Scene.h" />
     <ClInclude Include="ReverseGravitySituation.h" />
     <ClInclude Include="ReverseInputSituation.h" />
+    <ClInclude Include="ReverseMoveSituation.h" />
     <ClInclude Include="Rigidbody.h" />
     <ClInclude Include="RotateMapSituation.h" />
     <ClInclude Include="Scene.h" />
@@ -257,6 +258,7 @@
     <ClCompile Include="Result_Scene.cpp" />
     <ClCompile Include="ReverseGravitySituation.cpp" />
     <ClCompile Include="ReverseInputSituation.cpp" />
+    <ClCompile Include="ReverseMoveSituation.cpp" />
     <ClCompile Include="Rigidbody.cpp" />
     <ClCompile Include="RotateMapSituation.cpp" />
     <ClCompile Include="Scene.cpp" />
