@@ -1,4 +1,4 @@
-# SecurityPoker
+# 강강술래잡기
 2022년 winapi 팀 프로젝트
 
 # 프로젝트 소개 
